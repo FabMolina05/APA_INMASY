@@ -1,12 +1,12 @@
 <div class="sidebar">
     <div class="sidebar-header">
-        <h3><i class="fas fa-boxes"></i> Sistema</h3>
+        <h3><i class="fas fa-boxes"></i> INMASY</h3>
     </div>
 
     <nav class="sidebar-nav">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="#dashboard" class="nav-link active">
+                <a href="#dashboard" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span>
                 </a>
@@ -41,6 +41,12 @@
                     <span>Registros</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="/Web/Usuarios/view.php" class="nav-link">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -56,4 +62,4 @@
         </div>
     </div>
 </div>
-<script src="public/JS/sidebar.js"></script>
+<script src="/public/JS/sidebar.js"></script>

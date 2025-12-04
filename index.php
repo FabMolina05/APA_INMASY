@@ -1,6 +1,6 @@
-<?php include 'src/Web/components/Header.php'; ?>
-<?php include 'src/Web/components/Sidebar.php'; ?>
-<?php require_once 'src/DA/DBContext.php'; ?>
+<?php include 'Web/components/Header.php'; ?>
+<?php include 'Web/components/Sidebar.php'; ?>
+
 
 <div class="main-content">
      <div class="content">
@@ -18,4 +18,4 @@
           </div>
      </div>
 
-     <?php include 'src/Web/components/Footer.php'; ?>
+     <?php include 'Web/components/Footer.php'; ?>
