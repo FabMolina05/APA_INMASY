@@ -1,13 +1,21 @@
-<?php include 'src/Web/components/Header.php'; ?> 
+<?php include 'src/Web/components/Header.php'; ?>
 <?php include 'src/Web/components/Sidebar.php'; ?>
+<?php require_once 'src/DA/DBContext.php'; ?>
 
 <div class="main-content">
-     <h1>Contenido Principal</h1>
-    <p>Aquí va el contenido de tu aplicación.</p>
-</div>
+     <div class="content">
+          <div class="col">
+               <div class="row">
+                    <div class="card">
+                         <div class="card-header text-center">
+                              <h2>Bienvenido al Sistema de Gestión INMASY</h2>
+                         </div>
+                         <div class="card-body text-center">
+                              <p>Utilice el menú lateral para navegar por las diferentes secciones del sistema.</p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
 
-<?php include 'src/Web/components/Footer.php'; ?>
-    
-
-
-
+     <?php include 'src/Web/components/Footer.php'; ?>
