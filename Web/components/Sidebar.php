@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="sidebar-header">
-        <h3><i class="fas fa-boxes"></i> INMASY</h3>
+        <h3><a href="/" style="text-decoration: none; color : white"><i class="fas fa-boxes"></i> INMASY</a></h3>
     </div>
 
     <nav class="sidebar-nav">
@@ -63,3 +63,4 @@
     </div>
 </div>
 <script src="/public/JS/sidebar.js"></script>
+<div class="main-content">

@@ -1,7 +1,7 @@
-<?php 
-namespace ABS\Interfaces\DA;
+<?php
+namespace ABS\Interfaces\BL;
 
-interface IUsuarioDA {
+interface IUsuarioBL {
     public function obtenerPermisosUsuario($user);
     public function obtenerUsuariosPADDE();
     public function obtenerUsuarioPorId($user);
@@ -9,9 +9,4 @@ interface IUsuarioDA {
     public function actualizarUsuario($user);
     public function obtenerRol($user);
     public function obtenerUsuarios();
-
 }
-
-
-
-?>

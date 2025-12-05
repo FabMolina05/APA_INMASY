@@ -1,21 +1,24 @@
-<?php include 'Web/components/Header.php'; ?>
-<?php include 'Web/components/Sidebar.php'; ?>
+<?php include __DIR__ .'/Web/components/Header.php'; ?>
+<?php include __DIR__ .'/Web/components/Sidebar.php'; ?>
+<?php require_once __DIR__ . '/src/Controlador/IndexControlador.php'; ?>
+<?php
+$indexController = new IndexControlador();
+
+$request = $_SERVER['REQUEST_URI'];
+$request = strtok($request, '?');
+$request = str_replace('/index.php', '', $request);
+$request = $request ?: '/';
+
+switch ($request) {
+    case '/' : 
+     $indexController->index();
+     break;
+    default :
+     http_response_code(404);
+     break;
+};
 
 
-<div class="main-content">
-     <div class="content">
-          <div class="col">
-               <div class="row">
-                    <div class="card">
-                         <div class="card-header text-center">
-                              <h2>Bienvenido al Sistema de Gestión INMASY</h2>
-                         </div>
-                         <div class="card-body text-center">
-                              <p>Utilice el menú lateral para navegar por las diferentes secciones del sistema.</p>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </div>
+?>
 
-     <?php include 'Web/components/Footer.php'; ?>
+<?php include __DIR__ . '/Web/components/Footer.php'; ?>

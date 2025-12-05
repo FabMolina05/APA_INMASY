@@ -1,5 +1,5 @@
 <?php
-namespace DA;
+namespace DA\Context;
 
 class DBContext {
     private $conn;
