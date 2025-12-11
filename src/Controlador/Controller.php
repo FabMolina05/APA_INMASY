@@ -5,10 +5,11 @@ class Controller {
     protected function view($viewPath, $data = []) {
         extract($data);
         
-        $viewFile = __DIR__ . "/../views/" . $viewPath . ".php";
+        $viewFile = dirname(__DIR__, 2) . "/Web/" . $viewPath . ".php";
         
         if (!file_exists($viewFile)) {
-            die("Vista no encontrada: $viewPath");
+
+            die("Vista no encontrada: $viewFile");
         }
         
         require_once $viewFile;

@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/Web/Usuarios/view.php" class="nav-link">
+                <a href="/usuarios/index" class="nav-link">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                     <span>Usuarios</span>
                 </a>

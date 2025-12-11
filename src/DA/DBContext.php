@@ -1,5 +1,5 @@
 <?php
-namespace DA\Context;
+namespace DA;
 
 class DBContext {
     private $conn;
@@ -13,9 +13,9 @@ class DBContext {
 
         $this->conn = sqlsrv_connect($host, ['Database' => $db, 'UID' => $UID, 'PWD' => $PWD, 'TrustServerCertificate' => 1]);
         if ($this->conn === false) {
-            die(print_r(sqlsrv_errors(), true));
+            http_response_code(500);
         }else {
-            print_r("Conexión exitosa a la base de datos.");
+            
         }
     }
 

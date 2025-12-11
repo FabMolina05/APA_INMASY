@@ -1,8 +1,11 @@
 <?php
 namespace BL\Usuario;
-use ABS\Interfaces\BL\IUsuarioBL;
-use Exception;
 
+require_once dirname(__DIR__,3) . "/src/ABS/Interfaces/BL/IUsuarioBL.php";
+require_once dirname(__DIR__,3) . "/src/DA/Usuario/UsuarioDA.php";
+use ABS\Interfaces\BL\IUsuarioBL;
+use DA\Usuario\UsuarioDA;
+use Exception;
 
 class UsuarioBL implements IUsuarioBL
 {
@@ -10,7 +13,7 @@ class UsuarioBL implements IUsuarioBL
 
     public function __construct($conn)
     {
-        $this->usuarioDA = $conn;
+        $this->usuarioDA = new UsuarioDA($conn);
     }
 
     public function obtenerPermisosUsuario($user)

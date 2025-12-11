@@ -1,6 +1,7 @@
 <?php
-
 namespace DA\Usuario;
+require_once dirname(__DIR__,3) . "/src/ABS/Interfaces/DA/IUsuarioDA.php";
+
 use ABS\Interfaces\DA\IUsuarioDA;
 use ABS\Modelos\Usuarios;
 use DA\Context\DBContext;

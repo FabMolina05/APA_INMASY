@@ -1,5 +1,5 @@
 <?php
-
+require_once dirname(__DIR__,2) . "/src/BL/Usuario/UsuarioBL.php";
 use BL\Usuario\UsuarioBL;
 
 class UsuarioControlador extends Controller {
