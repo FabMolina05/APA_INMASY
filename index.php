@@ -25,6 +25,16 @@ switch ($request) {
     case '/usuarios/index':
         $usuarioController->index();
         break;
+    case '/usuarios/agregar':
+        $usuarioController->agregarUsuario();
+        break;
+    case '/usuarios/guardar':
+        $usuarioController->guardarUsuario();
+        break;
+    case '/usuarios/actualizar':
+        $usuarioController->actualizarUsuario();
+        break;
+
     default:
         http_response_code(404);
         break;

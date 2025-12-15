@@ -9,6 +9,7 @@ interface IUsuarioDA {
     public function actualizarUsuario($user);
     public function obtenerRol($user);
     public function obtenerUsuarios();
+    public function obtenerRoles();
 
 }
 

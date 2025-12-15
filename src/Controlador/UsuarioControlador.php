@@ -11,12 +11,64 @@ class UsuarioControlador extends Controller {
 
     public function index() {
         $usuarios = $this->usuarioBL->obtenerUsuarios();
-
-        $this->view('usuarios/index', ['usuarios' => $usuarios]);
+        $roles = $this->usuarioBL->obtenerRoles();
+        $this->view('usuarios/index', ['usuarios' => $usuarios,'roles' => $roles]);
     }
 
     public function verUsuario($id) {
         $usuario = $this->usuarioBL->obtenerUsuarioPorId($id);
         $this->view('usuarios/ver', ['usuario' => $usuario]);
+    }
+
+    public function agregarUsuario() {
+        $usuarios = $this->usuarioBL->obtenerUsuariosPADDE();
+        $roles = $this->usuarioBL->obtenerRoles();
+        $this->view('usuarios/agregar', ['usuario' => $usuarios, 'roles' => $roles]);
+        
+    }
+
+    public function guardarUsuario() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['usuarioPADDE'];
+            $nombre = $_POST['nombreUsuarioPADDE'];
+            $rol = $_POST['rol'];
+            
+            $nuevoUsuario = [
+                'id' => $id,
+                'nombre' => $nombre,
+                'rol' => $rol
+            ];
+
+            $resultado = $this->usuarioBL->agregarUsuario($nuevoUsuario);
+
+            if (isset($resultado['error'])) {
+                $this->view('usuarios/agregar', ['error' => $resultado['error']]);
+            } else {
+                header('Location: /usuarios/index');
+                exit();
+            }
+        }
+    }
+    public function actualizarUsuario() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['ID_Usuario'];
+            $rol = $_POST['rol'];
+            $estado = $_POST['estado'];
+            
+            $usuarioActualizado = [
+                'id' => $id,
+                'rol' => $rol,
+                'estado' => $estado
+            ];
+
+            $resultado = $this->usuarioBL->actualizarUsuario($usuarioActualizado);
+
+            if (isset($resultado['error'])) {
+                $this->view('usuarios/index', ['error' => $resultado['error']]);
+            } else {
+                header('Location: /usuarios/index');
+                exit();
+            }
+        }
     }
 }

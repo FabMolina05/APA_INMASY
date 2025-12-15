@@ -20,7 +20,18 @@ class UsuarioDA implements IUsuarioDA {
     }
 
     public function obtenerUsuariosPADDE() {
-        
+        $query = "SELECT nombre_completo, num_empleado 
+                  FROM [PADDE].[dbo].[CNFL_Empleados] 
+                  WHERE dependencia = 6311
+                  and num_empleado NOT IN (SELECT ID_usuario FROM dbo.INMASY_Usuarios)";
+        $stmt = sqlsrv_prepare($this->conexion, $query);
+        sqlsrv_execute($stmt);
+        $usuarios = [];
+        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $usuarios[] = $row;
+        }
+       
+        return $usuarios;
         
     }
 
@@ -29,23 +40,65 @@ class UsuarioDA implements IUsuarioDA {
     }
 
     public function agregarUsuario($user) {
-        // Implementación del método
+        $query = "INSERT INTO dbo.INMASY_Usuarios (ID_usuario, nombre_completo, ID_rol, estado) VALUES (?, ?, ?, ?)";
+        $params = [
+            $user['id'],
+            $user['nombre'],
+            $user['rol'],
+            1
+        ];
+        $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+        return ['success' => true];
     }
 
     public function actualizarUsuario($user) {
-        // Implementación del método
+        $query = "UPDATE dbo.INMASY_Usuarios SET ID_rol = ?, estado = ? WHERE ID_Usuario = ?";
+        $params = [
+            $user['rol'],
+            $user['estado'] ,
+            $user['id']
+        ];
+        $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+        return ['success' => true];
     }
 
     public function obtenerRol($user) {
         // Implementación del método
     }
-
-    public function obtenerUsuarios() {
-        $query = "SELECT ID_Usuario, ID_Rol, nombre_completo FROM dbo.INMASY_Usuarios";
+    public function obtenerRoles()
+    {
+        $query = "SELECT ID_Rol, nombre FROM dbo.INMASY_Roles";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         sqlsrv_execute($stmt);
-        return sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        $roles = [];
+        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $roles[] = $row;
+        }
+        
+        return $roles;
+    }
+    
+
+    public function obtenerUsuarios() {
+        $query = "SELECT u.ID_Usuario,u.nombre_completo, r.nombre as rol ,u.estado FROM dbo.INMASY_Usuarios u JOIN dbo.INMASY_Roles r ON u.ID_rol = r.ID_rol";
+        $stmt = sqlsrv_prepare($this->conexion, $query);
+        sqlsrv_execute($stmt);
+        $usuarios = [];
+        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $usuarios[] = $row;
+        }
+        return $usuarios;
         
         
     }
+
+    
 }

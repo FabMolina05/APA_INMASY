@@ -1,10 +1,34 @@
 $(document).ready(function() {
     $('#usuariosTable').DataTable({
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+            search: "",
+            searchPlaceholder: "Buscar usuarios...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+            infoEmpty: "Mostrando 0 a 0 de 0 usuarios",
+            infoFiltered: "(filtrado de _MAX_ usuarios totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[0, 'desc']], 
-        
+        order: [[0, 'asc']],
+        searching: true,
+        responsive: true
     });
 });
+
+function editarUsuario(id) {
+    window.location.href = `/usuarios/editar/${id}`;
+}
+
+function eliminarUsuario(id) {
+    if (confirm('¿Estás seguro de eliminar este usuario?')) {
+        // Aquí tu lógica de eliminación
+        console.log('Eliminar usuario:', id);
+    }
+}

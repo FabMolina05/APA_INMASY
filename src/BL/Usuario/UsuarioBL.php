@@ -23,7 +23,14 @@ class UsuarioBL implements IUsuarioBL
 
     public function obtenerUsuariosPADDE()
     {
-        return $this->usuarioDA->obtenerUsuariosPADDE();
+        try {
+            $users = $this->usuarioDA->obtenerUsuariosPADDE();
+
+            return $users;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     public function obtenerUsuarioPorId($user)
@@ -33,17 +40,42 @@ class UsuarioBL implements IUsuarioBL
 
     public function agregarUsuario($user)
     {
-        return $this->usuarioDA->agregarUsuario($user);
+        try {
+            $resultado = $this->usuarioDA->agregarUsuario($user);
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     public function actualizarUsuario($user)
     {
-        return $this->usuarioDA->actualizarUsuario($user);
+        try {
+            $resultado = $this->usuarioDA->actualizarUsuario($user);
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     public function obtenerRol($user)
     {
         return $this->usuarioDA->obtenerRol($user);
+    }
+    public function obtenerRoles()
+    {
+        try {
+            $roles = $this->usuarioDA->obtenerRoles();
+
+            return $roles;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     public function obtenerUsuarios()

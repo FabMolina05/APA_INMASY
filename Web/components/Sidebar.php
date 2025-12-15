@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="sidebar-header">
-        <h3><a href="/" style="text-decoration: none; color : white"><i class="fas fa-boxes"></i> INMASY</a></h3>
+        <h3><a href="/" style="text-decoration: none; color : white"><img src="/public/Assets/logo.png"> INMASY</a></h3>
     </div>
 
     <nav class="sidebar-nav">
