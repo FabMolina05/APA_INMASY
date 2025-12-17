@@ -2,8 +2,10 @@
 require_once __DIR__ . '/src/DA/DBContext.php';
 require_once __DIR__ . '/src/Controlador/IndexControlador.php';
 require_once __DIR__ . '/src/Controlador/UsuarioControlador.php';
+require_once __DIR__ . '/src/Services/validate_session.php';
+require_once __DIR__ . '/src/Services/validate_permission.php';
 include __DIR__ . '/Web/components/Header.php';
-include __DIR__ . '/Web/components/Sidebar.php';
+
 use DA\DBContext;
 ?>
 <?php
@@ -13,10 +15,17 @@ $conn = $dbContext->getConnection();
 $indexController = new IndexControlador();
 $usuarioController = new UsuarioControlador($conn);
 
+
+
 $request = $_SERVER['REQUEST_URI'];
 $request = strtok($request, '?');
 $request = str_replace('/index.php', '', $request);
 $request = $request ?: '/';
+
+ValidateSession::validate($conn);
+ValidatePermissions::validate($request);
+
+include __DIR__ . '/Web/components/Sidebar.php';
 
 switch ($request) {
     case '/':
@@ -33,6 +42,13 @@ switch ($request) {
         break;
     case '/usuarios/actualizar':
         $usuarioController->actualizarUsuario();
+        break;
+
+    case '/error403':
+        include __DIR__ . '/Web/vistas/error403.php';
+        break;
+    case '/error404':
+        include __DIR__ . '/Web/vistas/error404.php';
         break;
 
     default:

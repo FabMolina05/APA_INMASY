@@ -7,7 +7,6 @@ interface IUsuarioBL {
     public function obtenerUsuarioPorId($user);
     public function agregarUsuario($user);
     public function actualizarUsuario($user);
-    public function obtenerRol($user);
     public function obtenerUsuarios();
     public function obtenerRoles();
 }

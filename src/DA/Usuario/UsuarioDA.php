@@ -16,7 +16,14 @@ class UsuarioDA implements IUsuarioDA {
     }
 
     public function obtenerPermisosUsuario($user) {
-        // Implementación del métod
+        $query = "SELECT u.ID_Usuario,u.nombre_completo, r.nombre as rol_nombre,r.ID_rol as rol FROM dbo.INMASY_Usuarios u JOIN dbo.INMASY_Roles r ON u.ID_rol = r.ID_rol where u.ID_Usuario = ?";
+        $params = [$user];
+        $stmt = sqlsrv_prepare($this->conexion,$query,$params);
+        sqlsrv_execute($stmt);
+        $usuarios[] = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        
+       
+        return $usuarios;
     }
 
     public function obtenerUsuariosPADDE() {
@@ -36,7 +43,22 @@ class UsuarioDA implements IUsuarioDA {
     }
 
     public function obtenerUsuarioPorId($user) {
-        // Implementación del método
+        $query = "SELECT * FROM dbo.INMASY_Usuarios WHERE ID_Usuario = ? ";
+        $params = [$user];
+        $stmt = sqlsrv_prepare($this->conexion,$query,$params);
+       
+        if (!sqlsrv_execute($stmt)){
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+
+        $usuario = [];
+        while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $usuario[] = $row;
+        }
+
+        return $usuario;
+        
     }
 
     public function agregarUsuario($user) {
@@ -70,9 +92,7 @@ class UsuarioDA implements IUsuarioDA {
         return ['success' => true];
     }
 
-    public function obtenerRol($user) {
-        // Implementación del método
-    }
+   
     public function obtenerRoles()
     {
         $query = "SELECT ID_Rol, nombre FROM dbo.INMASY_Roles";
