@@ -42,9 +42,9 @@ class UsuarioControlador extends Controller {
             $resultado = $this->usuarioBL->agregarUsuario($nuevoUsuario);
 
             if (isset($resultado['error'])) {
-                $this->view('usuarios/agregar', ['error' => $resultado['error']]);
+                $this->json($resultado,500);
             } else {
-                header('Location: /usuarios/index');
+                $this->redirect('/usuarios/index');
                 exit();
             }
         }
@@ -64,7 +64,7 @@ class UsuarioControlador extends Controller {
             $resultado = $this->usuarioBL->actualizarUsuario($usuarioActualizado);
 
             if (isset($resultado['error'])) {
-                $this->view('usuarios/index', ['error' => $resultado['error']]);
+                $this->json($resultado,500);
             } else {
                 header('Location: /usuarios/index');
                 exit();

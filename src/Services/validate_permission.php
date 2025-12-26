@@ -29,6 +29,18 @@ class ValidatePermissions
                 'request' => '/usuarios/actualizar',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/inventario/comunicaciones',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/error404',
+                'roles' => ['1','2','3']
+            ],
+             [
+                'request' => '/error403',
+                'roles' => ['1','2','3']
+            ],
 
         ];
         $rqExist = false;
@@ -41,7 +53,8 @@ class ValidatePermissions
                     
                     $rqExist = true;
                     if (!in_array($rol, $rq['roles'])) {
-                        http_response_code(403);
+                        header('Location: /error403');
+
                         exit();
                     }
                 }
@@ -50,7 +63,8 @@ class ValidatePermissions
             
         }
         if (!$rqExist) {
-                http_response_code(404);
+               
+                header('Location: /error404');
                 exit;
             }
     }

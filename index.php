@@ -43,12 +43,15 @@ switch ($request) {
     case '/usuarios/actualizar':
         $usuarioController->actualizarUsuario();
         break;
+    case '/inventario/comunicaciones':
+        $indexController->index();
+        break;
 
     case '/error403':
-        include __DIR__ . '/Web/vistas/error403.php';
+        require_once __DIR__ . '/Web/vistas/error403.php';
         break;
     case '/error404':
-        include __DIR__ . '/Web/vistas/error404.php';
+        require_once __DIR__ . '/Web/vistas/error404.php';
         break;
 
     default:
