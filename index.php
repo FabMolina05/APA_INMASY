@@ -1,9 +1,13 @@
 <?php 
 require_once __DIR__ . '/src/DA/DBContext.php';
+
 require_once __DIR__ . '/src/Controlador/IndexControlador.php';
 require_once __DIR__ . '/src/Controlador/UsuarioControlador.php';
+require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
+
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
+
 include __DIR__ . '/Web/components/Header.php';
 
 use DA\DBContext;
@@ -12,8 +16,11 @@ use DA\DBContext;
 
 $dbContext = new DBContext();
 $conn = $dbContext->getConnection();
+
 $indexController = new IndexControlador();
 $usuarioController = new UsuarioControlador($conn);
+$inventarioController = new InventarioControlador($conn);
+
 
 
 
@@ -44,9 +51,29 @@ switch ($request) {
         $usuarioController->actualizarUsuario();
         break;
     case '/inventario/comunicaciones':
-        $indexController->index();
+        $inventarioController->obtenerComunicaciones();
         break;
-
+    case '/inventario/reles':
+        $inventarioController->obteneReles();
+        break;
+    case '/inventario/tarjetas':
+        $inventarioController->obtenerTarjetas();
+        break;
+    case '/inventario/electronico':
+        $inventarioController->obtenerEquipoElectronico();
+        break;
+    case '/inventario/otros':
+        $inventarioController->obtenerOtros();
+        break;
+    case '/inventario/cables':
+        $inventarioController->obtenerCables();
+        break;
+    case '/inventario/gabinetes':
+        $inventarioController->obtenerGabinetes();
+        break;
+    case '/inventario/obtenerArticuloPorId':
+        $inventarioController->obtenerArticuloPorId();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;

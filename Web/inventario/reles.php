@@ -1,0 +1,77 @@
+
+<div class="content">
+    <div class="container-fluid">
+        <!-- Card principal -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2 class="mb-0">Inventario</h2>
+                        <p class="text-muted small mb-0">Gestiona Inventario</p>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregar'">
+                            <i class="bi bi-plus-circle me-1"></i> Agregar artículo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="inventarioTable" class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID CAJA</th>
+                                <th>Nombre</th>
+                                <th>Marca</th>
+                                <th>Modelo</th> 
+                                <th>Disponible</th>
+                                <th>tipo</th>
+                                <th>activo</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($reles != null && count($reles) > 0) {
+                                foreach ($reles as $rele) {
+                                    echo "<tr>";
+                                    echo "<td>" . htmlspecialchars($rele['id_caja']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($rele['nombre']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($rele['marca']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($rele['modelo']) . "</td>";
+                                    if($rele['disponibilidad'] == 0){
+                                        echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
+                                    } else {
+                                    echo "<td><span class='badge bg-success'>Libre</span></td>";
+                                    };
+                                    echo "<td>" . htmlspecialchars($rele['tipo']) . "</td>";
+                                    if($rele['activo'] == 0){
+                                        echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
+                                    } else {
+                                    echo "<td><span class='badge bg-success'>Activo</span></td>";
+                                    };
+                                    echo "<td class='text-center'>
+                                            <div class='btn-group btn-group-sm' role='group'>
+                                               
+                                                <button type='button' data-id=". htmlspecialchars($rele['ID_Articulo'])." data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                    <i class='fa-solid fa-pen'></i>
+                                                </button>
+                                                
+                                            </div>
+                                          </td>";
+                                    echo "</tr>";
+                                }
+                            } 
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

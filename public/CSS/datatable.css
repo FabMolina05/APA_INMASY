@@ -1,0 +1,118 @@
+/* Card principal */
+.content .card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.content .card-header {
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Botón primary con gradiente corregido */
+.btn-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+/* DataTables Search - Estilo moderno */
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.dataTables_wrapper .dataTables_filter label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input[type="search"] {
+    width: 280px;
+    padding: 10px 15px 10px 40px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    outline: none;
+    margin-left: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input[type="search"]:hover {
+    border-color: #c0c0c0;
+    background-color: #ffffff;
+}
+
+.dataTables_wrapper .dataTables_filter input[type="search"]:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    background-color: #ffffff;
+}
+
+/* Botones de acción */
+.btn-group-sm .btn {
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+.btn-group .btn:not(:last-child) {
+    margin-right: 4px;
+}
+
+/* Badges personalizados */
+.badge {
+    padding: 6px 12px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+/* Info de DataTables */
+.dataTables_wrapper .dataTables_info {
+    padding-top: 20px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 20px;
+}
+
+/* Paginación personalizada */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #0d6efd;
+    color: white !important;
+    border-color: #0d6efd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #0d6efd !important;
+    color: white !important;
+    border-color: #0d6efd;
+}

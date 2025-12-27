@@ -1,9 +1,3 @@
-<?php
-
-$usuario = $_SESSION['usuario_INMASY'];
-
-
-?>
 <div class="sidebar">
     <div class="sidebar-header">
         <h3><a href="/" style="text-decoration: none; color : white"><img src="/public/Assets/logo.png"> INMASY</a></h3>
@@ -11,88 +5,103 @@ $usuario = $_SESSION['usuario_INMASY'];
 
     <nav class="sidebar-nav">
         <ul class="nav flex-column">
-            <?php if ($usuario['rol'] == 1): ?>
-                <li class="nav-item">
-                    <a href="#dashboard" class="nav-link">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1 || $usuario['rol'] == 3): ?>
-                <li class="nav-item">
-                    <a href="#pedidos" class="nav-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Pedidos</span>
-                    </a>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1 || $usuario['rol'] == 2 || $usuario['rol'] == 3): ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="inventario" href="#inventario" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-warehouse"></i>
-                        <span>Inventario</span>
-                    </a>
-                    <ul class="dropdown-menu ">
-                        <li><a class="nav-link" href="/inventario/cables">Cables</a></li>
-                        <li><a class="nav-link" href="/inventario/comunicaciones">Comunicaciones</a></li>
-                        <li><a class="nav-link" href="/inventario/gabinetes">Gabinetes</a></li>
-                        <li><a class="nav-link" href="/inventario/electronico">Equipo Electronico</a></li>
-                        <li><a class="nav-link" href="/inventario/reles">Reles</a></li>
-                        <li><a class="nav-link" href="/inventario/tarjetas">Tarjetas</a></li>
-                        <li><a class="nav-link" href="/inventario/otros">Otros</a></li>
+<?php
+            $usuario = $_SESSION['usuario_INMASY'];
 
+            // Dashboard     
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="#dashboard" class="nav-link">';
+                echo ' <i class="fas fa-chart-line"></i>';
+                echo ' <span>Dashboard</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
 
+            // Pedidos
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 3) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="#pedidos" class="nav-link">';
+                echo ' <i class="fas fa-shopping-cart"></i>';
+                echo ' <span>Pedidos</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
 
-                    </ul>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1 ||  $usuario['rol'] == 2): ?>
-                <li class="nav-item">
-                    <a href="#entradas" class="nav-link">
-                        <i class="fas fa-arrow-circle-down"></i>
-                        <span>Entradas</span>
-                    </a>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1): ?>
-                <li class="nav-item">
-                    <a href="#salidas" class="nav-link">
-                        <i class="fas fa-arrow-circle-up"></i>
-                        <span>Salidas</span>
-                    </a>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1): ?>
-                <li class="nav-item">
-                    <a href="#Registros" class="nav-link">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <span>Registros</span>
-                    </a>
-                </li>
-            <?php endif ?>
-            <?php if ($usuario['rol'] == 1): ?>
-                <li class="nav-item">
-                    <a href="/usuarios/index" class="nav-link">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <span>Usuarios</span>
-                    </a>
-                </li>
-            <?php endif ?>
-        </ul>
-    </nav>
+            // Inventario con dropdown
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2 || $usuario['rol'] == 3) {
+                echo ' <li class="nav-item dropdown">';
+                echo ' <a class="nav-link dropdown-toggle" id="inventario" href="#inventario" data-bs-toggle="dropdown" aria-expanded="false">';
+                echo ' <i class="fas fa-warehouse"></i>';
+                echo ' <span>Inventario</span>';
+                echo ' </a>';
+                echo ' <ul class="dropdown-menu">';
+                echo ' <li><a class="nav-link" href="/inventario/cables">Cables</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/comunicaciones">Comunicaciones</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/gabinetes">Gabinetes</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/electronico">Equipo Electronico</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/reles">Reles</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/tarjetas">Tarjetas</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/otros">Otros</a></li>';
+                echo ' </ul>';
+                echo ' </li>';
+            }
 
-    <div class="sidebar-footer">
-        <div class="user-info">
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="user-details">
-                <p class="user-name"><?php echo htmlspecialchars($usuario['nombre_completo']) ?></p>
-                <p class="user-role"><?php echo htmlspecialchars($usuario['rol_nombre']) ?></p>
-            </div>
-        </div>
-    </div>
+            // Entradas
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="#entradas" class="nav-link">';
+                echo ' <i class="fas fa-arrow-circle-down"></i>';
+                echo ' <span>Entradas</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+            // Salidas
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="#salidas" class="nav-link">';
+                echo ' <i class="fas fa-arrow-circle-up"></i>';
+                echo ' <span>Salidas</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+            // Registros
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="#Registros" class="nav-link">';
+                echo ' <i class="fa-solid fa-clock-rotate-left"></i>';
+                echo ' <span>Registros</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+            // Usuarios
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="/usuarios/index" class="nav-link">';
+                echo ' <i class="fa-solid fa-user-gear"></i>';
+                echo ' <span>Usuarios</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+            echo '        </ul>';
+            echo '    </nav>';
+
+            echo '    <div class="sidebar-footer">';
+            echo '        <div class="user-info">';
+            echo '            <div class="user-avatar">';
+            echo '                <i class="fas fa-user"></i>';
+            echo '            </div>';
+            echo '            <div class="user-details">';
+            echo '                <p class="user-name">' . htmlspecialchars($usuario['nombre_completo']) . '</p>';
+            echo '                <p class="user-role">' . htmlspecialchars($usuario['rol_nombre']) . '</p>';
+            echo '            </div>';
+?>
+</div>
+</div>
 </div>
 <script src="/public/JS/sidebar.js"></script>
 <div class="main-content">

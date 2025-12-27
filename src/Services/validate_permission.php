@@ -34,6 +34,34 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
+                'request' => '/inventario/reles',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/electronico',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/gabinetes',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/tarjetas',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/otros',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/cables',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/obtenerArticuloPorId',
+                'roles' => ['1']
+            ],
+            [
                 'request' => '/error404',
                 'roles' => ['1','2','3']
             ],

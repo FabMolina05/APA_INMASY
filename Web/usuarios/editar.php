@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="Editar" aria-hidden="true">
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="Editar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
