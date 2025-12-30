@@ -38,9 +38,9 @@ class InventarioControlador extends Controller{
     public function obtenerArticuloPorId(){
         $id = $_GET['id'];
         $categoria = $_GET['categoria'];
-        $articulo = $this->inventarioBL->obtenerArticuloPorId($id,$categoria);
+        $articulo = $this->inventarioBL->obtenerArticuloPorId($categoria, $id);
         
-        $this->json($articulo);
+        $this->json(['success' => true, 'data' => $articulo]);
 
 
     }

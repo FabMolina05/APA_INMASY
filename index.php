@@ -8,8 +8,6 @@ require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
 
-include __DIR__ . '/Web/components/Header.php';
-
 use DA\DBContext;
 ?>
 <?php
@@ -32,7 +30,12 @@ $request = $request ?: '/';
 ValidateSession::validate($conn);
 ValidatePermissions::validate($request);
 
+ob_start();
+
+include __DIR__ . '/Web/components/Header.php';
 include __DIR__ . '/Web/components/Sidebar.php';
+
+ob_end_flush();
 
 switch ($request) {
     case '/':
@@ -86,7 +89,6 @@ switch ($request) {
         break;
 };
 
+include __DIR__ . '/Web/components/Footer.php'; 
 
 ?>
-
-<?php include __DIR__ . '/Web/components/Footer.php'; ?>

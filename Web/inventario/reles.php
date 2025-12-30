@@ -1,4 +1,3 @@
-
 <div class="content">
     <div class="container-fluid">
         <!-- Card principal -->
@@ -16,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="inventarioTable" class="table table-hover align-middle">
@@ -25,9 +24,9 @@
                                 <th>ID CAJA</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
-                                <th>Modelo</th> 
+                                <th>Modelo</th>
+                                <th>Tipo</th>
                                 <th>Disponible</th>
-                                <th>tipo</th>
                                 <th>activo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
@@ -41,29 +40,37 @@
                                     echo "<td>" . htmlspecialchars($rele['nombre']) . "</td>";
                                     echo "<td>" . htmlspecialchars($rele['marca']) . "</td>";
                                     echo "<td>" . htmlspecialchars($rele['modelo']) . "</td>";
-                                    if($rele['disponibilidad'] == 0){
+                                    echo "<td>" . htmlspecialchars($rele['tipo']) . "</td>";
+                                    if ($rele['disponibilidad'] == 1) {
                                         echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                     } else {
-                                    echo "<td><span class='badge bg-success'>Libre</span></td>";
+                                        echo "<td><span class='badge bg-success'>Libre</span></td>";
                                     };
-                                    echo "<td>" . htmlspecialchars($rele['tipo']) . "</td>";
-                                    if($rele['activo'] == 0){
-                                        echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
-                                    } else {
-                                    echo "<td><span class='badge bg-success'>Activo</span></td>";
-                                    };
+                                    
+                                    if ($_SESSION['usuario_INMASY']['rol'] == 1) {
+                                        if ($rele['activo'] == 0) {
+                                            echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
+                                        } else {
+                                            echo "<td><span class='badge bg-success'>Activo</span></td>";
+                                        };
+                                    }
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=". htmlspecialchars($rele['ID_Articulo'])." data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                    <i class='fa-regular fa-eye'></i>
+                                                </button>
+                                                
+                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
+                
                                                 
                                             </div>
                                           </td>";
                                     echo "</tr>";
                                 }
-                            } 
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -72,6 +79,6 @@
         </div>
     </div>
 
-
+    <?php include_once './Web/inventario/info.php' ?>
 
 </div>

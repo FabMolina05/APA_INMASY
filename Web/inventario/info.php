@@ -5,7 +5,13 @@
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">Información Articulo</h2>
                 </div>
+                <div id="infoArticuloContenido">
 
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
