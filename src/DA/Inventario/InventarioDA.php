@@ -50,7 +50,7 @@ class InventarioDA implements IInventarioDA{
         
         switch ($categoria) {
             case "reles":
-                $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,ISNULL(u.nombre_completo,'Sin ocupar') as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,IIF(a.disponibilidad<1,'Libre','Ocupado') as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,r.tipo FROM dbo.INMASY_Reles r 
+                $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,u.nombre_completo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,r.tipo as Tipo,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Reles r 
                  JOIN dbo.INMASY_Articulos a on r.id_articulo = a.ID_Articulo 
                  JOIN dbo.INMASY_Usuarios u on a.uso_equipo = u.ID_Usuario
                  WHERE a.ID_Articulo = ?";

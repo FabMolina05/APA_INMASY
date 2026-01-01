@@ -12,8 +12,22 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
             response = response.data;
             let html = '';
             let keys = Object.keys(response);
-            keys.forEach(key =>{
-                html += '<p class="my-3"><strong>'+key+'</strong> :'+response[key]+'</p>';
+            keys.forEach(key => {
+                if (key !== "Activo" && key !== "ID") {
+
+                    if (key === "Disponibilidad") {
+                        let disponibilidad = response[key] === 1 ? 'Ocupado' : 'Libre';
+                        html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> :' + disponibilidad + '</p>';
+                        return;
+                    }
+                    if (key === "Tecnico" && response[key] === null) {
+                        html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> : Sin ocupar</p>';
+                        return;
+                    }
+                    html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> :' + response[key] + '</p>';
+
+                }
+
             });
 
             $('#infoArticuloContenido').html(html);

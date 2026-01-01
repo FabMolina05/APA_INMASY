@@ -45,7 +45,7 @@ class InventarioControlador extends Controller{
 
     }
     public function editarArticulo($categoria, $id){
-
+        
     }
     public function sacarArticulo($id){
 

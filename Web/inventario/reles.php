@@ -61,7 +61,7 @@
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>
                                                 
-                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
@@ -80,5 +80,6 @@
     </div>
 
     <?php include_once './Web/inventario/info.php' ?>
+    <?php include_once './Web/inventario/releEditar.php' ?>
 
 </div>
