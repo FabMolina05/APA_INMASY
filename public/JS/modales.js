@@ -20,6 +20,18 @@ $('#modalEditarArticulo').on('show.bs.modal', function (event) {
             let keys = Object.keys(response);
             keys.forEach(key => {
 
+                
+                if (key === 'atributos') {
+                    const atributos = JSON.parse(response[key]);
+                    Object.keys(atributos).forEach(attrKey => {
+                        const attrElement = $('#modalEditarArticulo').find(`#${attrKey}`);
+                        if (attrElement.length > 0) {
+                            attrElement.val(atributos[attrKey]);
+                        }
+                    });
+                    return;
+                }
+
                 const elemento = $('#modalEditarArticulo').find(`#${key}`);
 
                 if (elemento.length > 0) {

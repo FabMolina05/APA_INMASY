@@ -17,9 +17,10 @@ class InventarioBL implements IInventarioBL{
         $this->inventarioDA = new InventarioDA($conn);
     }
 
-    public function obtenerReles(){
+    public function obtenerArticulosPorCategoria($categoria)
+    {
         try {
-            $reles = $this->inventarioDA->obtenerReles();
+            $reles = $this->inventarioDA->obtenerArticulosPorCategoria($categoria);
 
             return $reles;
 
@@ -27,24 +28,8 @@ class InventarioBL implements IInventarioBL{
             return ['error' => $e->getMessage()];
         }
     }
-    public function obtenerEquipoElectronico(){
 
-    }
-    public function obtenerCables(){
-
-    }
-    public function obtenerComunicaciones(){
-
-    }
-    public function obtenerGabinetes(){
-
-    }
-    public function obtenerTarjetas(){
-
-    }
-    public function obtenerOtros(){
-
-    }
+    
     public function obtenerArticuloPorId($categoria, $id){
         try {
             $articulo = $this->inventarioDA->obtenerArticuloPorId($categoria, $id);
@@ -55,8 +40,15 @@ class InventarioBL implements IInventarioBL{
             return ['error' => $e->getMessage()];
         }
     }
-    public function editarArticulo($categoria, $id){
+    public function editarArticulo($articulo){
+        try {
+            $resultado = $this->inventarioDA->editarArticulo($articulo);
 
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
     public function sacarArticulo($id){
 
@@ -64,8 +56,6 @@ class InventarioBL implements IInventarioBL{
     public function pedirArticulo($id){
 
     }
-    public function agregarArticulo(){
-
-    }
+    
 
 }

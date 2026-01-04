@@ -12,29 +12,11 @@ class InventarioControlador extends Controller{
         $this->inventarioBL = new InventarioBL($conn);
     }
 
-    public function obteneReles(){
-        $reles = $this->inventarioBL->obtenerReles();
-        $this->view('inventario/reles',['reles'=>$reles]);
+    public function obtenerArticulosPorCategoria($id,$categoria){
+        $articulos = $this->inventarioBL->obtenerArticulosPorCategoria($id);
+        $this->view('inventario/'.$categoria,['articulos'=>$articulos]);
     }
     
-    public function obtenerEquipoElectronico(){
-
-    }
-    public function obtenerCables(){
-
-    }
-    public function obtenerComunicaciones(){
-
-    }
-    public function obtenerGabinetes(){
-
-    }
-    public function obtenerTarjetas(){
-
-    }
-    public function obtenerOtros(){
-
-    }
     public function obtenerArticuloPorId(){
         $id = $_GET['id'];
         $categoria = $_GET['categoria'];
@@ -44,8 +26,13 @@ class InventarioControlador extends Controller{
 
 
     }
-    public function editarArticulo($categoria, $id){
-        
+    public function editarArticulo(){
+       $categoria = $_POST['categoria'];
+        $articuloActualizado = $_POST;
+        $this->inventarioBL->editarArticulo($articuloActualizado);
+
+        $this->redirect('/inventario/' . $categoria);
+
     }
     public function sacarArticulo($id){
 
@@ -53,9 +40,7 @@ class InventarioControlador extends Controller{
     public function pedirArticulo($id){
 
     }
-    public function agregarArticulo(){
-
-    }
+   
 
 
 }

@@ -17,7 +17,7 @@ class Controller {
     
     protected function redirect($url) {
         header("Location: $url");
-        exit;
+        exit();
     }
     
     protected function json($data, $statusCode = 200) {

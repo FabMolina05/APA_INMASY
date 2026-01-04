@@ -30,35 +30,27 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
-                'request' => '/inventario/comunicaciones',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/reles',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/electronico',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/gabinetes',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/tarjetas',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/otros',
-                'roles' => ['1']
-            ],
-            [
-                'request' => '/inventario/cables',
+                'request' => '/inventario/categoria',
                 'roles' => ['1']
             ],
             [
                 'request' => '/inventario/obtenerArticuloPorId',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/actualizar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/sacarArticulo',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/pedirArticulo',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/entrada/agregarArticulo',
                 'roles' => ['1']
             ],
             [

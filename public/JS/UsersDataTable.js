@@ -45,13 +45,3 @@ $(document).ready(function() {
     });
 });
 
-function editarUsuario(id) {
-    window.location.href = `/usuarios/editar/${id}`;
-}
-
-function eliminarUsuario(id) {
-    if (confirm('¿Estás seguro de eliminar este usuario?')) {
-        // Aquí tu lógica de eliminación
-        console.log('Eliminar usuario:', id);
-    }
-}

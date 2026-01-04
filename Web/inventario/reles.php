@@ -9,7 +9,7 @@
                         <p class="text-muted small mb-0">Gestiona Inventario</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregar'">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo'">
                             <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>
@@ -33,22 +33,22 @@
                         </thead>
                         <tbody>
                             <?php
-                            if ($reles != null && count($reles) > 0) {
-                                foreach ($reles as $rele) {
+                            if ($articulos != null && count($articulos) > 0) {
+                                foreach ($articulos as $articulo) {
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($rele['id_caja']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($rele['nombre']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($rele['marca']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($rele['modelo']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($rele['tipo']) . "</td>";
-                                    if ($rele['disponibilidad'] == 1) {
+                                    echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
+                                    if ($articulo['disponibilidad'] == 1) {
                                         echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                     } else {
                                         echo "<td><span class='badge bg-success'>Libre</span></td>";
                                     };
                                     
                                     if ($_SESSION['usuario_INMASY']['rol'] == 1) {
-                                        if ($rele['activo'] == 0) {
+                                        if ($articulo['activo'] == 0) {
                                             echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
                                         } else {
                                             echo "<td><span class='badge bg-success'>Activo</span></td>";
@@ -57,11 +57,11 @@
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>
                                                 
-                                                <button type='button' data-id=" . htmlspecialchars($rele['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 

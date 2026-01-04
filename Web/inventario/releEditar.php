@@ -27,6 +27,14 @@
                         <input type="text" class="form-control" id="Serial" name="serial" required>
                     </div>
                     <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select class="form-select" id="Estado" name="estado" required>
+                            <option value="NUEVO">NUEVO</option>
+                            <option value="USADO">USADO</option>
+                            <option value="REPARADO">REPARADO</option>
+                            <option value="ROTO">ROTO</option>
+                        </select>
+                    <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
                         <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" required>
                     </div>
@@ -40,7 +48,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" id="Tipo" name="tipo" required>
+                        <input type="text" class="form-control" id="tipo" name="tipo" required>
                     </div>
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>
@@ -63,6 +71,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
+                    <input type="hidden" id="Categoria" name="categoria" value="reles">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

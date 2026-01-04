@@ -36,13 +36,13 @@
                 echo ' <span>Inventario</span>';
                 echo ' </a>';
                 echo ' <ul class="dropdown-menu">';
-                echo ' <li><a class="nav-link" href="/inventario/cables">Cables</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/comunicaciones">Comunicaciones</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/gabinetes">Gabinetes</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/electronico">Equipo Electronico</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/reles">Reles</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/tarjetas">Tarjetas</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/otros">Otros</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=cables&id=4">Cables</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=comunicaciones&id=5">Comunicaciones</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=gabinetes&id=6">Gabinetes</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=equipo_electronico&id=1">Equipo Electronico</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reles&id=2">Reles</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=tarjetas&id=3">Tarjetas</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
                 echo ' </li>';
             }

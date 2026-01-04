@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/public/CSS/datatable.css">
     <link rel="stylesheet" href="/public/CSS/sidebar.css">
     <link rel="stylesheet" href="/public/CSS/users.css">
+    <link rel="stylesheet" href="/public/CSS/entradas.css">
    
 </head>
 <body>
