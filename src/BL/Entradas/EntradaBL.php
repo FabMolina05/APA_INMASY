@@ -17,10 +17,10 @@ class EntradaBL implements IEntradaBL
         $this->entradaDA = new EntradaDA($conn);
     }
 
-    public function agregarArticulo($articulo, $adquisicion, $categoria)
+    public function agregarArticulo($articulo, $adquisicion, $categoria ,$tipo)
     {
         try {
-            $resultado = $this->entradaDA->agregarArticulo($articulo, $adquisicion, $categoria);
+            $resultado = $this->entradaDA->agregarArticulo($articulo, $adquisicion, $categoria, $tipo);
 
             return $resultado;
 

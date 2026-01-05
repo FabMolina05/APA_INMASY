@@ -95,7 +95,7 @@
                             <option value="ROTO">ROTO</option>
                         </select>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="cantidad" name="cantidad" required>
@@ -121,6 +121,16 @@
 
                     </div>
 
+                    <h3 class="mb-3 mt-4">Almacenamiento</h3>
+                    <div class="mb-3">
+                        <label for="almacenamiento" class="form-label">Almacenamiento</label>
+                        <select class="form-select" id="almacenamiento" name="almacenamiento" required>
+                            <option value="inventario">Inventario</option>
+                            <option value="bodega">Bodega</option>
+                        </select>
+                    </div>
+                    <div class="num_catalogo">
+                    </div>
                     <button type="submit" class="btn btn-primary mb-3 mt-3">Agregar Artículo</button>
                 </form>
             </div>

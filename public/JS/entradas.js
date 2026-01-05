@@ -68,3 +68,17 @@ $('#persona_compra').on('change', function () {
         otro.innerHTML = '';
     }
 });
+
+$('#almacenamiento').on('change', function () {
+    const seleccion = $(this).val();
+    const numCatalogoDiv = document.querySelector('.num_catalogo');
+    if (seleccion === 'bodega') {
+        numCatalogoDiv.innerHTML = `
+         <label for="num_catalogo" class="form-label">Número de Catálogo</label>
+                        <input type="text" class="form-control" id="num_catalogo" name="num_catalogo" required>
+        `;
+    } else {
+        numCatalogoDiv.innerHTML = '';
+    }
+});
+    

@@ -19,17 +19,16 @@ class EntradaControlador extends Controller{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $categoria = $_POST['categoria'];
             $adquisicion = [
-                'fecha_compra' => $_POST['fecha_compra'],
+                'fecha_adquisicion' => $_POST['fecha_adquisicion'],
                 'persona_compra' => $_POST['persona_compra'],
                 'proveedor' => $_POST['proveedor'],
-                'numero_factura' => $_POST['numero_factura'],
+                'numero_factura' => $_POST['factura'],
                 'numero_fondo' => $_POST['numero_fondo'],
                 'tipo_pago' => $_POST['tipo_pago'],
                 'garantia' => $_POST['garantia'],
             ];
             $articuloNuevo = [
                 'nombre' => $_POST['nombre'],
-                'descripcion' => $_POST['descripcion'],
                 'marca' => $_POST['marca'],
                 'modelo' => $_POST['modelo'],
                 'serial' => $_POST['serial'],
@@ -55,10 +54,20 @@ class EntradaControlador extends Controller{
                 $articuloNuevo['atributos'] = json_encode(['descripcion1' => $_POST['descripcion1'], 'descripcion2' => $_POST['descripcion2']]);
             };
 
+            $almacenamiento = ['tipo' => $_POST['almacenamiento']];
+           
+            if($_POST['almacenamiento'] == 'bodega'){
+                $almacenamiento['num_catalogo'] = $_POST['num_catalogo'];
+            }
 
-            $this->entradaBL->agregarArticulo($articuloNuevo,$adquisicion,$categoria);
+            $resultado = $this->entradaBL->agregarArticulo($articuloNuevo,$adquisicion,$categoria,$almacenamiento);
 
-            $this->redirect('/inventario/' . $categoria);
+            if (isset($resultado['error'])) {
+                $this->view('/Vistas/error501', ['mensaje' => $resultado['error']]);
+                return;
+            }
+
+            $this->redirect('/inventario/categoria?categoria=reles&id=2' );
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
