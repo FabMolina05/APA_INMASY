@@ -27,13 +27,12 @@ class InventarioControlador extends Controller{
 
     }
     public function editarArticulo(){
-       $categoria = $_POST['categoria'];
+        $categoria = $_POST['categoria'];
         $articuloActualizado = $_POST;
-        $this->inventarioBL->editarArticulo($articuloActualizado);
-
-        $this->redirect('/inventario/' . $categoria);
-
+        $resultado = $this->inventarioBL->editarArticulo($articuloActualizado);
+        $this->redirect('/inventario/categoria?categoria=' . $categoria. '&id=' . $resultado['categoria']);
     }
+
     public function sacarArticulo($id){
 
     }

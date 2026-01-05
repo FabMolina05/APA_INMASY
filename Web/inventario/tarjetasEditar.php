@@ -48,10 +48,6 @@
                         <input type="text" class="form-control" id="Direccion" name="direccion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>
                         <input type="text" class="form-control" id="Tecnico" name="tecnico" required disabled>
                     </div>
@@ -72,7 +68,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="reles">
+                    <input type="hidden" id="Categoria" name="categoria" value="tarjetas">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

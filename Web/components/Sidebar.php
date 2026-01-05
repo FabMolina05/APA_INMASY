@@ -39,7 +39,7 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=cables&id=4">Cables</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=comunicaciones&id=5">Comunicaciones</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=gabinetes&id=6">Gabinetes</a></li>';
-                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=equipo_electronico&id=1">Equipo Electronico</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=electronica&id=1">Equipo Electronico</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reles&id=2">Reles</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=tarjetas&id=3">Tarjetas</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';

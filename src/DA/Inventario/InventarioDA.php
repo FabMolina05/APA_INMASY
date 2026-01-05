@@ -56,17 +56,20 @@ class InventarioDA implements IInventarioDA
     public function editarArticulo($articulo)
     {
         sqlsrv_begin_transaction($this->conexion);
-        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? WHERE ID_Articulo = ?";
+        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? WHERE ID_Articulo = ?;
+        SELECT id_categoria FROM dbo.INMASY_Articulos WHERE ID_Articulo = ?;";
         $params = [
             $articulo['nombre'],
             $articulo['marca'],
             $articulo['modelo'],
             $articulo['serial'],
+            $articulo['estado'],
             $articulo['costo_unitario'],
             $articulo['cantidad'],
             $articulo['direccion'],
             $articulo['activo'],
-            $articulo['ID_Articulo']
+            $articulo['ID_Articulo'],
+            $articulo['ID_Articulo'],
         ];
         $stmt = sqlsrv_prepare($this->conexion, $queryArticulo, $params);
         if (!sqlsrv_execute($stmt)) {
@@ -74,29 +77,29 @@ class InventarioDA implements IInventarioDA
             sqlsrv_rollback($this->conexion);
             return ['error' => $errors[0]['message']];
         }
+        sqlsrv_next_result($stmt);
+        $id = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['id_categoria'];
+        sqlsrv_free_stmt($stmt);
 
-        switch ($articulo['categoria']) {
-            case "reles":
-                $queryCategoria = "UPDATE dbo.INMASY_Articulos SET atributos_especificos = ? WHERE ID_Articulo = ?";
-                $atributos = json_encode(['tipo' => $articulo['tipo']]);
-                $paramsCategoria = [
-                    $atributos,
-                    $articulo['ID_Articulo']
-                ];
-                $stmtCategoria = sqlsrv_prepare($this->conexion, $queryCategoria, $paramsCategoria);
-                if (!sqlsrv_execute($stmtCategoria)) {
-                    $errors = sqlsrv_errors();
-                    sqlsrv_rollback($this->conexion);
-                    return ['error' => $errors[0]['message']];
-                }
-                break;
-
-            default:
-                sqlsrv_rollback($this->conexion);
-                return ['error' => 'Categoría no válida: ' . $articulo['categoria']];
-        }
+        
+        $queryCategoria = "UPDATE dbo.INMASY_Articulos SET atributos_especificos = ? WHERE ID_Articulo = ?";
+        $atributos = json_encode(['tipo' => $articulo['tipo']]);
+        $paramsCategoria = [
+            $atributos,
+            $articulo['ID_Articulo']
+        ];
+        $stmtCategoria = sqlsrv_prepare($this->conexion, $queryCategoria, $paramsCategoria);
+        if (!sqlsrv_execute($stmtCategoria)) {
+               $errors = sqlsrv_errors();
+               sqlsrv_rollback($this->conexion);
+            return ['error' => $errors[0]['message']];
+            }
+                
+        sqlsrv_free_stmt($stmtCategoria);
+            
+        
         sqlsrv_commit($this->conexion);
-        return ['success' => true];
+        return ['success' => true,'categoria'=>$id];
     }
     public function sacarArticulo($id) {}
     public function pedirArticulo($id) {}

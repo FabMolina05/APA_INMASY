@@ -6,7 +6,7 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <h2 class="mb-0">Inventario</h2>
-                        <p class="text-muted small mb-0">Gestiona Reles</p>
+                        <p class="text-muted small mb-0">Gestiona Equipos Electrónicos</p>
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo'">
@@ -57,11 +57,11 @@
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='electronica' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>
                                                 
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='electronica' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 

@@ -72,7 +72,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="reles">
+                    <input type="hidden" id="Categoria" name="categoria" value="electronica">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
