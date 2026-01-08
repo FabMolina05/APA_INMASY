@@ -5,7 +5,7 @@
 
     <nav class="sidebar-nav">
         <ul class="nav flex-column">
-<?php
+            <?php
             $usuario = $_SESSION['usuario_INMASY'];
 
             // Dashboard     
@@ -42,6 +42,7 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=electronica&id=1">Equipo Electronico</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reles&id=2">Reles</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=tarjetas&id=3">Tarjetas</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=baterias&id=8">Baterías</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
                 echo ' </li>';
@@ -50,7 +51,7 @@
             // Entradas
             if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#entradas" class="nav-link">';
+                echo ' <a href="/entrada/index" class="nav-link">';
                 echo ' <i class="fas fa-arrow-circle-down"></i>';
                 echo ' <span>Entradas</span>';
                 echo ' </a>';
@@ -99,7 +100,7 @@
             echo '                <p class="user-name">' . htmlspecialchars($usuario['nombre_completo']) . '</p>';
             echo '                <p class="user-role">' . htmlspecialchars($usuario['rol_nombre']) . '</p>';
             echo '            </div>';
-?>
+            ?>
 </div>
 </div>
 </div>

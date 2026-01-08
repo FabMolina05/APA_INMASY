@@ -30,6 +30,9 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                     if (key === "atributos" && response[key] !== null) {
                         const atributos = JSON.parse(response[key]);
                         Object.keys(atributos).forEach(attrKey => {
+                            if(atributos[attrKey] === null || atributos[attrKey] === '') {
+                                atributos[attrKey] = 'N/A';
+                            }
                             html += '<p class="my-3 mx-3    "><strong>' + attrKey + '</strong> :' + atributos[attrKey] + '</p>';
                         });
                         return;

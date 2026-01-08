@@ -25,7 +25,7 @@ function mostrarCategoria() {
         contenidoCategoria.innerHTML = `
         <div class="mb-3">
                 <label for="peso" class="form-label">Peso (kg)</label>
-                <input type="number" step="0.01" class="form-control" id="peso" name="peso" required>
+                <input type="number" step="0.01" class="form-control" id="peso" name="peso">
             </div>
         
         `;    
@@ -48,13 +48,25 @@ function mostrarCategoria() {
         </div>
 
         `;
+    }else if (categoria === "8") {
+        contenidoCategoria.innerHTML = `
+        <div class="mb-3">
+                <label for="corriente" class="form-label">Corriente (A)</label>
+                <input type="number" step="0.01" class="form-control" id="corriente" name="corriente" required>
+        </div>
+        <div class="mb-3">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" id="numero" name="numero" required>
+        </div>
+         `;
+        
     }
-
-    
     else {
         contenidoCategoria.innerHTML = "";
     }
 }
+
+window.addEventListener('DOMContentLoaded', mostrarCategoria);
 
 $('#persona_compra').on('change', function () {
     const seleccion = $(this).val();
@@ -68,6 +80,8 @@ $('#persona_compra').on('change', function () {
         otro.innerHTML = '';
     }
 });
+
+
 
 $('#almacenamiento').on('change', function () {
     const seleccion = $(this).val();

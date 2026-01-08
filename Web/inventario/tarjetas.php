@@ -9,7 +9,7 @@
                         <p class="text-muted small mb-0">Gestiona Tarjetas Electrónicas</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo'">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=3'">
                             <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>
@@ -78,6 +78,6 @@
     </div>
 
     <?php include_once './Web/inventario/info.php' ?>
-    <?php include_once './Web/inventario/releEditar.php' ?>
+    <?php include_once './Web/inventario/tarjetasEditar.php' ?>
 
 </div>

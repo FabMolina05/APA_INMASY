@@ -9,7 +9,7 @@
                         <p class="text-muted small mb-0">Gestiona Reles</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo'">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=2'">
                             <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>

@@ -21,7 +21,7 @@ $('#modalEditarArticulo').on('show.bs.modal', function (event) {
             keys.forEach(key => {
 
                 
-                if (key === 'atributos') {
+                if (key === 'atributos' && response[key] !== null) {
                     const atributos = JSON.parse(response[key]);
                     Object.keys(atributos).forEach(attrKey => {
                         const attrElement = $('#modalEditarArticulo').find(`#${attrKey}`);

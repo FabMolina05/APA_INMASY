@@ -18,6 +18,7 @@ class EntradaControlador extends Controller{
     public function agregarArticulo(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $categoria = $_POST['categoria'];
+            
             $adquisicion = [
                 'fecha_adquisicion' => $_POST['fecha_adquisicion'],
                 'persona_compra' => $_POST['persona_compra'],
@@ -27,6 +28,11 @@ class EntradaControlador extends Controller{
                 'tipo_pago' => $_POST['tipo_pago'],
                 'garantia' => $_POST['garantia'],
             ];
+
+            if($_POST['persona_compra'] == "otros"){
+                $adquisicion['persona_compra'] = $_POST['otra_persona'];
+            };
+
             $articuloNuevo = [
                 'nombre' => $_POST['nombre'],
                 'marca' => $_POST['marca'],
@@ -53,7 +59,10 @@ class EntradaControlador extends Controller{
             if(isset($_POST['descripcion1'])){
                 $articuloNuevo['atributos'] = json_encode(['descripcion1' => $_POST['descripcion1'], 'descripcion2' => $_POST['descripcion2']]);
             };
-
+            if(isset($_POST['corriente'])){
+                $articuloNuevo['atributos'] = json_encode(['corriente' => $_POST['corriente'], 'numero' => $_POST['numero']]);
+            };
+          
             $almacenamiento = ['tipo' => $_POST['almacenamiento']];
            
             if($_POST['almacenamiento'] == 'bodega'){
@@ -71,10 +80,11 @@ class EntradaControlador extends Controller{
         }
 
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
+            $categoria = $_GET['categoria'] ?? null;
             $usuarios = $this->usuarioBL->obtenerUsuariosPADDE();
             $categorias = $this->entradaBL->obtenerCategorias();
             $proveedores = $this->entradaBL->obtenerProveedores();
-            $this->view('entrada/agregar',['categorias'=>$categorias,'proveedores'=>$proveedores,'usuarios'=>$usuarios]);
+            $this->view('entrada/agregar',['categorias'=>$categorias,'proveedores'=>$proveedores,'usuarios'=>$usuarios,'categoriaSeleccionada'=>$categoria]);
             
         }
     }
@@ -84,6 +94,7 @@ class EntradaControlador extends Controller{
     }
 
     public function obtenerEntradas(){
-        
+        $entradas = $this->entradaBL->obtenerEntradas();
+        $this->view('entrada/index',['entradas'=>$entradas]);
     }
 }

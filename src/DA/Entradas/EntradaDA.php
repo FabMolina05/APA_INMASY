@@ -129,7 +129,47 @@ class EntradaDA implements IEntradaDA
 
     public function obtenerEntradas()
     {
-        // Implementación para obtener entradas
+        $query = "SELECT 
+                        e.ID_Entrante as id,
+                        p.ID_Proveedor as id_proveedor,
+                        ar.ID_Articulo AS id_articulo,
+                        a.ID_Adquisicion as id_adquisicion,
+                        a.numero_factura AS factura,
+                        a.persona_compra AS encargado,
+                        p.nombre AS proveedor,
+                        e.fecha_entrada AS fecha,
+                        IIF(e.id_inventario IS NULL,'Bodega','Inventario') as almacenamiento,
+                        ar.nombre as nombre_articulo
+                    FROM dbo.INMASY_EntranteArticulo e
+                    LEFT JOIN dbo.INMASY_Adquisicion a ON e.id_adquisicion = a.ID_Adquisicion
+                    LEFT JOIN dbo.INMASY_Proveedores p ON a.id_proveedor = p.ID_Proveedor
+                    LEFT JOIN dbo.INMASY_Articulos ar ON ar.ID_Articulo = (
+                        CASE 
+                            WHEN e.id_inventario IS NULL THEN (
+                                SELECT id_articulo 
+                                FROM dbo.INMASY_BodegaID 
+                                WHERE ID_Bodega = e.id_bodega
+                            )
+                            ELSE (
+                                SELECT id_articulo
+                                FROM dbo.INMASY_Inventario
+                                WHERE ID_Inventario = e.id_inventario
+                            )
+                        END
+                    )
+                    ORDER BY fecha DESC";
+        $stmt = sqlsrv_prepare($this->conexion, $query);
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+        $entradas = [];
+
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $entradas[] = $row;
+        }
+
+        return $entradas;
     }
     public function obtenerCategorias()
     {

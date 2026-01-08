@@ -74,6 +74,9 @@ switch ($request) {
     case '/entrada/agregarArticulo':
         $entradaController->agregarArticulo();
         break;
+    case '/entrada/index':
+        $entradaController->obtenerEntradas();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;

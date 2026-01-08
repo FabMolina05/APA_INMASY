@@ -45,3 +45,26 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('#entrantesTable').DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Buscar entrante...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ articulos",
+            infoEmpty: "Mostrando 0 a 0 de 0 usuarios",
+            infoFiltered: "(filtrado de _MAX_ entrantes totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
+        },
+        pageLength: 10,
+        order: [[2, 'desc']],
+        searching: true,
+        responsive: true
+    });
+});

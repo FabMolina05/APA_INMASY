@@ -49,7 +49,7 @@
                     <div class="mb-3">
                         <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>
                         <select class="form-select" id="persona_compra" name="persona_compra" required>
-                            <option selected>Seleccione una persona</option>
+                            <option disabled selected hidden>Seleccione una persona</option>
                             <option value="otros">Otros</option>
                             <?php
                             foreach ($usuarios as $usuario) {
@@ -109,10 +109,16 @@
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
                         <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()">
+                            <?php if($categoriaSeleccionada !== null): ?>
+                            <option >Seleccione una categoria</option>
+                            <?php else: ?>
                             <option selected>Seleccione una categoria</option>
                             <?php
+                            endif;
+
                             foreach ($categorias as $categoria) {
-                                echo "<option value='" . htmlspecialchars($categoria['id']) . "'>" . htmlspecialchars($categoria['nombre']) . "</option>";
+                                $selected = ($categoriaSeleccionada == $categoria['id']) ? "selected" : "";
+                                echo "<option value='" . htmlspecialchars($categoria['id']) . "' $selected>" . htmlspecialchars($categoria['nombre']) . "</option>";
                             }
                             ?>
                         </select>

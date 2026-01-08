@@ -6,10 +6,10 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <h2 class="mb-0">Inventario</h2>
-                        <p class="text-muted small mb-0">Gestiona Equipos Electrónicos</p>
+                        <p class="text-muted small mb-0">Gestiona Otros Articulos</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=1'">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=7'">
                             <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>
@@ -25,7 +25,7 @@
                                 <th>Nombre</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
-                                <th>Tipo</th>
+                                <th>Descripción</th>
                                 <th>Disponible</th>
                                 <th>activo</th>
                                 <th class="text-center">Acciones</th>
@@ -40,7 +40,7 @@
                                     echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                     echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
                                     echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($articulo['descripcion1']) . "</td>";
                                     if ($articulo['disponibilidad'] == 1) {
                                         echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                     } else {
@@ -57,11 +57,11 @@
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='electronica' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='otros' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>
                                                 
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='electronica' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='otros' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
@@ -80,6 +80,6 @@
     </div>
 
     <?php include_once './Web/inventario/info.php' ?>
-    <?php include_once './Web/inventario/electronicaEditar.php' ?>
+    <?php include_once './Web/inventario/otrosEditar.php' ?>
 
 </div>
