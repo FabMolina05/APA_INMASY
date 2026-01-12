@@ -181,6 +181,16 @@
     
 }
 
+.form-control{
+    width: 50% !important;
+}
+
+.form-select{
+    width: 50% !important;
+}
+
+
+
 
 
  @media (max-width: 768px) {

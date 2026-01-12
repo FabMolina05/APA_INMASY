@@ -33,16 +33,6 @@ class UsuarioBL implements IUsuarioBL
         }
     }
 
-    public function obtenerUsuarioPorId($user)
-    {
-        try {
-            $user = $this->usuarioDA->obtenerUsuarioPorId($user);
-            return $user;
-        } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
-
     public function agregarUsuario($user)
     {
         try {

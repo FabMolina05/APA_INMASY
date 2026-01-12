@@ -1,11 +1,12 @@
-
-
+.date{
+    width: 25% !important;
+}
 /* Tabla mejorada */
-#usuariosTable {
+#entrantesTable {
     margin-bottom: 0;
 }
 
-#usuariosTable thead th {
+#entrantesTable thead th {
     font-weight: 600;
     font-size: 13px;
     text-transform: uppercase;
@@ -15,16 +16,16 @@
     padding: 12px;
 }
 
-#usuariosTable tbody tr {
+#entrantesTable tbody tr {
     transition: all 0.2s ease;
 }
 
-#usuariosTable tbody tr:hover {
+#entrantesTable tbody tr:hover {
     background-color: #f8f9fa;
     transform: scale(1.01);
 }
 
-#usuariosTable tbody td {
+#entrantesTable tbody td {
     padding: 12px;
     vertical-align: middle;
 }

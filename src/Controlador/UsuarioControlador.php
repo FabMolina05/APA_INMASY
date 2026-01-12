@@ -15,11 +15,6 @@ class UsuarioControlador extends Controller {
         $this->view('usuarios/index', ['usuarios' => $usuarios,'roles' => $roles]);
     }
 
-    public function verUsuario($id) {
-        $usuario = $this->usuarioBL->obtenerUsuarioPorId($id);
-        $this->view('usuarios/ver', ['usuario' => $usuario]);
-    }
-
     public function agregarUsuario() {
         $usuarios = $this->usuarioBL->obtenerUsuariosPADDE();
         $roles = $this->usuarioBL->obtenerRoles();
@@ -66,8 +61,7 @@ class UsuarioControlador extends Controller {
             if (isset($resultado['error'])) {
                 $this->json($resultado,500);
             } else {
-                header('Location: /usuarios/index');
-                exit();
+                $this->redirect('/usuarios/index');
             }
         }
     }

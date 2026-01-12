@@ -30,7 +30,31 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
-                'request' => '/inventario/comunicaciones',
+                'request' => '/inventario/categoria',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/obtenerArticuloPorId',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/actualizar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/sacarArticulo',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/inventario/pedirArticulo',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/entrada/agregarArticulo',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/entrada/index',
                 'roles' => ['1']
             ],
             [
