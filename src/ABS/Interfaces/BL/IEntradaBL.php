@@ -9,4 +9,5 @@ interface IEntradaBL
     public function obtenerEntradas();
     public function obtenerCategorias();
     public function obtenerProveedores();
+    public function obtenerEntradaPorId();
 }

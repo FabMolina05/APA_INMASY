@@ -35,10 +35,10 @@
                             if ($entradas != null && count($entradas) > 0) {
                                 foreach ($entradas as $entrada) {
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($entrada['factura']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($entrada['proveedor']) . "</td>";
+                                    echo "<td>" . (isset($entrada['factura'])?htmlspecialchars($entrada['factura']):"N/A") . "</td>";
+                                    echo "<td>" . (isset($entrada['proveedor'])?htmlspecialchars($entrada['proveedor']):"N/A") . "</td>";
                                     echo "<td>" . date_format($entrada['fecha'], "d/m/Y") . "</td>";
-                                    echo "<td>" . htmlspecialchars($entrada['almacenamiento']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($entrada['almacenamiento']). "</td>";
                                     echo "<td>" . htmlspecialchars($entrada['encargado']) . "</td>";
                                     echo "<td>" . htmlspecialchars($entrada['nombre_articulo']) . "</td>";
                                     echo "<td class='text-center'>

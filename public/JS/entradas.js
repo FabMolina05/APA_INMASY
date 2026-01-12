@@ -28,15 +28,15 @@ function mostrarCategoria() {
                 <input type="number" step="0.01" class="form-control" id="peso" name="peso">
             </div>
         
-        `;    
-    }else if (categoria === "5") {
+        `;
+    } else if (categoria === "5") {
         contenidoCategoria.innerHTML = `
         <div class="mb-3">
                 <label for="puertos" class="form-label">Puertos</label>
                 <input type="number" step="1" min="1" class="form-control" id="puertos" name="puertos" required>
             </div>
         `;
-    }else if (categoria === "7") {
+    } else if (categoria === "7") {
         contenidoCategoria.innerHTML = `
         <div class="mb-3">
                 <label for="descripcion1" class="form-label">Descripción Adicional</label>
@@ -48,7 +48,7 @@ function mostrarCategoria() {
         </div>
 
         `;
-    }else if (categoria === "8") {
+    } else if (categoria === "8") {
         contenidoCategoria.innerHTML = `
         <div class="mb-3">
                 <label for="corriente" class="form-label">Corriente (A)</label>
@@ -59,7 +59,7 @@ function mostrarCategoria() {
                 <input type="text" class="form-control" id="numero" name="numero" required>
         </div>
          `;
-        
+
     }
     else {
         contenidoCategoria.innerHTML = "";
@@ -74,7 +74,7 @@ $('#persona_compra').on('change', function () {
     if (seleccion === 'otros') {
         otro.innerHTML = `
          <label for="otra_persona" class="form-label">Especifique otra persona</label>
-                        <input type="text" class="form-control" id="otra_persona" name="otra_persona" required>
+                        <input type="text" class="form-control" id="otra_persona" name="otra_persona" >
         `;
     } else {
         otro.innerHTML = '';
@@ -95,4 +95,42 @@ $('#almacenamiento').on('change', function () {
         numCatalogoDiv.innerHTML = '';
     }
 });
+
+$('#btnAdquisicion').on('click', function () {
+
+    var btn = $(this);
+    var expanded = btn.attr('aria-expanded')
+    var agregado = $('#adquisicionAgregada')
     
+    if (expanded == "true") {
+        btn.html('<i class="fa-solid fa-minus"></i> Quitar Adquisición')
+        btn.removeClass("btn-success");
+        btn.addClass('btn-danger');
+        agregado.val("true")
+        
+
+        
+
+    } else {
+        btn.html('<i class="fa-solid fa-plus"></i> Agregar Adquisición')
+        btn.removeClass('btn-danger');
+        btn.addClass('btn-success');
+        agregado.val("false")
+        $('#adquisicionCollapse').on('hidden.bs.collapse', function () {
+
+            // Resetear inputs, selects y textareas
+            $(this).find('input, select, textarea').val('');
+
+            // Resetear selects con opción disabled/hidden
+            $(this).find('select').prop('selectedIndex', 0);
+
+            // Si hay checkboxes o radios (por si acaso)
+            $(this).find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
+
+            // Limpiar contenido dinámico
+            $(this).find('.otra_persona').empty();
+
+        });
+    }
+});
+
