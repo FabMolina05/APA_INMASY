@@ -9,5 +9,5 @@ interface IEntradaDA
     public function obtenerEntradas();
     public function obtenerCategorias();
     public function obtenerProveedores();
-    public function obtenerEntradaPorID();
+    public function obtenerEntradaPorID($id);
 }

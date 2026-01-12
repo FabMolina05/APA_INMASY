@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once __DIR__ . '/src/DA/DBContext.php';
 
 require_once __DIR__ . '/src/Controlador/IndexControlador.php';
@@ -56,9 +56,9 @@ switch ($request) {
         $usuarioController->actualizarUsuario();
         break;
     case '/inventario/categoria':
-        $inventarioController->obtenerArticulosPorCategoria($_GET['id'],$_GET['categoria']);
+        $inventarioController->obtenerArticulosPorCategoria($_GET['id'], $_GET['categoria']);
         break;
-    
+
     case '/inventario/obtenerArticuloPorId':
         $inventarioController->obtenerArticuloPorId();
         break;
@@ -77,6 +77,9 @@ switch ($request) {
     case '/entrada/index':
         $entradaController->obtenerEntradas();
         break;
+    case '/entrada/obtenerEntradaPorId':
+        $entradaController->obtenerEntradaPorId();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;
@@ -89,6 +92,6 @@ switch ($request) {
         break;
 };
 
-include __DIR__ . '/Web/components/Footer.php'; 
+include __DIR__ . '/Web/components/Footer.php';
 
 ?>

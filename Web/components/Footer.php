@@ -6,5 +6,7 @@
 <script src="/public/JS/UsersDataTable.js"></script>
 <script src="/public/JS/modales.js"></script>
 <script src="/public/JS/infoArticulos.js"></script>
+<script src="/public/JS/infoEntradas.js"></script>
+
 <script src="/public/JS/entradas.js"></script>
 </html>

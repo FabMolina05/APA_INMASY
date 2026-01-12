@@ -20,26 +20,26 @@ class EntradaDA implements IEntradaDA
         sqlsrv_begin_transaction($this->conexion);
         try {
 
-                $queryAdquisicion = "INSERT INTO dbo.INMASY_Adquisicion (fecha_entrega, persona_compra, id_proveedor, numero_factura, numero_fondo, tipo_pago, garantia) 
+            $queryAdquisicion = "INSERT INTO dbo.INMASY_Adquisicion (fecha_entrega, persona_compra, id_proveedor, numero_factura, numero_fondo, tipo_pago, garantia) 
                                  VALUES (?, ?, ?, ?, ?, ?, ?);
                                  SELECT SCOPE_IDENTITY() AS id;";
-                $paramsAdquisicion = [
-                    $adquisicion['fecha_adquisicion'] ?? null,
-                    $adquisicion['persona_compra'],
-                    $adquisicion['proveedor'] ?? null,
-                    $adquisicion['numero_factura'] ?? null,
-                    $adquisicion['numero_fondo'] ?? null,
-                    $adquisicion['tipo_pago'] ?? null,
-                    $adquisicion['garantia'] ?? null
-                ];
-                $stmtAdquisicion = sqlsrv_query($this->conexion, $queryAdquisicion, $paramsAdquisicion);
-                if ($stmtAdquisicion === false) {
-                    throw new \Exception("Error al insertar la adquisición: " . sqlsrv_errors()[0]['message']);
-                }
+            $paramsAdquisicion = [
+                $adquisicion['fecha_adquisicion'] ?? null,
+                $adquisicion['persona_compra'],
+                $adquisicion['proveedor'] ?? null,
+                $adquisicion['numero_factura'] ?? null,
+                $adquisicion['numero_fondo'] ?? null,
+                $adquisicion['tipo_pago'] ?? null,
+                $adquisicion['garantia'] ?? null
+            ];
+            $stmtAdquisicion = sqlsrv_query($this->conexion, $queryAdquisicion, $paramsAdquisicion);
+            if ($stmtAdquisicion === false) {
+                throw new \Exception("Error al insertar la adquisición: " . sqlsrv_errors()[0]['message']);
+            }
 
-                
+
             $idAdquisicion = $this->obtenerSiguienteId($stmtAdquisicion);
-            
+
             $queryArticulo = "INSERT INTO dbo.INMASY_Articulos (nombre, marca, modelo, serial, costo_unitario, estado, direccion, cantidad, activo, disponibilidad, id_caja, atributos_especificos, id_categoria) 
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                               SELECT SCOPE_IDENTITY() AS id;";
@@ -205,9 +205,21 @@ class EntradaDA implements IEntradaDA
         return $proveedores;
     }
 
-    public function obtenerEntradaPorID()
+    public function obtenerEntradaPorID($id)
     {
-        throw new \Exception('Not implemented');
+        $query = "{CALL dbo.INMASY_obtenerEntrantePorId(?)}";
+        $param = array($id);
+        $stmt = sqlsrv_prepare($this->conexion, $query, $param);
+
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+
+        $entrante = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+
+        return $entrante;
+
     }
 
     private function obtenerSiguienteId($stmt)

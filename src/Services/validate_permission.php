@@ -57,6 +57,10 @@ class ValidatePermissions
                 'request' => '/entrada/index',
                 'roles' => ['1']
             ],
+             [
+                'request' => '/entrada/obtenerEntradaPorId',
+                'roles' => ['1']
+            ],
             [
                 'request' => '/error404',
                 'roles' => ['1','2','3']

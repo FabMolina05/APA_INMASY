@@ -98,6 +98,12 @@ class EntradaControlador extends Controller
 
     public function editarEntrada() {}
 
+    public function obtenerEntradaPorId(){
+        $id = $_GET['id'];
+        $entrada = $this->entradaBL->obtenerEntradaPorId($id);
+        $this->json(['success' => true, 'data' => $entrada]);
+    }
+
     public function obtenerEntradas()
     {
         $entradas = $this->entradaBL->obtenerEntradas();

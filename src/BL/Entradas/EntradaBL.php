@@ -74,4 +74,16 @@ class EntradaBL implements IEntradaBL
             return ['error' => $e->getMessage()];
         }
     }
+
+    public function obtenerEntradaPorId($id){
+        try {
+            $entrada = $this->entradaDA->obtenerEntradaPorID($id);
+
+            return $entrada;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+
+    }
 }
