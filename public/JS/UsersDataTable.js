@@ -63,7 +63,7 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[2, 'desc']],
+        order: [[3, 'desc']],
         searching: true,
         responsive: true
     });

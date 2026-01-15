@@ -36,6 +36,11 @@ class EntradaControlador extends Controller
                 if ($_POST['persona_compra'] == "otros") {
                     $adquisicion['persona_compra'] = $_POST['otra_persona'];
                 };
+
+                if(isset($_POST['fecha_entrada'])){
+                    $adquisicion['fecha_entrada'] = $_POST['fecha_entrada'];
+                }
+
             }else{
                 $adquisicion = [
                     'persona_compra' => $_SESSION['usuario_INMASY']['nombre_completo'],
@@ -108,5 +113,10 @@ class EntradaControlador extends Controller
     {
         $entradas = $this->entradaBL->obtenerEntradas();
         $this->view('entrada/index', ['entradas' => $entradas]);
+    }
+
+    public function establecerFecha(){
+        $id = $_GET['id'];
+        $resultado = $this->entradaBL->establecerFecha($id);
     }
 }

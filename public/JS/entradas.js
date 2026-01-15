@@ -101,15 +101,20 @@ $('#btnAdquisicion').on('click', function () {
     var btn = $(this);
     var expanded = btn.attr('aria-expanded')
     var agregado = $('#adquisicionAgregada')
-    
+
     if (expanded == "true") {
         btn.html('<i class="fa-solid fa-minus"></i> Quitar Adquisición')
         btn.removeClass("btn-success");
         btn.addClass('btn-danger');
         agregado.val("true")
-        
 
-        
+        $('#adquisicionCollapse')
+            .find('input[type="text"],input[type="number"], select, textarea')
+            .prop('required', true)
+            
+
+
+
 
     } else {
         btn.html('<i class="fa-solid fa-plus"></i> Agregar Adquisición')
@@ -119,16 +124,16 @@ $('#btnAdquisicion').on('click', function () {
         $('#adquisicionCollapse').on('hidden.bs.collapse', function () {
 
             // Resetear inputs, selects y textareas
-            $(this).find('input, select, textarea').val('');
+            $(this).find('input, select, textarea').val('').prop('required', false);
 
             // Resetear selects con opción disabled/hidden
-            $(this).find('select').prop('selectedIndex', 0);
+            $(this).find('select').prop('selectedIndex', 0).prop('required', false);
 
             // Si hay checkboxes o radios (por si acaso)
-            $(this).find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
+            $(this).find('input[type="checkbox"], input[type="radio"]').prop('checked', false).prop('required', false);
 
             // Limpiar contenido dinámico
-            $(this).find('.otra_persona').empty();
+            $(this).find('.otra_persona').empty().prop('required', false);
 
         });
     }

@@ -80,12 +80,18 @@ class EntradaDA implements IEntradaDA
 
                 $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_bodega, id_adquisicion,fecha_entrada) VALUES (?, ?, ?)
                 ";
-
+                if (!isset($adquisicion['fecha_adquisicion'])) {
+                    $fecha_entrega = date('Y-m-d H:i:s');
+                } else if (isset($adquisicion['fecha_adquisicion']) && isset($adquisicion['fecha_entrada'])) {
+                    $fecha_entrega = $adquisicion['fecha_adquisicion'];
+                }else{
+                    $fecha_entrega = null;
+                }
                 $paramsEntrante = [
 
                     $idBodega,
                     $idAdquisicion,
-                    $adquisicion['fecha_adquisicion'] ?? date('Y-m-d H:i:s')
+                    $fecha_entrega
                 ];
                 $stmtEntrante = sqlsrv_query($this->conexion, $queryEntrante, $paramsEntrante);
                 if ($stmtEntrante === false) {
@@ -105,11 +111,18 @@ class EntradaDA implements IEntradaDA
                 }
                 $idInventario = $this->obtenerSiguienteId($stmtInventario);
                 $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_inventario, id_adquisicion,fecha_entrada) VALUES (?, ?, ?)";
+                 if (!isset($adquisicion['fecha_adquisicion'])) {
+                    $fecha_entrega = date('Y-m-d H:i:s');
+                } else if (isset($adquisicion['fecha_adquisicion']) && isset($adquisicion['fecha_entrada'])) {
+                    $fecha_entrega = $adquisicion['fecha_adquisicion'];
+                }else{
+                    $fecha_entrega = null;
+                }
                 $paramsEntrante = [
 
                     $idInventario,
                     $idAdquisicion,
-                    $adquisicion['fecha_adquisicion'] ?? date('Y-m-d H:i:s')
+                    $fecha_entrega
                 ];
                 $stmtEntrante = sqlsrv_query($this->conexion, $queryEntrante, $paramsEntrante);
                 if ($stmtEntrante === false) {
@@ -124,10 +137,7 @@ class EntradaDA implements IEntradaDA
         }
     }
 
-    public function editarEntrada($entrada)
-    {
-        // Implementación para editar una entrada
-    }
+    public function editarEntrada($entrada) {}
 
     public function obtenerEntradas()
     {
@@ -139,7 +149,8 @@ class EntradaDA implements IEntradaDA
                         a.numero_factura AS factura,
                         a.persona_compra AS encargado,
                         p.nombre AS proveedor,
-                        e.fecha_entrada AS fecha,
+                        e.fecha_entrada AS 'fecha_entrada',
+                        a.fecha_entrega AS 'fecha_entrega',
                         IIF(e.id_inventario IS NULL,'Bodega','Inventario') as almacenamiento,
                         ar.nombre as nombre_articulo
                     FROM dbo.INMASY_EntranteArticulo e
@@ -159,7 +170,7 @@ class EntradaDA implements IEntradaDA
                             )
                         END
                     )
-                    ORDER BY fecha DESC";
+                    ";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
@@ -216,10 +227,9 @@ class EntradaDA implements IEntradaDA
             return ['error' => $errors[0]['message']];
         }
 
-        $entrante = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+        $entrante = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
         return $entrante;
-
     }
 
     private function obtenerSiguienteId($stmt)
@@ -234,4 +244,24 @@ class EntradaDA implements IEntradaDA
 
         return (int)$row['id'];
     }
+
+    public function establecerFecha($id){
+        $query = 'UPDATE dbo.INMASY_EntranteArticulo SET fecha_entrante = ? WHERE ID_Entrante = ?';
+        $param = array(date('Y-m-d H:i:s'),$id);
+
+        sqlsrv_begin_transaction($this->conexion);
+
+        $stmt = sqlsrv_prepare($this->conexion, $query, $param);
+
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+            return ['error' => $errors[0]['message']];
+        }
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true];
+
+    }
+
 }

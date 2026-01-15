@@ -80,6 +80,9 @@ switch ($request) {
     case '/entrada/obtenerEntradaPorId':
         $entradaController->obtenerEntradaPorId();
         break;
+    case '/entrada/establecerFecha':
+        $entradaController->establecerFecha();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;

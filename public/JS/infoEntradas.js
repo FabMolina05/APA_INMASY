@@ -26,7 +26,7 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">Encargado:</span>
-                        <span class="fw-semibold">${data.encargado }</span>
+                        <span class="fw-semibold">${data.encargado}</span>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -149,3 +149,44 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
 
 
 });
+
+$('#modalFechaEntrada').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    $('#btnAgregar').val(id);
+
+
+})
+
+function agregarFecha() {
+    var id = $('#btnAgregar').val();
+
+    $.ajax({
+        type: "GET",
+        url: "/entrada/establecerFecha",
+        dataType: 'json',
+        data: { id: id },
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    title: 'Exito!!',
+                    icon: 'success',
+                    timer: 2000
+                })
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se pudo agregar la fecha',
+                    icon: 'error',
+                    timer: 2000
+                })
+            }
+        },
+        error: function (error) {
+            alert("Error: " + error.responseText);
+        }
+
+
+    });
+}

@@ -61,6 +61,10 @@ class ValidatePermissions
                 'request' => '/entrada/obtenerEntradaPorId',
                 'roles' => ['1']
             ],
+             [
+                'request' => '/entrada/establecerFecha',
+                'roles' => ['1']
+            ],
             [
                 'request' => '/error404',
                 'roles' => ['1','2','3']
