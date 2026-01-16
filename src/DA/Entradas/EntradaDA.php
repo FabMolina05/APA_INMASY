@@ -5,6 +5,9 @@ namespace DA\Entradas;
 require_once __DIR__ . '/../../ABS/Interfaces/DA/IEntradaDA.php';
 
 use ABS\Interfaces\DA\IEntradaDA;
+use DateTimeZone;
+use DateTime;
+use Exception;
 
 class EntradaDA implements IEntradaDA
 {
@@ -81,10 +84,12 @@ class EntradaDA implements IEntradaDA
                 $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_bodega, id_adquisicion,fecha_entrada) VALUES (?, ?, ?)
                 ";
                 if (!isset($adquisicion['fecha_adquisicion'])) {
-                    $fecha_entrega = date('Y-m-d H:i:s');
+                    $zona = new DateTimeZone('America/Costa_Rica');
+                    $fechaConZona = new DateTime('now', $zona);
+                    $fecha_entrega = $fechaConZona->format('Y-m-d H:i:s');
                 } else if (isset($adquisicion['fecha_adquisicion']) && isset($adquisicion['fecha_entrada'])) {
                     $fecha_entrega = $adquisicion['fecha_adquisicion'];
-                }else{
+                } else {
                     $fecha_entrega = null;
                 }
                 $paramsEntrante = [
@@ -111,11 +116,13 @@ class EntradaDA implements IEntradaDA
                 }
                 $idInventario = $this->obtenerSiguienteId($stmtInventario);
                 $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_inventario, id_adquisicion,fecha_entrada) VALUES (?, ?, ?)";
-                 if (!isset($adquisicion['fecha_adquisicion'])) {
-                    $fecha_entrega = date('Y-m-d H:i:s');
+                if (!isset($adquisicion['fecha_adquisicion'])) {
+                    $zona = new DateTimeZone('America/Costa_Rica');
+                    $fechaConZona = new DateTime('now', $zona);
+                    $fecha_entrega = $fechaConZona->format('Y-m-d H:i:s');
                 } else if (isset($adquisicion['fecha_adquisicion']) && isset($adquisicion['fecha_entrada'])) {
                     $fecha_entrega = $adquisicion['fecha_adquisicion'];
-                }else{
+                } else {
                     $fecha_entrega = null;
                 }
                 $paramsEntrante = [
@@ -137,7 +144,49 @@ class EntradaDA implements IEntradaDA
         }
     }
 
-    public function editarEntrada($entrada) {}
+    public function editarEntrada($entrada)
+    {
+        try {
+            sqlsrv_begin_transaction($this->conexion);
+
+            $query = "UPDATE a 
+                  SET a.tipo_pago = ?,
+                  a.numero_fondo = ?,
+                  a.numero_factura = ?,
+                  a.fecha_entrega = ?,
+                  a.persona_compra = ?,
+                  a.garantia = ?,
+                  a.id_proveedor = ?
+                  FROM dbo.INMASY_Adquisicion a  
+                  INNER JOIN dbo.INMASY_EntranteArticulo e ON e.id_adquisicion = a.ID_Adquisicion
+                  WHERE e.ID_Entrante = ?";
+            $params = [
+                $entrada['tipo_pago'],
+                $entrada['numero_fondo'],
+                $entrada['numero_factura'],
+                $entrada['fecha_adquisicion'],
+                $entrada['persona_compra'],
+                $entrada['garantia'],
+                $entrada['proveedor'],
+                $entrada['id_entrada']
+
+            ];
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt === false) {
+                sqlsrv_rollback($this->conexion);
+                throw new \Exception("Error al insertar el entrada en entrantes.");
+            }
+
+            sqlsrv_commit($this->conexion);
+
+            return ["success" => true];
+        } catch (\Exception $e) {
+            sqlsrv_rollback($this->conexion);
+            return ['error' => $e->getMessage()];
+        }
+    }
 
     public function obtenerEntradas()
     {
@@ -245,9 +294,12 @@ class EntradaDA implements IEntradaDA
         return (int)$row['id'];
     }
 
-    public function establecerFecha($id){
-        $query = 'UPDATE dbo.INMASY_EntranteArticulo SET fecha_entrante = ? WHERE ID_Entrante = ?';
-        $param = array(date('Y-m-d H:i:s'),$id);
+    public function establecerFecha($id)
+    {
+        $query = 'UPDATE dbo.INMASY_EntranteArticulo SET fecha_entrada = ? WHERE ID_Entrante = ?';
+        $zona = new DateTimeZone('America/Costa_Rica');
+        $fechaConZona = new DateTime('now', $zona);
+        $param = array($fechaConZona->format('Y-m-d H:i:s'), $id);
 
         sqlsrv_begin_transaction($this->conexion);
 
@@ -261,7 +313,5 @@ class EntradaDA implements IEntradaDA
         sqlsrv_commit($this->conexion);
 
         return ['success' => true];
-
     }
-
 }

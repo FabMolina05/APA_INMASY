@@ -168,18 +168,26 @@ function agregarFecha() {
         dataType: 'json',
         data: { id: id },
         success: function (response) {
+            console.log(response)
             if (response.success) {
                 Swal.fire({
                     title: 'Exito!!',
                     icon: 'success',
-                    timer: 2000
+                    timer: 4000,
+                    showConfirmButton: false,
+                }).then(()=>{
+                    location.reload();
                 })
             } else {
                 Swal.fire({
                     title: 'Error!',
                     text: 'No se pudo agregar la fecha',
                     icon: 'error',
-                    timer: 2000
+                    timer: 6000
+                }).then(()=>{
+                    
+                        location.reload();
+                    
                 })
             }
         },

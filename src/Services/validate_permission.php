@@ -66,6 +66,10 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
+                'request' => '/entrada/actualizar',
+                'roles' => ['1']
+            ],
+            [
                 'request' => '/error404',
                 'roles' => ['1','2','3']
             ],

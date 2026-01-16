@@ -59,13 +59,15 @@
                                                
                                                 <button type='button' data-id=" . htmlspecialchars($entrada['id']) . "  class='btn btn-outline-info' id='botonModal' title='Informacion' data-bs-toggle='modal' data-bs-target='#modalInfoEntrada'>
                                                     <i class='fa-regular fa-eye'></i>
-                                                </button>
-
-                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . "  class='btn btn-outline-success' id='botonModal' title='Poner fecha' data-bs-toggle='modal' data-bs-target='#modalFechaEntrada'>
+                                                </button>";
+                                    if (!isset($entrada['fecha_entrada'])) {
+                                        echo "<button type='button' data-id=" . htmlspecialchars($entrada['id']) . "  class='btn btn-outline-success' id='botonModal' title='Poner fecha' data-bs-toggle='modal' data-bs-target='#modalFechaEntrada'>
                                                     <i class='fa-regular fa-calendar'></i>
-                                                </button>
-                                                
-                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarEntrada'>
+                                                </button>";
+                                    };
+
+                                    echo "
+                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarEntrante'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
@@ -87,20 +89,24 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                <div class="modal-title text-white"><h2>Agregar fecha</h2></div>   
+                    <div class="modal-title text-white">
+                        <h2>Agregar fecha</h2>
+                    </div>
                 </div>
                 <div class="modal-body">
-                <p>Desea agregar la fecha actual a la fecha de entreda del articulo?</p>
+                    <p>Desea agregar la fecha actual a la fecha de entreda del articulo?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnAgregar" value="" onclick="agregarFecha()">Agregar    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnAgregar" value="" onclick="agregarFecha()">Agregar </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 
     <?php include_once './Web/entrada/info.php' ?>
+        <?php include_once './Web/entrada/editar.php' ?>
+
 
 
 </div>

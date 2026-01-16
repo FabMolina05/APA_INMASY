@@ -47,6 +47,15 @@
                 echo ' </ul>';
                 echo ' </li>';
             }
+             // Bodega
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="/bodega/index" class="nav-link">';
+                echo ' <i class="fa-solid fa-box"></i>';
+                echo ' <span>Bodega</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
 
             // Entradas
             if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
@@ -87,6 +96,19 @@
                 echo ' </a>';
                 echo ' </li>';
             }
+            
+            // Proveedores
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="/proveedores/index" class="nav-link">';
+                echo ' <i class="fa-solid fa-truck"></i>';
+                echo ' <span>Proveedores</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+            
+           
 
             echo '        </ul>';
             echo '    </nav>';

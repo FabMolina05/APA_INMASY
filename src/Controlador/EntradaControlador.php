@@ -37,11 +37,10 @@ class EntradaControlador extends Controller
                     $adquisicion['persona_compra'] = $_POST['otra_persona'];
                 };
 
-                if(isset($_POST['fecha_entrada'])){
+                if (isset($_POST['fecha_entrada'])) {
                     $adquisicion['fecha_entrada'] = $_POST['fecha_entrada'];
                 }
-
-            }else{
+            } else {
                 $adquisicion = [
                     'persona_compra' => $_SESSION['usuario_INMASY']['nombre_completo'],
                 ];
@@ -101,22 +100,50 @@ class EntradaControlador extends Controller
         }
     }
 
-    public function editarEntrada() {}
+    public function editarEntrada()
+    {
+        $entrada = [
+            'tipo_pago' => $_POST['tipo_pago'],
+            'numero_fondo' => $_POST['numero_fondo'],
+            'numero_factura' => $_POST['factura'],
+            'fecha_adquisicion' => $_POST['fecha_adquisicion'],
+            'persona_compra' => $_POST['persona_compra'],
+            'garantia' => $_POST['garantia'],
+            'proveedor' => $_POST['proveedor'],
+            'id_entrada' => $_POST['id_entrante'],
+        ];
+        $resultado = $this->entradaBL->editarEntrada($entrada);
 
-    public function obtenerEntradaPorId(){
+        if(isset($resultado['error'])){
+                    $this->view('/Vistas/error403',['error'=>$resultado['error']]);
+
+        }
+        $this->redirect('/entrada/index');
+
+    }
+
+    public function obtenerEntradaPorId()
+    {
+
+
         $id = $_GET['id'];
         $entrada = $this->entradaBL->obtenerEntradaPorId($id);
+        
         $this->json(['success' => true, 'data' => $entrada]);
     }
 
     public function obtenerEntradas()
     {
+        $usuarios = $this->usuarioBL->obtenerUsuariosPADDE();
+        $proveedores = $this->entradaBL->obtenerProveedores();
         $entradas = $this->entradaBL->obtenerEntradas();
-        $this->view('entrada/index', ['entradas' => $entradas]);
+        $this->view('entrada/index', ['entradas' => $entradas, 'proveedores' => $proveedores, 'usuarios' => $usuarios]);
     }
 
-    public function establecerFecha(){
+    public function establecerFecha()
+    {
         $id = $_GET['id'];
         $resultado = $this->entradaBL->establecerFecha($id);
+        $this->json($resultado);
     }
 }
