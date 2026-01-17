@@ -21,7 +21,7 @@
             // Pedidos
             if ($usuario['rol'] == 1 || $usuario['rol'] == 3) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#pedidos" class="nav-link">';
+                echo ' <a href="/pedidos/index" class="nav-link">';
                 echo ' <i class="fas fa-shopping-cart"></i>';
                 echo ' <span>Pedidos</span>';
                 echo ' </a>';

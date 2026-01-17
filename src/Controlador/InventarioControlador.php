@@ -65,7 +65,19 @@ class InventarioControlador extends Controller{
     public function sacarArticulo($id){
 
     }
-    public function pedirArticulo($id){
+    public function pedirArticulo(){
+        $pedido = [
+            'fecha' => $_POST['fecha'],
+            'direccion' => $_POST['direccion'],
+            'num_orden' => $_POST['num_orden'],
+            'id_articulo' => $_POST['id_articulo'],
+            'nombre_cliente' => $_POST['nombre_cliente'],
+            'estado' => 'PENDIENTE'
+        ];
+
+        $resultado = $this->inventarioBL->pedirArticulo($pedido);
+        
+        $this->json($resultado);
 
     }
    

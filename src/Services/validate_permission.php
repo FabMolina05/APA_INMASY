@@ -70,6 +70,10 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
+                'request' => '/pedidos/index',
+                'roles' => ['1','2','3']
+            ],
+            [
                 'request' => '/error404',
                 'roles' => ['1','2','3']
             ],

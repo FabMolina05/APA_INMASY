@@ -111,5 +111,56 @@ class InventarioDA implements IInventarioDA
         return ['success' => true, 'categoria' => $id];
     }
     public function sacarArticulo($id) {}
-    public function pedirArticulo($id) {}
+    public function pedirArticulo($pedido) {
+        $queryFormula = "INSERT INTO dbo.INMASY_FormulaRetiro(fecha,direccion,num_orden) 
+                  VALUES (?,?,?);
+                  SELECT SCOPE_IDENTITY() AS id;
+                  SELECT ID_Inventario
+                  FROM dbo.INMASY_Inventario
+                  WHERE id_articulo = ?;";
+
+        $params=[
+            $pedido['fecha'],
+            $pedido['direccion'],
+            $pedido['num_orden'],
+            $pedido['id_articulo']
+        ];
+
+        $stmt = sqlsrv_query($this->conexion,$queryFormula,$params);
+
+        
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            return ['error' => $e[0]['message']];
+        }
+
+        sqlsrv_next_result($stmt);
+
+        $idFormula=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+
+        sqlsrv_next_result($stmt);
+
+        $idInventario=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+
+        sqlsrv_free_stmt($stmt);
+
+        $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,nombre_cliente,estado)
+                        VALUES (?,?,?,?)";
+        $params = [
+            $idInventario,
+            $idFormula,
+            $pedido['nombre_cliente'],
+            $pedido['estado']
+
+        ];
+
+        $stmt = sqlsrv_query($this->conexion,$queryPedido,$params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            return ['error' => $e[0]['message']];
+        }
+
+        return ['success'=> true];
+    }
 }
