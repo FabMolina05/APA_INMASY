@@ -68,7 +68,7 @@ function mostrarCategoria() {
         </div>
         <div class="mb-3">
                 <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
-                <input type="text" class="form-control" id="corriente" name="corriente" required>
+                <input type="text" class="form-control" id="corrienteNominal" name="corrienteNominal" required>
         </div>
         <div class="mb-3">
                 <label for="control" class="form-label">Tipo de control</label>
@@ -84,8 +84,6 @@ function mostrarCategoria() {
                     <option value='IEC101/104'>IEC101/104</option>
                     <option value='IEC61850'>IEC 61850</option>
                     <option value='otro'>OTRO</option>
-                    
-
                 </select>
         </div>
         <div class='mb-3'>
@@ -109,7 +107,7 @@ function mostrarCategoria() {
         </div>
         <div class="mb-3">
                 <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
-                <input type="text" class="form-control" id="corriente" name="corriente" required>
+                <input type="text" class="form-control" id="corrienteNominal" name="corrienteNominal" required>
         </div>
         <div class="mb-3">
                 <label for="operacion" class="form-label">Tipo Operación</label>

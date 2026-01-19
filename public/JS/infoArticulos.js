@@ -10,7 +10,7 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
         data: { id: id, categoria: categoria },
         success: function (response) {
             response = response.data;
-            
+
             let keys = Object.keys(response);
             let html = `<div class="container-fluid p-0">
                          <div class="card border-0 shadow-sm mb-3">
@@ -46,16 +46,32 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                     if (key === "atributos" && response[key] !== null) {
                         const atributos = JSON.parse(response[key]);
                         Object.keys(atributos).forEach(attrKey => {
-                            if(atributos[attrKey] === null || atributos[attrKey] === '') {
+                            if (atributos[attrKey] === null || atributos[attrKey] === '') {
                                 atributos[attrKey] = 'N/A';
+                            }
+                            word = attrKey;
+                            if (attrKey.includes("_")) {
+                                split = attrKey.split("_")
+                                word = `${split[0]} ${split[1]}`
                             }
                             html += `<div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-start">
-                                    <span class="text-muted me-2">${attrKey}:</span>
+                                    <span class="text-muted me-2">${word}:</span>
                                     <span class="fw-semibold">${atributos[attrKey]}</span>
                                 </div>
                             </div>`;
                         });
+                        return;
+                    }
+                    if (key.includes("_")) {
+                        split = key.split("_")
+                        word = `${split[0]} ${split[1]}`
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${word}:</span>
+                                    <span class="fw-semibold">${response[key]}</span>
+                                </div>
+                            </div>`;
                         return;
                     }
                     html += `<div class="col-md-6 mb-3">

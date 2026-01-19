@@ -74,6 +74,24 @@ class EntradaControlador extends Controller
             if (isset($_POST['corriente'])) {
                 $articuloNuevo['atributos'] = json_encode(['corriente' => $_POST['corriente'], 'numero' => $_POST['numero']]);
             };
+            if (isset($_POST['montaje'])) {
+                $articuloNuevo['atributos'] = json_encode([
+                    'corriente_nominal' => $_POST['corrienteNominal'],
+                    'tension_nominal' => $_POST['tension'],
+                    'control' => $_POST['control'],
+                    'montaje' =>$_POST['montaje'],
+                    'protocolo' =>  (isset($_POST['protocolo'])) ? $_POST['protocolo'] : $_POST['otro_protocolo']
+                ]);
+            }
+            if (isset($_POST['instalacion'])) {
+                $articuloNuevo['atributos'] = json_encode([
+                    'corriente Nominal' => $_POST['corrienteNominal'],
+                    'tension Nominal' => $_POST['tension'],
+                    'operacion' => $_POST['operacion'],
+                    'corte' =>$_POST['corte'],
+                    'instalacion'=>$_POST['otro_protocolo']
+                ]);
+            }
 
             $almacenamiento = ['tipo' => $_POST['almacenamiento']];
 
@@ -114,12 +132,10 @@ class EntradaControlador extends Controller
         ];
         $resultado = $this->entradaBL->editarEntrada($entrada);
 
-        if(isset($resultado['error'])){
-                    $this->view('/Vistas/error403',['error'=>$resultado['error']]);
-
+        if (isset($resultado['error'])) {
+            $this->view('/Vistas/error403', ['error' => $resultado['error']]);
         }
         $this->redirect('/entrada/index');
-
     }
 
     public function obtenerEntradaPorId()
@@ -128,7 +144,7 @@ class EntradaControlador extends Controller
 
         $id = $_GET['id'];
         $entrada = $this->entradaBL->obtenerEntradaPorId($id);
-        
+
         $this->json(['success' => true, 'data' => $entrada]);
     }
 
