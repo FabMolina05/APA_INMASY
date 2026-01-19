@@ -19,54 +19,25 @@ class PedidosControlador extends Controller {
         $this->view('pedidos/index', [(isset($PedidosGenerales))?? 'pedidosGenerales' => $PedidosGenerales,'pedidosUsuario' => $PedidosUsuario]);
     }
 
-    public function agregarUsuario() {
-        $usuarios = $this->usuarioBL->obtenerUsuariosPADDE();
-        $roles = $this->usuarioBL->obtenerRoles();
-        $this->view('usuarios/agregar', ['usuario' => $usuarios, 'roles' => $roles]);
-        
+    public function denegarPedido(){
+        $id = $_POST['id'];
+        $resultado = $this->PedidosBL->denegarPedido($id);
+
+        $this->json($resultado);
     }
+    public function aceptarPedido(){
+        $id = $_POST['id'];
+        $resultado = $this->PedidosBL->aceptarPedido($id);
 
-    public function guardarUsuario() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['usuarioPADDE'];
-            $nombre = $_POST['nombreUsuarioPADDE'];
-            $rol = $_POST['rol'];
-            
-            $nuevoUsuario = [
-                'id' => $id,
-                'nombre' => $nombre,
-                'rol' => $rol
-            ];
-
-            $resultado = $this->usuarioBL->agregarUsuario($nuevoUsuario);
-
-            if (isset($resultado['error'])) {
-                $this->json($resultado,500);
-            } else {
-                $this->redirect('/usuarios/index');
-                exit();
-            }
-        }
+        $this->json($resultado);
     }
-    public function actualizarUsuario() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['ID_Usuario'];
-            $rol = $_POST['rol'];
-            $estado = $_POST['estado'];
-            
-            $usuarioActualizado = [
-                'id' => $id,
-                'rol' => $rol,
-                'estado' => $estado
-            ];
+    public function detallePedido(){
+        $id = $_GET['id'];
+        $pedido = $this->PedidosBL->detallePedido($id);
+        $this->json($pedido);
 
-            $resultado = $this->usuarioBL->actualizarUsuario($usuarioActualizado);
 
-            if (isset($resultado['error'])) {
-                $this->json($resultado,500);
-            } else {
-                $this->redirect('/usuarios/index');
-            }
-        }
+
     }
+   
 }

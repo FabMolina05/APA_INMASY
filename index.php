@@ -5,6 +5,8 @@ require_once __DIR__ . '/src/Controlador/IndexControlador.php';
 require_once __DIR__ . '/src/Controlador/UsuarioControlador.php';
 require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
 require_once __DIR__ . '/src/Controlador/EntradaControlador.php';
+require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
+
 
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
@@ -20,6 +22,7 @@ $indexController = new IndexControlador();
 $usuarioController = new UsuarioControlador($conn);
 $inventarioController = new InventarioControlador($conn);
 $entradaController = new EntradaControlador($conn);
+$pedidosController = new PedidosControlador($conn);
 
 
 
@@ -83,8 +86,11 @@ switch ($request) {
     case '/entrada/establecerFecha':
         $entradaController->establecerFecha();
         break;
-        case '/entrada/actualizar':
+    case '/entrada/actualizar':
         $entradaController->editarEntrada();
+        break;
+    case '/pedidos/index':
+        $pedidosController->index();
         break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';

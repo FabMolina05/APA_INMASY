@@ -68,7 +68,7 @@ class EntradaDA implements IEntradaDA
             $idArticulo = $this->obtenerSiguienteId($stmtArticulo);
 
             if ($almacenamiento['tipo'] === 'bodega') {
-                $queryBodega = "INSERT INTO dbo.INMASY_BodegaID (id_articulo, numero_cat) VALUES ( ?, ?);
+                $queryBodega = "INSERT INTO dbo.INMASY_Bodega (id_articulo, numero_cat) VALUES ( ?, ?);
                 SELECT SCOPE_IDENTITY() AS id;";
                 $paramsBodega = [
                     $idArticulo,
@@ -209,7 +209,7 @@ class EntradaDA implements IEntradaDA
                         CASE 
                             WHEN e.id_inventario IS NULL THEN (
                                 SELECT id_articulo 
-                                FROM dbo.INMASY_BodegaID 
+                                FROM dbo.INMASY_Bodega 
                                 WHERE ID_Bodega = e.id_bodega
                             )
                             ELSE (

@@ -43,11 +43,13 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reles&id=2">Reles</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=tarjetas&id=3">Tarjetas</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=baterias&id=8">Baterías</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reconectador&id=9">Reconectador</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=seccionador&id=10">Seccionador</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
                 echo ' </li>';
             }
-             // Bodega
+            // Bodega
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/bodega/index" class="nav-link">';
@@ -96,7 +98,7 @@
                 echo ' </a>';
                 echo ' </li>';
             }
-            
+
             // Proveedores
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
@@ -107,8 +109,8 @@
                 echo ' </li>';
             }
 
-            
-           
+
+
 
             echo '        </ul>';
             echo '    </nav>';

@@ -60,6 +60,80 @@ function mostrarCategoria() {
         </div>
          `;
 
+    } else if (categoria === "9") {
+        contenidoCategoria.innerHTML = `
+        <div class="mb-3">
+                <label for="tension" class="form-label">Tension Nominal (kV)</label>
+                <input type="text"  class="form-control" id="tension" name="tension" required>
+        </div>
+        <div class="mb-3">
+                <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
+                <input type="text" class="form-control" id="corriente" name="corriente" required>
+        </div>
+        <div class="mb-3">
+                <label for="control" class="form-label">Tipo de control</label>
+                <select class="form-control" id="control" name="control" required>
+                    <option value='LOCAL'>LOCAL</option>
+                    <option value='REMOTO'>REMOTO</option>
+                </select>
+        </div>
+        <div class="mb-3">
+                <label for="protocolo" class="form-label">Protocolo de comunicación</label>
+                <select class="form-control" id="protocolo" name="protocolo" required>
+                    <option value='DNP3'>DNP3</option>
+                    <option value='IEC101/104'>IEC101/104</option>
+                    <option value='IEC61850'>IEC 61850</option>
+                    <option value='otro'>OTRO</option>
+                    
+
+                </select>
+        </div>
+        <div class='mb-3'>
+            <div class="otro_protocolo">
+            </div>
+        </div>
+        <div class="mb-3">
+                <label for="montaje" class="form-label">Montaje</label>
+                <select class="form-control" id="montaje" name="montaje" required>
+                    <option value='POSTE'>POSTE</option>
+                    <option value='SUBESTACIÓN'>SUBESTACIÓN</option>
+                </select>
+        </div>
+         `;
+
+    } else if (categoria === "10") {
+        contenidoCategoria.innerHTML = `
+       <div class="mb-3">
+                <label for="tension" class="form-label">Tension Nominal (kV)</label>
+                <input type="text"  class="form-control" id="tension" name="tension" required>
+        </div>
+        <div class="mb-3">
+                <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
+                <input type="text" class="form-control" id="corriente" name="corriente" required>
+        </div>
+        <div class="mb-3">
+                <label for="operacion" class="form-label">Tipo Operación</label>
+                <select class="form-control" id="operacion" name="operacion" required>
+                    <option value='MANUAL'>MANUAL</option>
+                    <option value='MOTORIZADO'>MOTORIZADO</option>
+                </select>
+        </div>
+        <div class="mb-3">
+                <label for="corte" class="form-label">Capacidad de corte bajo carga</label>
+                <select class="form-control" id="corte" name="corte" required>
+                    <option value='true'>SI</option>
+                    <option value='false'>NO</option>
+                </select>
+        </div>
+        <div class="mb-3">
+                <label for="instalacion" class="form-label">Tipo instalación</label>
+                <select class="form-control" id="instalacion" name="instalacion" required>
+                    <option value='LINEA_AEREA'>LINEA AÉREA</option>
+                    <option value='POSTE'>POSTE</option>
+                </select>
+        </div>
+         `;
+
     }
     else {
         contenidoCategoria.innerHTML = "";
@@ -80,6 +154,21 @@ $('#persona_compra').on('change', function () {
         otro.innerHTML = '';
     }
 });
+
+
+$(document).on('change', '#protocolo',function () {
+    const seleccion = $(this).val();
+    const otro = document.querySelector('.otro_protocolo');
+    if (seleccion === 'otro') {
+        otro.innerHTML = `
+            <label for= "otro_protocolo" class= "form-label"> Especifique el protocolo</label>
+                <input type="text" class="form-control" id="otro_protocolo" name="otro_protocolo" >
+                    `;
+    } else {
+        otro.innerHTML = '';
+    }
+});
+
 
 
 
@@ -111,7 +200,7 @@ $('#btnAdquisicion').on('click', function () {
         $('#adquisicionCollapse')
             .find('input[type="text"],input[type="number"], select, textarea')
             .prop('required', true)
-            
+
 
 
 
