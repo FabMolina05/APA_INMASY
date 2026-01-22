@@ -49,6 +49,11 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                             if (atributos[attrKey] === null || atributos[attrKey] === '') {
                                 atributos[attrKey] = 'N/A';
                             }
+
+                            if(attrKey == "corte")
+                            {
+                                atributos[attrKey] = (atributos[attrKey] == 1)? "SI" : "NO";
+                            }
                             word = attrKey;
                             if (attrKey.includes("_")) {
                                 split = attrKey.split("_")

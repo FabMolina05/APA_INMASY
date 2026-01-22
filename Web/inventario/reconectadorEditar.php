@@ -8,7 +8,7 @@
                 <form method="POST" action="/inventario/actualizar">
                     <div class="mb-3">
                         <label for="id_caja" class="form-label">ID Caja</label>
-                        <input type="text" class="form-control" id="CAJA" name="CAJA" disabled required>
+                        <input type="number" step="0.01" class="form-control" id="CAJA" name="CAJA"  required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" required>
+                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" required>
                     </div>
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
@@ -104,7 +104,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="baterias">
+                    <input type="hidden" id="Categoria" name="categoria" value="reconectador">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

@@ -81,7 +81,8 @@ class PedidosDA implements IPedidosDA
         sqlsrv_begin_transaction($this->conexion);
         $query = "UPDATE dbo.INMASY_PedidosRetiro
                   SET estado = 'ACEPTADO'
-                  WHERE ID_Pedido = ? ";
+                  WHERE ID_Pedido = ? ;
+                   ";
 
         $params = array($pedido);
 
@@ -91,13 +92,50 @@ class PedidosDA implements IPedidosDA
             $e = sqlsrv_errors();
             return ['error' => $e[0]['message']];
         }
+        sqlsrv_free_stmt($stmt);
+        $query = "UPDATE a
+                SET 
+                    a.disponibilidad = 1,
+                    a.uso_equipo = ?
+                FROM dbo.INMASY_Articulos a
+                INNER JOIN dbo.INMASY_Inventario i 
+                    ON i.id_articulo = a.ID_Articulo
+                INNER JOIN dbo.INMASY_PedidosRetiro pr 
+                    ON pr.id_inventario = i.ID_Inventario
+                WHERE pr.ID_Pedido = ?;
+                SELECT id_inventario as id from dbo.INMASY_PedidosRetiro WHERE ID_Pedido = ? ;";
+        $params = [
+            $_SESSION['usuario_INMASY']['ID_Usuario'],
+            $pedido,
+            $pedido
+        ];
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            return ['error' => $e[0]['message']];
+        }
+
+
+        $idInventario = $this->obtenerSiguienteId($stmt);
+
+
+
+         $query = "UPDATE dbo.INMASY_PedidosRetiro
+                  SET estado = 'DENEGADO'
+                  WHERE ID_Pedido = ? ;
+                   ";
+
+
+        
 
 
 
         return ['success' => true];;
     }
-    public function detallePedido($pedido) {
-         $query = "SELECT 
+    public function detallePedido($pedido)
+    {
+        $query = "SELECT 
                 pr.ID_Pedido as id,
                 pr.estado as estado,
                 pr.nombre_cliente as cliente,
@@ -174,5 +212,17 @@ class PedidosDA implements IPedidosDA
         }
 
         return $pedidos;;
+    }
+    private function obtenerSiguienteId($stmt)
+    {
+        sqlsrv_next_result($stmt);
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        sqlsrv_free_stmt($stmt);
+
+        if (!isset($row['id']) || $row['id'] === null) {
+            throw new \Exception("SCOPE_IDENTITY retornó NULL");
+        }
+
+        return (int)$row['id'];
     }
 }

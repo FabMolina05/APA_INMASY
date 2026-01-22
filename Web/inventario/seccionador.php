@@ -6,10 +6,10 @@
                 <div class="row align-items-center">
                     <div class="col">
                         <h2 class="mb-0">Inventario</h2>
-                        <p class="text-muted small mb-0">Gestiona Reconector</p>
+                        <p class="text-muted small mb-0">Gestiona Seccionadores</p>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=9'">
+                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=10'">
                             <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>
@@ -59,16 +59,11 @@
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reconector' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='seccionador' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
-                                                </button>";
-                                    if ($articulo['disponibilidad'] == 0) {
-                                        echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reconector' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
-                                                    <i class='fa-solid fa-basket-shopping'></i>
-                                                </button>";
-                                    }
-
-                                    echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reconector' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                </button>
+                                                
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='seccionador' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
@@ -87,8 +82,6 @@
     </div>
 
     <?php include_once './Web/inventario/info.php' ?>
-    <?php include_once './Web/inventario/reconectadorEditar.php' ?>
-    <?php include_once './Web/inventario/pedido.php' ?>
-
+    <?php include_once './Web/inventario/seccionadorEditar.php' ?>
 
 </div>

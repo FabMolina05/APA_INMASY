@@ -40,6 +40,7 @@ class InventarioControlador extends Controller{
                 'activo' => $_POST['activo'],
                 'disponibilidad' => 0,
                 'ID_Articulo' => $_POST['ID_Articulo'],
+                'id_caja' => $_POST['CAJA']
 
             ];
          if(isset($_POST['tipo'])){
@@ -58,18 +59,18 @@ class InventarioControlador extends Controller{
                 $articuloActualizado['atributos'] = json_encode(['corriente' => $_POST['corriente'], 'numero' => $_POST['numero']]);
             }; 
             if (isset($_POST['montaje'])) {
-                $articuloNuevo['atributos'] = json_encode([
-                    'corriente_nominal' => $_POST['corrienteNominal'],
-                    'tension_nominal' => $_POST['tension'],
+                $articuloActualizado['atributos'] = json_encode([
+                    'corriente_nominal' => $_POST['corriente_nominal'],
+                    'tension_nominal' => $_POST['tension_nominal'],
                     'control' => $_POST['control'],
                     'montaje' =>$_POST['montaje'],
                     'protocolo' =>  (isset($_POST['protocolo'])) ? $_POST['protocolo'] : $_POST['otro_protocolo']
                 ]);
             }
             if (isset($_POST['instalacion'])) {
-                $articuloNuevo['atributos'] = json_encode([
-                    'corriente Nominal' => $_POST['corriente_nominal'],
-                    'tension Nominal' => $_POST['tension_nominal'],
+                $articuloActualizado['atributos'] = json_encode([
+                    'corriente_nominal' => $_POST['corriente_nominal'],
+                    'tension_nominal' => $_POST['tension_nominal'],
                     'operacion' => $_POST['operacion'],
                     'corte' =>$_POST['corte'],
                     'instalacion'=>$_POST['instalacion']
@@ -80,14 +81,14 @@ class InventarioControlador extends Controller{
         $this->redirect('/inventario/categoria?categoria=' . $categoria. '&id=' . $resultado['categoria']);
     }
 
-    public function sacarArticulo($id){
+    public function sacarArticulo(){
 
     }
     public function pedirArticulo(){
         $pedido = [
             'fecha' => $_POST['fecha'],
             'direccion' => $_POST['direccion'],
-            'num_orden' => $_POST['num_orden'],
+            'num_orden' => null,
             'id_articulo' => $_POST['id_articulo'],
             'nombre_cliente' => $_POST['nombre_cliente'],
             'estado' => 'PENDIENTE'

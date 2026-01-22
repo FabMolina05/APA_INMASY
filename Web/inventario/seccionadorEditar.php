@@ -8,7 +8,7 @@
                 <form method="POST" action="/inventario/actualizar">
                     <div class="mb-3">
                         <label for="id_caja" class="form-label">ID Caja</label>
-                        <input type="number" step="0.01" class="form-control" id="CAJA" name="CAJA"  required>
+                        <input type="number" step="0.01"  class="form-control" id="CAJA" name="CAJA"  required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -48,13 +48,37 @@
                         <input type="text" class="form-control" id="Direccion" name="direccion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="corriente" class="form-label">Corriente</label>
-                        <input type="number" step="0.01" class="form-control" id="corriente" name="corriente" required>
+                        <label for="tension" class="form-label">Tension Nominal (kV)</label>
+                        <input type="text" class="form-control" id="tension_nominal" name="tension_nominal" required>
                     </div>
                     <div class="mb-3">
-                        <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="numero" required>
+                        <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
+                        <input type="text" class="form-control" id="corriente_nominal" name="corriente_nominal" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="corte" class="form-label">Corte Bajo Carga</label>
+                        <select class="form-control" id="corte" name="corte" required>
+                            <option value='1'>SI</option>
+                            <option value='0'>NO</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="operacion" class="form-label">Tipo Operación</label>
+                        <select class="form-control" id="operacion" name="operacion" required>
+                            <option value='MANUAL'>MANUAL</option>
+                            <option value='MOTORIZADO'>MOTORIZADO</option>
+
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="instalacion" class="form-label">Instalación</label>
+                        <select class="form-control" id="instalacion" name="instalacion" required>
+                            <option value='POSTE'>POSTE</option>
+                            <option value='LINEA AEREA'>LINEA AÉREA</option>
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>
                         <input type="text" class="form-control" id="Tecnico" name="tecnico" required disabled>
@@ -76,7 +100,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="baterias">
+                    <input type="hidden" id="Categoria" name="categoria" value="seccionador">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

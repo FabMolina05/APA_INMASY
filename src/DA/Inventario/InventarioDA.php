@@ -47,7 +47,7 @@ class InventarioDA implements IInventarioDA
     {
 
 
-        $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,u.nombre_completo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as 'costo_unitario',a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a
+        $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,u.nombre_completo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a
                  LEFT JOIN dbo.INMASY_Usuarios u on a.uso_equipo = u.ID_Usuario
                  WHERE a.ID_Articulo = ?";
         $params = array($id);
@@ -63,7 +63,7 @@ class InventarioDA implements IInventarioDA
     public function editarArticulo($articulo)
     {
         sqlsrv_begin_transaction($this->conexion);
-        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? WHERE ID_Articulo = ?;
+        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? ,id_caja = ? WHERE ID_Articulo = ?;
         SELECT id_categoria FROM dbo.INMASY_Articulos WHERE ID_Articulo = ?;";
         $params = [
             $articulo['nombre'],
@@ -75,6 +75,7 @@ class InventarioDA implements IInventarioDA
             $articulo['cantidad'],
             $articulo['direccion'],
             $articulo['activo'],
+            $articulo['id_caja'],
             $articulo['ID_Articulo'],
             $articulo['ID_Articulo'],
         ];

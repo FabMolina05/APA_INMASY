@@ -69,10 +69,10 @@ switch ($request) {
         $inventarioController->editarArticulo();
         break;
     case '/inventario/sacarArticulo':
-        $inventarioController->sacarArticulo($_GET['id']);
+        $inventarioController->sacarArticulo();
         break;
     case '/inventario/pedirArticulo':
-        $inventarioController->pedirArticulo($_GET['id']);
+        $inventarioController->pedirArticulo();
         break;
     case '/entrada/agregarArticulo':
         $entradaController->agregarArticulo();

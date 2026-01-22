@@ -119,14 +119,14 @@ function mostrarCategoria() {
         <div class="mb-3">
                 <label for="corte" class="form-label">Capacidad de corte bajo carga</label>
                 <select class="form-control" id="corte" name="corte" required>
-                    <option value='true'>SI</option>
-                    <option value='false'>NO</option>
+                    <option value='1'>SI</option>
+                    <option value='0'>NO</option>
                 </select>
         </div>
         <div class="mb-3">
                 <label for="instalacion" class="form-label">Tipo instalación</label>
                 <select class="form-control" id="instalacion" name="instalacion" required>
-                    <option value='LINEA_AEREA'>LINEA AÉREA</option>
+                    <option value='LINEA AEREA'>LINEA AÉREA</option>
                     <option value='POSTE'>POSTE</option>
                 </select>
         </div>
@@ -146,7 +146,7 @@ $('#persona_compra').on('change', function () {
     if (seleccion === 'otros') {
         otro.innerHTML = `
          <label for="otra_persona" class="form-label">Especifique otra persona</label>
-                        <input type="text" class="form-control" id="otra_persona" name="otra_persona" >
+                        <input type="text" class="form-control" id="otra_persona" name="otra_persona" required>
         `;
     } else {
         otro.innerHTML = '';

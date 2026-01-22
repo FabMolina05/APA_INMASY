@@ -85,11 +85,11 @@ class EntradaControlador extends Controller
             }
             if (isset($_POST['instalacion'])) {
                 $articuloNuevo['atributos'] = json_encode([
-                    'corriente Nominal' => $_POST['corrienteNominal'],
-                    'tension Nominal' => $_POST['tension'],
+                    'corriente_nominal' => $_POST['corrienteNominal'],
+                    'tension_nominal' => $_POST['tension'],
                     'operacion' => $_POST['operacion'],
                     'corte' =>$_POST['corte'],
-                    'instalacion'=>$_POST['otro_protocolo']
+                    'instalacion'=>$_POST['instalacion']
                 ]);
             }
 
