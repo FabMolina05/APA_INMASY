@@ -48,13 +48,41 @@
                         <input type="text" class="form-control" id="Direccion" name="direccion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="corriente" class="form-label">Corriente</label>
-                        <input type="number" step="0.01" class="form-control" id="corriente" name="corriente" required>
+                        <label for="tension" class="form-label">Tension Nominal (kV)</label>
+                        <input type="text" class="form-control" id="tension_nominal" name="tension_nominal" required>
                     </div>
                     <div class="mb-3">
-                        <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="numero" required>
+                        <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
+                        <input type="text" class="form-control" id="corriente_nominal" name="corriente_nominal" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="control" class="form-label">Tipo de control</label>
+                        <select class="form-control" id="control" name="control" required>
+                            <option value='LOCAL'>LOCAL</option>
+                            <option value='REMOTO'>REMOTO</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="protocolo" class="form-label">Protocolo de comunicación</label>
+                        <select class="form-control" id="protocolo" name="protocolo" required>
+                            <option value='DNP3'>DNP3</option>
+                            <option value='IEC101/104'>IEC101/104</option>
+                            <option value='IEC61850'>IEC 61850</option>
+                            <option value='otro'>OTRO</option>
+                        </select>
+                    </div>
+                    <div class='mb-3'>
+                        <div class="otro_protocolo">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="montaje" class="form-label">Montaje</label>
+                        <select class="form-control" id="montaje" name="montaje" required>
+                            <option value='POSTE'>POSTE</option>
+                            <option value='SUBESTACIÓN'>SUBESTACIÓN</option>
+                        </select>
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>
                         <input type="text" class="form-control" id="Tecnico" name="tecnico" required disabled>
@@ -76,7 +104,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="baterias">
+                    <input type="hidden" id="Categoria" name="categoria" value="reconectador">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

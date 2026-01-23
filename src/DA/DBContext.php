@@ -9,9 +9,10 @@ class DBContext {
         $db   = 'PADDE';
         $UID = 'sa';
         $PWD = 'Cnfl_10_2025';
+        $CharacterSet = "UTF-8";
         
 
-        $this->conn = sqlsrv_connect($host, ['Database' => $db, 'UID' => $UID, 'PWD' => $PWD, 'TrustServerCertificate' => 1]);
+        $this->conn = sqlsrv_connect($host, ['Database' => $db, 'UID' => $UID, 'PWD' => $PWD, 'TrustServerCertificate' => 1, 'CharacterSet'=>$CharacterSet]);
         if ($this->conn === false) {
             http_response_code(500);
         }else {

@@ -6,5 +6,5 @@ interface IInventarioBL{
     public function obtenerArticuloPorId($categoria, $id);
     public function editarArticulo($articulo);
     public function sacarArticulo($id);
-    public function pedirArticulo($id);
+    public function pedirArticulo($pedido);
 }

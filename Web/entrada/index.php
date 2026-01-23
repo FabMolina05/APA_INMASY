@@ -23,7 +23,9 @@
                             <tr>
                                 <th>N° Factura</th>
                                 <th>Proveedor</th>
+                                <th>Fecha Entrega</th>
                                 <th>Fecha Entrada</th>
+
                                 <th>Almacenamiento</th>
                                 <th>Encargado</th>
                                 <th>Nombre Articulo</th>
@@ -35,20 +37,37 @@
                             if ($entradas != null && count($entradas) > 0) {
                                 foreach ($entradas as $entrada) {
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($entrada['factura']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($entrada['proveedor']) . "</td>";
-                                    echo "<td>" . date_format($entrada['fecha'], "d/m/Y") . "</td>";
+                                    echo "<td>" . (isset($entrada['factura']) ? htmlspecialchars($entrada['factura']) : "N/A") . "</td>";
+                                    echo "<td>" . (isset($entrada['proveedor']) ? htmlspecialchars($entrada['proveedor']) : "N/A") . "</td>";
+                                    if (isset($entrada['fecha_entrega'])) {
+                                        echo "<td>" . date_format($entrada['fecha_entrega'], "d/m/Y") . "</td>";
+                                    } else {
+                                        echo "<td>" . "N/A" . "</td>";
+                                    };
+                                    if (isset($entrada['fecha_entrada'])) {
+                                        echo "<td>" . date_format($entrada['fecha_entrada'], "d/m/Y") . "</td>";
+                                    } else {
+                                        echo "<td>" . "<span class='badge bg-danger'>No entregado</span>" . "</td>";
+                                    };
+
+
                                     echo "<td>" . htmlspecialchars($entrada['almacenamiento']) . "</td>";
                                     echo "<td>" . htmlspecialchars($entrada['encargado']) . "</td>";
                                     echo "<td>" . htmlspecialchars($entrada['nombre_articulo']) . "</td>";
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . "  class='btn btn-outline-info' id='botonModal' title='Informacion' data-bs-toggle='modal' data-bs-target='#modalInfoEntrada'>
                                                     <i class='fa-regular fa-eye'></i>
-                                                </button>
-                                                
-                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " data-categoria='reles' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                </button>";
+                                    if (!isset($entrada['fecha_entrada'])) {
+                                        echo "<button type='button' data-id=" . htmlspecialchars($entrada['id']) . "  class='btn btn-outline-success' id='botonModal' title='Poner fecha' data-bs-toggle='modal' data-bs-target='#modalFechaEntrada'>
+                                                    <i class='fa-regular fa-calendar'></i>
+                                                </button>";
+                                    };
+
+                                    echo "
+                                                <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarEntrante'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
@@ -66,7 +85,28 @@
         </div>
     </div>
 
-    <?php include_once './Web/inventario/info.php' ?>
-    <?php include_once './Web/inventario/releEditar.php' ?>
+    <div class="modal fade" id="modalFechaEntrada" tabindex="-1" aria-labelledby="agregar fecha" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <div class="modal-title text-white">
+                        <h2>Agregar fecha</h2>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>Desea agregar la fecha actual a la fecha de entreda del articulo?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btnAgregar" value="" onclick="agregarFecha()">Agregar </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php include_once './Web/entrada/info.php' ?>
+        <?php include_once './Web/entrada/editar.php' ?>
+
+
 
 </div>

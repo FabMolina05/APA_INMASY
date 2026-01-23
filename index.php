@@ -1,17 +1,16 @@
-<?php 
+<?php
 require_once __DIR__ . '/src/DA/DBContext.php';
 
 require_once __DIR__ . '/src/Controlador/IndexControlador.php';
 require_once __DIR__ . '/src/Controlador/UsuarioControlador.php';
 require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
 require_once __DIR__ . '/src/Controlador/EntradaControlador.php';
+require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
 
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
 
 use DA\DBContext;
-?>
-<?php
 
 $dbContext = new DBContext();
 $conn = $dbContext->getConnection();
@@ -20,9 +19,7 @@ $indexController = new IndexControlador();
 $usuarioController = new UsuarioControlador($conn);
 $inventarioController = new InventarioControlador($conn);
 $entradaController = new EntradaControlador($conn);
-
-
-
+$pedidosController = new PedidosControlador($conn);
 
 $request = $_SERVER['REQUEST_URI'];
 $request = strtok($request, '?');
@@ -37,7 +34,7 @@ ob_start();
 include __DIR__ . '/Web/components/Header.php';
 include __DIR__ . '/Web/components/Sidebar.php';
 
-ob_end_flush();
+
 
 switch ($request) {
     case '/':
@@ -56,9 +53,8 @@ switch ($request) {
         $usuarioController->actualizarUsuario();
         break;
     case '/inventario/categoria':
-        $inventarioController->obtenerArticulosPorCategoria($_GET['id'],$_GET['categoria']);
+        $inventarioController->obtenerArticulosPorCategoria($_GET['id'], $_GET['categoria']);
         break;
-    
     case '/inventario/obtenerArticuloPorId':
         $inventarioController->obtenerArticuloPorId();
         break;
@@ -66,10 +62,10 @@ switch ($request) {
         $inventarioController->editarArticulo();
         break;
     case '/inventario/sacarArticulo':
-        $inventarioController->sacarArticulo($_GET['id']);
+        $inventarioController->sacarArticulo();
         break;
     case '/inventario/pedirArticulo':
-        $inventarioController->pedirArticulo($_GET['id']);
+        $inventarioController->pedirArticulo();
         break;
     case '/entrada/agregarArticulo':
         $entradaController->agregarArticulo();
@@ -77,18 +73,35 @@ switch ($request) {
     case '/entrada/index':
         $entradaController->obtenerEntradas();
         break;
+    case '/entrada/obtenerEntradaPorId':
+        $entradaController->obtenerEntradaPorId();
+        break;
+    case '/entrada/establecerFecha':
+        $entradaController->establecerFecha();
+        break;
+    case '/entrada/actualizar':
+        $entradaController->editarEntrada();
+        break;
+    case '/pedidos/index':
+        $pedidosController->index();
+        break;
+    case '/pedidos/aceptar':
+        $pedidosController->aceptarPedido();
+        break;
+    case '/pedidos/denegar':
+        $pedidosController->denegarPedido();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;
     case '/error404':
         require_once __DIR__ . '/Web/vistas/error404.php';
         break;
-
     default:
         http_response_code(404);
         break;
-};
+}
 
-include __DIR__ . '/Web/components/Footer.php'; 
+include __DIR__ . '/Web/components/Footer.php';
 
-?>
+ob_end_flush();

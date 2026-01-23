@@ -11,60 +11,81 @@
                 </div>
             </div>
             <div class="card-body">
-
                 <form method="POST" action="/entrada/agregarArticulo">
+                    <!-- adquisicion -->
                     <h3 class="mb-3">Información de la adquisicion</h3>
-                    <div class="mb-3">
-                        <label for="proveedor" class="form-label">Proveedor</label>
-                        <select class="form-select" id="proveedor" name="proveedor" required>
-                            <option value="">Seleccione un proveedor</option>
-                            <?php
-                            foreach ($proveedores as $proveedor) {
-                                echo "<option value=" . htmlspecialchars($proveedor['id']) . ">" . htmlspecialchars($proveedor['nombre']) . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fecha_adquisicion" class="form-label">Fecha de Adquisición</label>
-                        <input type="date" class="form-control date" id="fecha_adquisicion" name="fecha_adquisicion" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="factura" class="form-label">Número de Factura</label>
-                        <input type="text" class="form-control" id="factura" name="factura" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tipo_pago" class="form-label">Tipo de Pago</label>
-                        <input type="text" class="form-control" id="tipo_pago" name="tipo_pago" required>
-                    </div>
+                    <button
+                        id="btnAdquisicion"
+                        type="buttons"
+                        class="btn btn-success mb-3"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#adquisicionCollapse">
+                        <i class="fa-solid fa-plus"></i>
+                        Agregar Adquisición
+                    </button>
+                    <input type="hidden" id="adquisicionAgregada" name="adquisicionAgregada" value="false">
+                    <div class="collapse" id="adquisicionCollapse">
+                        <div class="mb-3">
+                            <label for="proveedor" class="form-label">Proveedor</label>
+                            <select class="form-select" id="proveedor" name="proveedor">
+                                <option value="">Seleccione un proveedor</option>
+                                <?php
+                                foreach ($proveedores as $proveedor) {
+                                    echo "<option value=" . htmlspecialchars($proveedor['id']) . ">" . htmlspecialchars($proveedor['nombre']) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha_adquisicion" class="form-label">Fecha de Entrega</label>
+                            <input type="date" class="form-control date" id="fecha_adquisicion" name="fecha_adquisicion">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="fecha_entrada" name="fecha_entrada">
+                                <label class="form-check-label" for="fecha_entrada">
+                                    Se entrega el mismo día?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="factura" class="form-label">Número de Factura</label>
+                            <input type="text" class="form-control" id="factura" name="factura">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo_pago" class="form-label">Tipo de Pago</label>
+                            <input type="text" class="form-control" id="tipo_pago" name="tipo_pago">
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="numero_fondo" class="form-label">Número de Fondo</label>
-                        <input type="text" class="form-control" id="numero_fondo" name="numero_fondo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="garantia" class="form-label">Garantía</label>
-                        <textarea type="text" class="form-control" id="garantia" name="garantia" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>
-                        <select class="form-select" id="persona_compra" name="persona_compra" required>
-                            <option disabled selected hidden>Seleccione una persona</option>
-                            <option value="otros">Otros</option>
-                            <?php
-                            foreach ($usuarios as $usuario) {
-                                echo "<option value='" . htmlspecialchars($usuario['nombre_completo']) . "'>" . htmlspecialchars($usuario['nombre_completo']) . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="otra_persona">
+                        <div class="mb-3">
+                            <label for="numero_fondo" class="form-label">Número de Fondo</label>
+                            <input type="text" class="form-control" id="numero_fondo" name="numero_fondo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="garantia" class="form-label">Garantía</label>
+                            <textarea type="text" class="form-control" id="garantia" name="garantia"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>
+                            <select class="form-select" id="persona_compra" name="persona_compra" required>
+                                <option disabled selected hidden>Seleccione una persona</option>
+                                <option value="otros">Otros</option>
+                                <?php
+                                foreach ($usuarios as $usuario) {
+                                    echo "<option value='" . htmlspecialchars($usuario['nombre_completo']) . "'>" . htmlspecialchars($usuario['nombre_completo']) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="otra_persona">
 
+                        </div>
                     </div>
+                    <!-- articulo -->
                     <h3 class="mb-3 mt-4">Información del artículo</h3>
                     <div class="mb-3">
                         <label for="caja" class="form-label">Número de caja</label>
-                        <input type="text" class="form-control" id="caja" name="caja" required>
+                        <input type="number" step="1" class="form-control" id="caja" name="caja" required>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -84,7 +105,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <textarea type="text" class="form-control" id="direccion" name="direccion" required></textarea>
+                        <textarea type="text" class="form-control" id="direccion" name="direccion"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -104,15 +125,15 @@
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
                         <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" required>
                     </div>
-
+                    <!-- categoria -->
                     <h3 class="mb-3 mt-4">Categoría</h3>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
-                        <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()">
-                            <?php if($categoriaSeleccionada !== null): ?>
-                            <option >Seleccione una categoria</option>
+                        <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()" required>
+                            <?php if ($categoriaSeleccionada !== null): ?>
+                                <option>Seleccione una categoria</option>
                             <?php else: ?>
-                            <option selected>Seleccione una categoria</option>
+                                <option selected>Seleccione una categoria</option>
                             <?php
                             endif;
 

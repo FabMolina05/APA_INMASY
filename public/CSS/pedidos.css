@@ -1,0 +1,90 @@
+ .tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    margin-right: 4px;
+    transition: background 0.3s;
+}
+
+.tab:hover {
+    background: #e8e8e8;
+}
+
+.tab.active {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    color: white;
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+ #misPedidos {
+    margin-bottom: 0;
+}
+
+#misPedidos thead th {
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+}
+
+#misPedidos tbody tr {
+    transition: all 0.2s ease;
+}
+
+#misPedidos tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+}
+
+#misPedidos tbody td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+ #listaPedidos {
+    margin-bottom: 0;
+}
+
+#listaPedidos thead th {
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+}
+
+#listaPedidos tbody tr {
+    transition: all 0.2s ease;
+}
+
+#listaPedidos tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+}
+
+#listaPedidos tbody td {
+    padding: 12px;
+    vertical-align: middle;
+}

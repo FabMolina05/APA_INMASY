@@ -21,7 +21,7 @@
             // Pedidos
             if ($usuario['rol'] == 1 || $usuario['rol'] == 3) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#pedidos" class="nav-link">';
+                echo ' <a href="/pedidos/index" class="nav-link">';
                 echo ' <i class="fas fa-shopping-cart"></i>';
                 echo ' <span>Pedidos</span>';
                 echo ' </a>';
@@ -43,8 +43,19 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reles&id=2">Reles</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=tarjetas&id=3">Tarjetas</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=baterias&id=8">Baterías</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reconectador&id=9">Reconectador</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=seccionador&id=10">Seccionador</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
+                echo ' </li>';
+            }
+            // Bodega
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="/bodega/index" class="nav-link">';
+                echo ' <i class="fa-solid fa-box"></i>';
+                echo ' <span>Bodega</span>';
+                echo ' </a>';
                 echo ' </li>';
             }
 
@@ -87,6 +98,19 @@
                 echo ' </a>';
                 echo ' </li>';
             }
+
+            // Proveedores
+            if ($usuario['rol'] == 1) {
+                echo ' <li class="nav-item">';
+                echo ' <a href="/proveedores/index" class="nav-link">';
+                echo ' <i class="fa-solid fa-truck"></i>';
+                echo ' <span>Proveedores</span>';
+                echo ' </a>';
+                echo ' </li>';
+            }
+
+
+
 
             echo '        </ul>';
             echo '    </nav>';

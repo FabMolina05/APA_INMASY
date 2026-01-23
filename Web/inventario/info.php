@@ -2,8 +2,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="exampleModalLabel">Información Articulo</h2>
+                <div class="modal-header bg-primary text-white">
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Información del Articulo</h2>
                 </div>
                 <div id="infoArticuloContenido">
 

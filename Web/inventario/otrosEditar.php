@@ -8,7 +8,7 @@
                 <form method="POST" action="/inventario/actualizar">
                     <div class="mb-3">
                         <label for="id_caja" class="form-label">ID Caja</label>
-                        <input type="text" class="form-control" id="CAJA" name="CAJA" disabled required>
+                        <input type="number" step="0.01"  class="form-control" id="CAJA" name="CAJA"  required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="nombre" class="form-label">Nombre</label>

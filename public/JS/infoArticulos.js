@@ -10,18 +10,34 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
         data: { id: id, categoria: categoria },
         success: function (response) {
             response = response.data;
-            let html = '';
+
             let keys = Object.keys(response);
+            let html = `<div class="container-fluid p-0">
+                         <div class="card border-0 shadow-sm mb-3">
+        
+        <div class="card-body">
+            <div class="row g-${keys.length}">
+            `;
             keys.forEach(key => {
                 if (key !== "Activo" && key !== "ID") {
 
                     if (key === "Disponibilidad") {
                         let disponibilidad = response[key] === 1 ? 'Ocupado' : 'Libre';
-                        html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> :' + disponibilidad + '</p>';
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${key}:</span>
+                                    <span class="fw-semibold">${disponibilidad}</span>
+                                </div>
+                            </div>`;
                         return;
                     }
                     if (key === "Tecnico" && response[key] === null) {
-                        html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> : Sin ocupar</p>';
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${key}:</span>
+                                    <span class="fw-semibold">Sin Ocupar</span>
+                                </div>
+                            </div>`;
                         return;
                     }
                     if (key === "atributos" && response[key] === null) {
@@ -30,19 +46,52 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                     if (key === "atributos" && response[key] !== null) {
                         const atributos = JSON.parse(response[key]);
                         Object.keys(atributos).forEach(attrKey => {
-                            if(atributos[attrKey] === null || atributos[attrKey] === '') {
+                            if (atributos[attrKey] === null || atributos[attrKey] === '') {
                                 atributos[attrKey] = 'N/A';
                             }
-                            html += '<p class="my-3 mx-3    "><strong>' + attrKey + '</strong> :' + atributos[attrKey] + '</p>';
+
+                            if(attrKey == "corte")
+                            {
+                                atributos[attrKey] = (atributos[attrKey] == 1)? "SI" : "NO";
+                            }
+                            word = attrKey;
+                            if (attrKey.includes("_")) {
+                                split = attrKey.split("_")
+                                word = `${split[0]} ${split[1]}`
+                            }
+                            html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${word}:</span>
+                                    <span class="fw-semibold">${atributos[attrKey]}</span>
+                                </div>
+                            </div>`;
                         });
                         return;
                     }
-                    html += '<p class="my-3 mx-3    "><strong>' + key + '</strong> :' + response[key] + '</p>';
+                    if (key.includes("_")) {
+                        split = key.split("_")
+                        word = `${split[0]} ${split[1]}`
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${word}:</span>
+                                    <span class="fw-semibold">${response[key]}</span>
+                                </div>
+                            </div>`;
+                        return;
+                    }
+                    html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${key}:</span>
+                                    <span class="fw-semibold">${response[key]}</span>
+                                </div>
+                            </div>`;
 
                 }
 
             });
-
+            html += `</div>
+        </div>
+    </div>`
             $('#infoArticuloContenido').html(html);
         },
         error: function (error) {

@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/public/CSS/sidebar.css">
     <link rel="stylesheet" href="/public/CSS/users.css">
     <link rel="stylesheet" href="/public/CSS/entradas.css">
+    <link rel="stylesheet" href="/public/CSS/pedidos.css">
+
    
 </head>
 <body>

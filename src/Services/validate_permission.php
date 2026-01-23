@@ -57,6 +57,34 @@ class ValidatePermissions
                 'request' => '/entrada/index',
                 'roles' => ['1']
             ],
+             [
+                'request' => '/entrada/obtenerEntradaPorId',
+                'roles' => ['1']
+            ],
+             [
+                'request' => '/entrada/establecerFecha',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/entrada/actualizar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/pedidos/index',
+                'roles' => ['1','2','3']
+            ],
+             [
+                'request' => '/pedidos/aceptar',
+                'roles' => ['1','2','3']
+            ],
+             [
+                'request' => '/pedidos/denegar',
+                'roles' => ['1','2','3']
+            ],
+             [
+                'request' => '/pedidos/obtenerPedidoPorId',
+                'roles' => ['1','2','3']
+            ],
             [
                 'request' => '/error404',
                 'roles' => ['1','2','3']
