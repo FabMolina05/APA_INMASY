@@ -67,7 +67,7 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
 
 
                 if (key === 'proveedor') {
-                    
+
 
                     $('#modalEditarEntrante').find(`#${key} option`).filter(function () {
                         return $(this).val() == entrada['id_proveedor'];
@@ -77,7 +77,7 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
                 }
 
                 if (key === 'encargado') {
-                    
+
 
                     $('#modalEditarEntrante').find(`#persona_compra option`).filter(function () {
                         return $(this).val() == entrada['encargado'];
@@ -85,8 +85,8 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
 
                     return;
                 }
-                 if (key === 'fecha_entrega') {
-                    
+                if (key === 'fecha_entrega') {
+
 
                     $('#modalEditarEntrante').find(`#fecha_adquisicion `).val(entrada[key].date.split(" ")[0])
 
@@ -110,6 +110,24 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
     })
 
 });
+
+$('#modalPedirArticulo').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    $(this).find('#ID').val(id);
+
+});
+
+$('#modalAceptarPedido').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    $(this).find('#ID').val(id);
+
+});
+
+
 
 function existeOpcion(valor, nombre) {
     let existe = false;

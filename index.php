@@ -7,13 +7,10 @@ require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
 require_once __DIR__ . '/src/Controlador/EntradaControlador.php';
 require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
 
-
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
 
 use DA\DBContext;
-?>
-<?php
 
 $dbContext = new DBContext();
 $conn = $dbContext->getConnection();
@@ -23,9 +20,6 @@ $usuarioController = new UsuarioControlador($conn);
 $inventarioController = new InventarioControlador($conn);
 $entradaController = new EntradaControlador($conn);
 $pedidosController = new PedidosControlador($conn);
-
-
-
 
 $request = $_SERVER['REQUEST_URI'];
 $request = strtok($request, '?');
@@ -40,7 +34,7 @@ ob_start();
 include __DIR__ . '/Web/components/Header.php';
 include __DIR__ . '/Web/components/Sidebar.php';
 
-ob_end_flush();
+
 
 switch ($request) {
     case '/':
@@ -61,7 +55,6 @@ switch ($request) {
     case '/inventario/categoria':
         $inventarioController->obtenerArticulosPorCategoria($_GET['id'], $_GET['categoria']);
         break;
-
     case '/inventario/obtenerArticuloPorId':
         $inventarioController->obtenerArticuloPorId();
         break;
@@ -92,18 +85,23 @@ switch ($request) {
     case '/pedidos/index':
         $pedidosController->index();
         break;
+    case '/pedidos/aceptar':
+        $pedidosController->aceptarPedido();
+        break;
+    case '/pedidos/denegar':
+        $pedidosController->denegarPedido();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;
     case '/error404':
         require_once __DIR__ . '/Web/vistas/error404.php';
         break;
-
     default:
         http_response_code(404);
         break;
-};
+}
 
 include __DIR__ . '/Web/components/Footer.php';
 
-?>
+ob_end_flush();

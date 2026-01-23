@@ -54,7 +54,14 @@ class InventarioBL implements IInventarioBL{
 
     }
     public function pedirArticulo($id){
+         try {
+            $resultado = $this->inventarioDA->pedirArticulo($id);
 
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
     
 

@@ -112,36 +112,52 @@ class InventarioDA implements IInventarioDA
         return ['success' => true, 'categoria' => $id];
     }
     public function sacarArticulo($id) {}
-    public function pedirArticulo($pedido) {
+    public function pedirArticulo($pedido)
+    {
+
+        sqlsrv_begin_transaction($this->conexion);
+        try{
         $queryFormula = "INSERT INTO dbo.INMASY_FormulaRetiro(fecha,direccion,num_orden) 
                   VALUES (?,?,?);
                   SELECT SCOPE_IDENTITY() AS id;
-                  SELECT ID_Inventario
-                  FROM dbo.INMASY_Inventario
-                  WHERE id_articulo = ?;";
+                  ";
 
-        $params=[
+        $params = [
             $pedido['fecha'],
             $pedido['direccion'],
             $pedido['num_orden'],
-            $pedido['id_articulo']
         ];
 
-        $stmt = sqlsrv_query($this->conexion,$queryFormula,$params);
+        $stmt = sqlsrv_query($this->conexion, $queryFormula, $params);
 
-        
+
         if ($stmt == false) {
             $e = sqlsrv_errors();
-            return ['error' => $e[0]['message']];
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']."linea 138"];
         }
 
-        sqlsrv_next_result($stmt);
 
-        $idFormula=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+        $idFormula = $this->obtenerSiguienteId($stmt);
 
-        sqlsrv_next_result($stmt);
+       $query = "SELECT ID_Inventario as id
+                  FROM dbo.INMASY_Inventario
+                  WHERE id_articulo = ?";
+            
+        $params = array($pedido['id_articulo']);
 
-        $idInventario=sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message'] ."linea 157"];
+        }
+
+        $idInventario = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['id'];
 
         sqlsrv_free_stmt($stmt);
 
@@ -155,13 +171,51 @@ class InventarioDA implements IInventarioDA
 
         ];
 
-        $stmt = sqlsrv_query($this->conexion,$queryPedido,$params);
+        $stmt = sqlsrv_query($this->conexion, $queryPedido, $params);
 
         if ($stmt == false) {
             $e = sqlsrv_errors();
-            return ['error' => $e[0]['message']];
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']."linea 180"];
         }
 
-        return ['success'=> true];
+        sqlsrv_free_stmt($stmt);
+
+        $query = "UPDATE  a
+                  SET a.disponibilidad = 1, uso_equipo = ?
+                  FROM dbo.INMASY_Articulos a
+                  INNER JOIN dbo.INMASY_Inventario i ON ID_Inventario = ?
+                  WHERE a.ID_Articulo = i.id_articulo";
+        
+        $params = array($pedido['usuario'],$idInventario);
+
+        $stmt = sqlsrv_query($this->conexion,$query,$params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']."linea 199"];
+        }
+
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true];
+        }catch(\Exception $e){
+            return ['error' => $e[0]['message']];
+        }
+    }
+    private function obtenerSiguienteId($stmt)
+    {
+        sqlsrv_next_result($stmt);
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        sqlsrv_free_stmt($stmt);
+
+        if (!isset($row['id']) || $row['id'] === null) {
+            throw new \Exception("SCOPE_IDENTITY retornó NULL");
+        }
+
+        return (int)$row['id'];
     }
 }

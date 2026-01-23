@@ -21,6 +21,7 @@ class InventarioControlador extends Controller{
         $id = $_GET['id'];
         $categoria = $_GET['categoria'];
         $articulo = $this->inventarioBL->obtenerArticuloPorId($categoria, $id);
+
         
         $this->json(['success' => true, 'data' => $articulo]);
 
@@ -91,12 +92,15 @@ class InventarioControlador extends Controller{
             'num_orden' => null,
             'id_articulo' => $_POST['id_articulo'],
             'nombre_cliente' => $_POST['nombre_cliente'],
-            'estado' => 'PENDIENTE'
+            'estado' => 'PENDIENTE',
+            'usuario' => $_SESSION['usuario_INMASY']['ID_Usuario']
         ];
 
         $resultado = $this->inventarioBL->pedirArticulo($pedido);
+
         
-        $this->json($resultado);
+        
+        $this->redirect('/pedidos/index');
 
     }
    
