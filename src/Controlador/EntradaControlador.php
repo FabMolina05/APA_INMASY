@@ -135,7 +135,7 @@ class EntradaControlador extends Controller
         if (isset($resultado['error'])) {
             $this->view('/Vistas/error403', ['error' => $resultado['error']]);
         }
-        $this->redirect('/entrada/index');
+        $this->json($resultado);
     }
 
     public function obtenerEntradaPorId()

@@ -5,6 +5,8 @@ namespace DA\Pedidos;
 require_once dirname(__DIR__, 3) . "/src/ABS/Interfaces/DA/IPedidosDA.php";
 
 use ABS\Interfaces\DA\IPedidosDA;
+use DateTime;
+use DateTimeZone;
 
 
 class PedidosDA implements IPedidosDA
@@ -34,7 +36,7 @@ class PedidosDA implements IPedidosDA
                                                               FROM dbo.INMASY_Inventario i
                                                               WHERE ID_Inventario = pr.id_inventario)
               JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
-              WHERE a.uso_equipo = ?";
+              WHERE pr.id_cliente = ?";
 
         $params = array($usuario);
 
@@ -58,10 +60,10 @@ class PedidosDA implements IPedidosDA
     {
         sqlsrv_begin_transaction($this->conexion);
         $query = "UPDATE dbo.INMASY_PedidosRetiro
-                  SET estado = 'DENEGADO'
+                  SET estado = 'DENEGADO',descripcion = ?,id_persona_taller = ?
                   WHERE ID_Pedido = ? ";
 
-        $params = array($pedido);
+        $params = [$pedido['descripcion'], $pedido['encargado'], $pedido['id']];
 
         $stmt = sqlsrv_query($this->conexion, $query, $params);
 
@@ -83,7 +85,7 @@ class PedidosDA implements IPedidosDA
                     ON pr.id_inventario = i.ID_Inventario
                 WHERE pr.ID_Pedido = ?";
 
-        $params = array($pedido);
+        $params = array($pedido['id']);
 
         $stmt = sqlsrv_query($this->conexion, $query, $params);
 
@@ -91,14 +93,14 @@ class PedidosDA implements IPedidosDA
             $e = sqlsrv_errors();
             sqlsrv_rollback($this->conexion);
 
-            return ['error' => $e[0]['message'] . "linea 199"];
+            return ['error' => $e . "linea 199"];
         }
 
         sqlsrv_commit($this->conexion);
 
 
 
-        return ['success' => true];;
+        return ['success' => true];
     }
     public function aceptarPedido($pedido)
     {
@@ -136,7 +138,25 @@ class PedidosDA implements IPedidosDA
             return ['error' => $e[0]['message']];
         }
         sqlsrv_free_stmt($stmt);
+        $query = "UPDATE  a
+                  SET a.uso_equipo = u.nombre_completo, a.direccion = fr.direccion
+                  FROM dbo.INMASY_PedidosRetiro pr
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
+                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
+                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE pr.ID_Pedido = ?";
 
+        $params = array($pedido['id']);
+
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']];
+        }
 
 
         sqlsrv_commit($this->conexion);
@@ -145,29 +165,35 @@ class PedidosDA implements IPedidosDA
 
 
 
-        return ['success' => true];;
+        return ['success' => true];
     }
     public function detallePedido($pedido)
     {
         $query = "SELECT 
-                pr.ID_Pedido as id,
-                pr.estado as estado,
-                pr.nombre_cliente as cliente,
-                u.nombre_completo as encargado,
-                a.nombre as nombre_articulo,
-                a.atributos_especificos,
-                a.serial,
-                a.modelo,
-                fr.fecha as fecha,
-                fr.direccion as direccion,
-                fr.num_orden as orden
-              FROM dbo.INMASY_PedidosRetiro pr
-              JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_persona_taller
-              JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = (SELECT i.id_articulo
-                                                              FROM dbo.INMASY_Inventario i
-                                                              WHERE ID_Inventario = pr.id_inventario)
-              JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
-              WHERE e.ID_Pedido = ?";
+            pr.ID_Pedido as id,
+            pr.estado as estado,
+            pr.descripcion as descripcion,
+            c.nombre_completo as cliente,
+            u.nombre_completo as encargado,
+            a.nombre as nombre_articulo,
+            a.atributos_especificos,
+            a.serial,
+            a.modelo,
+            a.id_caja as caja,
+            fr.fecha as fecha,
+            fr.direccion as direccion,
+            fr.num_orden as orden
+        FROM dbo.INMASY_PedidosRetiro pr
+        LEFT JOIN dbo.INMASY_Usuarios u 
+            ON u.ID_Usuario = pr.id_persona_taller
+        LEFT JOIN dbo.INMASY_Usuarios c ON c.ID_Usuario = pr.id_cliente
+        LEFT JOIN dbo.INMASY_Inventario i 
+            ON i.ID_Inventario = pr.id_inventario
+        LEFT JOIN dbo.INMASY_Articulos a 
+            ON a.ID_Articulo = i.id_articulo
+        LEFT JOIN dbo.INMASY_FormulaRetiro fr 
+            ON fr.ID_Formula = pr.id_formula
+        WHERE pr.ID_Pedido = ?";
 
         $params = array($pedido);
 
@@ -178,12 +204,10 @@ class PedidosDA implements IPedidosDA
             return ['error' => $e[0]['message']];
         }
 
-        $pedido = [];
+        $pedido = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
 
-            $pedido[] = $row;
-        }
+
 
         return $pedido;
     }
@@ -193,7 +217,7 @@ class PedidosDA implements IPedidosDA
                 pr.ID_Pedido as id,
                 pr.estado as estado,
                 u.nombre_completo as encargado,
-                pr.nombre_cliente as cliente,
+                c.nombre_completo as cliente,
                 a.nombre as nombre_articulo,
                 a.atributos_especificos,
                 a.serial,
@@ -201,6 +225,7 @@ class PedidosDA implements IPedidosDA
                 fr.fecha as fecha
               FROM dbo.INMASY_PedidosRetiro pr
               LEFT JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_persona_taller
+              LEFT JOIN dbo.INMASY_Usuarios c ON c.ID_Usuario = pr.id_cliente
               JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = (SELECT i.id_articulo
                                                               FROM dbo.INMASY_Inventario i
                                                               WHERE ID_Inventario = pr.id_inventario)
@@ -225,16 +250,116 @@ class PedidosDA implements IPedidosDA
 
         return $pedidos;;
     }
-    private function obtenerSiguienteId($stmt)
+    public function devolverPedido($pedido)
     {
-        sqlsrv_next_result($stmt);
-        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        sqlsrv_begin_transaction($this->conexion);
+        $query = "UPDATE  a
+                  SET a.uso_equipo = null, a.direccion = '',a.disponibilidad = 0
+                  FROM dbo.INMASY_PedidosRetiro pr
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
+                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
+                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE pr.ID_Pedido = ?";
+
+
+        $params = array($pedido);
+
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']];
+        }
         sqlsrv_free_stmt($stmt);
 
-        if (!isset($row['id']) || $row['id'] === null) {
-            throw new \Exception("SCOPE_IDENTITY retornó NULL");
+        $query = "UPDATE  dbo.INMASY_PedidosRetiro
+                  SET estado = 'DEVUELTO',fecha_devolucion = ?
+                  WHERE ID_Pedido = ?";
+
+        $zona = new DateTimeZone('America/Costa_Rica');
+        $fechaConZona = new DateTime('now', $zona);
+        $fecha_entrega = $fechaConZona->format('Y-m-d H:i:s');
+        $params = array($fecha_entrega,$pedido);
+
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $e[0]['message']];
         }
 
-        return (int)$row['id'];
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true];
+    }
+    public function editarPedido($pedido)
+    {
+
+        sqlsrv_begin_transaction($this->conexion);
+
+        if(($estado = $this->EstadoValido($pedido))['success']==false){
+            return $estado;
+        }
+        
+        $query = "UPDATE fr
+                SET fr.direccion = ?, fr.fecha = ?
+                FROM dbo.INMASY_FormulaRetiro fr
+                JOIN dbo.INMASY_PedidosRetiro pr ON pr.ID_Pedido = ?
+                WHERE fr.ID_Formula =pr.id_formula";
+
+        $params = [
+            $pedido['direccion'],
+            $pedido['fecha'],
+            $pedido['id_pedido']
+        ];
+
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+            return ['error' => $e[0]['message']];
+        }
+        sqlsrv_free_stmt($stmt);
+
+
+
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true];
+    }
+
+    private function EstadoValido($pedido) {
+        $query = "SELECT estado 
+                FROM dbo.INMASY_PedidosRetiro
+                WHERE ID_Pedido = ?";
+
+        $params = [
+            
+            $pedido['id_pedido']
+        ];
+
+        $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+        if ($stmt == false) {
+            $e = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+            return ['success' =>false , 'error'=> $e[0]['message']];
+        }
+
+        $estado = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+
+        if($estado['estado'] == "DENEGADO"){
+            sqlsrv_free_stmt($stmt);
+            return ['success' => false,'error'=>"Pedido Denegado"];
+        }
+
+        return ['success' => true];
+
     }
 }

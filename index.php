@@ -85,17 +85,32 @@ switch ($request) {
     case '/pedidos/index':
         $pedidosController->index();
         break;
+    case '/pedidos/listaPedidos':
+        $pedidosController->listaPedidos();
+        break;
+    case '/pedidos/detalle':
+        $pedidosController->detallePedido();
+        break;
     case '/pedidos/aceptar':
         $pedidosController->aceptarPedido();
         break;
     case '/pedidos/denegar':
         $pedidosController->denegarPedido();
         break;
+    case '/pedidos/editarPedido':
+        $pedidosController->editarPedido();
+        break;
+    case '/pedidos/devolver':
+        $pedidosController->devolverPedido();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;
     case '/error404':
         require_once __DIR__ . '/Web/vistas/error404.php';
+        break;
+    case '/error501':
+        require_once __DIR__ . '/Web/vistas/error501.php';
         break;
     default:
         http_response_code(404);

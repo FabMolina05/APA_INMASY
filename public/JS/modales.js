@@ -127,6 +127,48 @@ $('#modalAceptarPedido').on('show.bs.modal', function (event) {
 
 });
 
+$('#modalEditarPedido').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    $.ajax({
+        type: "GET",
+        url: "/pedidos/detalle",
+        dataType: 'json',
+        data: { id: id},
+        success: function (response) {
+            response = response.data;
+            let keys = Object.keys(response);
+            keys.forEach(key => {
+
+                if (key === 'fecha') {
+
+
+                    $('#modalEditarPedido').find(`#fecha`).val(response[key].date.split(" ")[0])
+
+                    return;
+                }
+                
+
+                const elemento = $('#modalEditarPedido').find(`#${key}`);
+
+                if (elemento.length > 0) {
+                    elemento.val(response[key]);
+                }
+
+
+            });
+            $('#modalEditarArticulo').modal('show');
+
+        },
+        error: function (error) {
+            alert("Error: " + error);
+        }
+    })
+
+});
+
+
 
 
 function existeOpcion(valor, nombre) {
@@ -139,5 +181,3 @@ function existeOpcion(valor, nombre) {
     });
     return existe;
 }
-
-

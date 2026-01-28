@@ -7,7 +7,7 @@
                 </div>
                 <form method="POST" action="/pedidos/aceptar" id="aceptarPedido">
                     
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 my-2">
                         <label for="num_orden" class="form-label">Número de orden</label>
                         <input type="text" class="form-control" id="num_orden" name="num_orden" required>
                     </div>
@@ -17,7 +17,7 @@
                     <?php echo '<input type="hidden" id="encargado" name="encargado" value="'.htmlspecialchars($_SESSION['usuario_INMASY']['ID_Usuario']).'">'; ?>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="submit" class="btn btn-success">Aceptar Pedido</button>
                     </div>
                 </form>
 

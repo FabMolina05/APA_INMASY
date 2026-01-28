@@ -93,7 +93,9 @@ class InventarioControlador extends Controller{
             'id_articulo' => $_POST['id_articulo'],
             'nombre_cliente' => $_POST['nombre_cliente'],
             'estado' => 'PENDIENTE',
-            'usuario' => $_SESSION['usuario_INMASY']['ID_Usuario']
+            'usuario' => $_SESSION['usuario_INMASY']['nombre_completo'],
+            'id_cliente' => $_SESSION['usuario_INMASY']['ID_Usuario']
+
         ];
 
         $resultado = $this->inventarioBL->pedirArticulo($pedido);

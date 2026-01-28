@@ -226,3 +226,39 @@ $('#btnAdquisicion').on('click', function () {
     }
 });
 
+
+$(document).ready(function () {
+    $('#aceptarPedido').on('submit', function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            url: '/pedidos/aceptar', // tu endpoint
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Se acepto el pedido correctamente'
+                }).then(() => {
+                    location.reload();
+                });
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un problema al enviar el formulario'
+                }).then(() => {
+                    location.reload();
+                });
+            }
+        });
+    });
+});
+
+
+
+
+

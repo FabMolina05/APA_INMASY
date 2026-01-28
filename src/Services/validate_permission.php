@@ -31,11 +31,11 @@ class ValidatePermissions
             ],
             [
                 'request' => '/inventario/categoria',
-                'roles' => ['1']
+                'roles' => ['1','2','3']
             ],
             [
                 'request' => '/inventario/obtenerArticuloPorId',
-                'roles' => ['1']
+                'roles' => ['1','2','3']
             ],
             [
                 'request' => '/inventario/actualizar',
@@ -47,7 +47,7 @@ class ValidatePermissions
             ],
             [
                 'request' => '/inventario/pedirArticulo',
-                'roles' => ['1']
+                'roles' => ['1','2','3']
             ],
             [
                 'request' => '/entrada/agregarArticulo',
@@ -70,6 +70,10 @@ class ValidatePermissions
                 'roles' => ['1']
             ],
             [
+                'request' => '/pedidos/listaPedidos',
+                'roles' => ['1']
+            ],
+            [
                 'request' => '/pedidos/index',
                 'roles' => ['1','2','3']
             ],
@@ -82,7 +86,15 @@ class ValidatePermissions
                 'roles' => ['1','2','3']
             ],
              [
-                'request' => '/pedidos/obtenerPedidoPorId',
+                'request' => '/pedidos/detalle',
+                'roles' => ['1','2','3']
+            ],
+            [
+                'request' => '/pedidos/editarPedido',
+                'roles' => ['1','2','3']
+            ],
+             [
+                'request' => '/pedidos/devolver',
                 'roles' => ['1','2','3']
             ],
             [
@@ -91,6 +103,10 @@ class ValidatePermissions
             ],
              [
                 'request' => '/error403',
+                'roles' => ['1','2','3']
+            ],
+            [
+                'request' => '/error501',
                 'roles' => ['1','2','3']
             ],
 
