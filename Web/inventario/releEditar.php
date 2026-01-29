@@ -16,15 +16,39 @@
                     </div>
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="Marca" name="marca" required>
+                        <input type="text" class="form-control" id="Marca" name="marca" >
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="Modelo" name="modelo" required>
+                        <input type="text" class="form-control" id="Modelo" name="modelo" >
                     </div>
                     <div class="mb-3">
                         <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="Serial" name="serial" required>
+                        <input type="text" class="form-control" id="Serial" name="serial" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <textarea type="text" class="form-control" id="Direccion" name="direccion" ></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-select" id="Tipo" name="tipo" required>
+                            <option value="Circuito de Distribución">Circuito de Distribución</option>
+                            <option value="Transformador">Transformador</option>
+                            <option value="Trifásico">Trifásico</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vdc" class="form-label">VDC</label>
+                        <input type="text" class="form-control" id="vdc" name="vdc" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vac" class="form-label">VAC</label>
+                        <input type="text" class="form-control" id="vac" name="vac" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="aidi" class="form-label">Codigo AIDI</label>
+                        <input type="text" class="form-control" id="aidi" name="aidi" required>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -37,19 +61,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" required>
+                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" >
                     </div>
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="Cantidad" name="cantidad" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="Direccion" name="direccion" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" required>
                     </div>
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>

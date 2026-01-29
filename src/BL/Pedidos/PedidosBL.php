@@ -68,4 +68,28 @@ class PedidosBL implements IPedidosBL{
             return ['error' => $e->getMessage()];
         }
     }
+
+    public function editarPedido($pedido)
+    {
+        try {
+            $resultado = $this->pedidosDA->editarPedido($pedido);
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function devolverPedido($pedido)
+    {
+         try {
+            $resultado = $this->pedidosDA->devolverPedido($pedido);
+
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
 }

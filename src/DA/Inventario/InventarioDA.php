@@ -18,7 +18,7 @@ class InventarioDA implements IInventarioDA
     public function obtenerArticulosPorCategoria($categoria)
     {
         $params = array($categoria);
-        $query = "SELECT a.ID_Articulo,a.id_caja,a.modelo,a.marca,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
+        $query = "SELECT a.ID_Articulo,a.id_caja,a.modelo,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
                  FROM dbo.INMASY_Articulos a
                  WHERE a.id_categoria = ?";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
@@ -42,13 +42,11 @@ class InventarioDA implements IInventarioDA
 
         return $reles;
     }
-
     public function obtenerArticuloPorId($categoria, $id)
     {
 
 
-        $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,u.nombre_completo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a
-                 LEFT JOIN dbo.INMASY_Usuarios u on a.uso_equipo = u.ID_Usuario
+        $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,a.uso_equipo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a    
                  WHERE a.ID_Articulo = ?";
         $params = array($id);
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
@@ -161,12 +159,12 @@ class InventarioDA implements IInventarioDA
 
         sqlsrv_free_stmt($stmt);
 
-        $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,nombre_cliente,estado)
+        $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,id_cliente,estado)
                         VALUES (?,?,?,?)";
         $params = [
             $idInventario,
             $idFormula,
-            $pedido['nombre_cliente'],
+            $pedido['id_cliente'],
             $pedido['estado']
 
         ];
@@ -183,12 +181,12 @@ class InventarioDA implements IInventarioDA
         sqlsrv_free_stmt($stmt);
 
         $query = "UPDATE  a
-                  SET a.disponibilidad = 1, uso_equipo = ?
+                  SET a.disponibilidad = 1, uso_equipo = 'EN REVISIÓN'
                   FROM dbo.INMASY_Articulos a
-                  INNER JOIN dbo.INMASY_Inventario i ON ID_Inventario = ?
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ?
                   WHERE a.ID_Articulo = i.id_articulo";
         
-        $params = array($pedido['usuario'],$idInventario);
+        $params = array($idInventario);
 
         $stmt = sqlsrv_query($this->conexion,$query,$params);
 

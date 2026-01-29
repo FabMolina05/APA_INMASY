@@ -85,7 +85,7 @@
                     <h3 class="mb-3 mt-4">Información del artículo</h3>
                     <div class="mb-3">
                         <label for="caja" class="form-label">Número de caja</label>
-                        <input type="number" step="1" class="form-control" id="caja" name="caja" required>
+                        <input type="number" step="1" class="form-control" id="caja" name="caja">
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -93,15 +93,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca" required>
+                        <input type="text" class="form-control" id="marca" name="marca">
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" required>
+                        <input type="text" class="form-control" id="modelo" name="modelo">
                     </div>
                     <div class="mb-3">
                         <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="serial" name="serial" required>
+                        <input type="text" class="form-control" id="serial" name="serial">
                     </div>
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" required>
+                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" >
                     </div>
                     <!-- categoria -->
                     <h3 class="mb-3 mt-4">Categoría</h3>

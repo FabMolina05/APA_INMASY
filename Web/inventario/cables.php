@@ -8,11 +8,14 @@
                         <h2 class="mb-0">Inventario</h2>
                         <p class="text-muted small mb-0">Gestiona Cables</p>
                     </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=4'">
-                            <i class="bi bi-plus-circle me-1"></i> Agregar artículo
-                        </button>
-                    </div>
+                    <?php if ($_SESSION['usuario_INMASY']['rol'] == 1): ?>
+
+                        <div class="col-auto">
+                            <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=4'">
+                                <i class="bi bi-plus-circle me-1"></i> Agregar artículo
+                            </button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -35,44 +38,52 @@
                             <?php
                             if ($articulos != null && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
-                                    echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
-                                    echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
-                                    if ($articulo['peso'] == null || $articulo['peso'] == '') {
-                                        $articulo['peso'] = 'N/A';
-                                    }
-                                    echo "<td>" . htmlspecialchars($articulo['peso']) . "</td>";
-                                    
-                                    if ($articulo['disponibilidad'] == 1) {
-                                        echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
-                                    } else {
-                                        echo "<td><span class='badge bg-success'>Libre</span></td>";
-                                    };
-                                    
-                                    if ($_SESSION['usuario_INMASY']['rol'] == 1) {
-                                        if ($articulo['activo'] == 0) {
-                                            echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
+                                    if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
+                                        echo "<tr>";
+                                        echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
+                                        echo ($articulo['marca']!="") ? "<td>" . htmlspecialchars($articulo['marca']) . "</td>" : "<td>N/A</td>";
+                                        echo ($articulo['modelo']!="") ? "<td>" . htmlspecialchars($articulo['modelo']) . "</td>" : "<td>N/A</td>";
+                                        if ($articulo['peso'] == null || $articulo['peso'] == '') {
+                                            $articulo['peso'] = 'N/A';
+                                        }
+                                        echo "<td>" . htmlspecialchars($articulo['peso']) . "</td>";
+
+                                        if ($articulo['disponibilidad'] == 1) {
+                                            echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                         } else {
-                                            echo "<td><span class='badge bg-success'>Activo</span></td>";
+                                            echo "<td><span class='badge bg-success'>Libre</span></td>";
                                         };
-                                    }
-                                    echo "<td class='text-center'>
+
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1) {
+                                            if ($articulo['activo'] == 0) {
+                                                echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
+                                            } else {
+                                                echo "<td><span class='badge bg-success'>Activo</span></td>";
+                                            };
+                                        }
+                                        echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
                                                 <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
-                                                </button>
-                                                
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                                </button>";
+                                        if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
+                                                    <i class='fa-solid fa-basket-shopping'></i>
+                                                </button>";
+                                        }
+
+                                        echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
                                                 
+                                                
                                             </div>
                                           </td>";
-                                    echo "</tr>";
+                                        echo "</tr>";
+                                    }
                                 }
                             }
                             ?>
@@ -82,6 +93,7 @@
             </div>
         </div>
     </div>
+    <?php include_once './Web/inventario/pedido.php' ?>
 
     <?php include_once './Web/inventario/info.php' ?>
     <?php include_once './Web/inventario/cablesEditar.php' ?>

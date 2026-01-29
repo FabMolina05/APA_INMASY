@@ -16,15 +16,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="Marca" name="marca" required>
+                        <input type="text" class="form-control" id="Marca" name="marca" >
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="Modelo" name="modelo" required>
+                        <input type="text" class="form-control" id="Modelo" name="modelo" >
                     </div>
                     <div class="mb-3">
                         <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="Serial" name="serial" required>
+                        <input type="text" class="form-control" id="Serial" name="serial" >
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" required>
+                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" >
                     </div>
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="Direccion" name="direccion" required>
+                        <input type="text" class="form-control" id="Direccion" name="direccion" >
                     </div>
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>

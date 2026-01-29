@@ -15,41 +15,75 @@ class PedidosControlador extends Controller
 
     public function index()
     {
+        
 
         if ($_SESSION['usuario_INMASY']['rol'] == 1) {
             $PedidosGenerales = $this->PedidosBL->obtenerPedidos();
             $PedidosUsuario = $this->PedidosBL->obtenerPedidosUsuario($_SESSION['usuario_INMASY']['ID_Usuario']);
             $this->view('pedidos/index', ['pedidosGenerales' => $PedidosGenerales, 'pedidosUsuario' => $PedidosUsuario]);
         }
+
+
         $PedidosUsuario = $this->PedidosBL->obtenerPedidosUsuario($_SESSION['usuario_INMASY']['ID_Usuario']);
         $this->view('pedidos/index', ['pedidosUsuario' => $PedidosUsuario]);
     }
 
+    public function listaPedidos()
+    {
+        $PedidosGenerales = $this->PedidosBL->obtenerPedidos();
+        $this->json( ['data' => $PedidosGenerales]);
+    }
+
     public function denegarPedido()
     {
-        $id = $_POST['id'];
-        $resultado = $this->PedidosBL->denegarPedido($id);
+         $pedido = [
+            'id' => $_POST['id'],
+            'descripcion' => $_POST['descripcion'],
+            'encargado'=> $_SESSION['usuario_INMASY']['ID_Usuario']
+        ];
+        $resultado = $this->PedidosBL->denegarPedido($pedido);
 
         $this->json($resultado);
     }
     public function aceptarPedido()
     {
 
-    $pedido = [
-        'id' =>$_POST['id'],
-        'encargado' =>$_POST['encargado'],
-        'num_orden' =>$_POST['num_orden'],
-    ];
-        
+        $pedido = [
+            'id' => $_POST['id'],
+            'encargado' => $_POST['encargado'],
+            'num_orden' => $_POST['num_orden'],
+        ];
+
         $resultado = $this->PedidosBL->aceptarPedido($pedido);
 
         $this->json($resultado);
     }
     public function detallePedido()
     {
-       
+
         $id = $_GET['id'];
         $pedido = $this->PedidosBL->detallePedido($id);
-        $this->json($pedido);
+        $this->json(['success' => true, 'data' => $pedido]);
+    }
+
+    public function editarPedido()
+    {
+        $pedido = [
+            'direccion' => $_POST['direccion'],
+            'fecha' => $_POST['fecha'],
+            'id_pedido' => $_POST['id_pedido']
+        ];
+
+        $resultado = $this->PedidosBL->editarPedido($pedido);
+
+        
+        $this->json($resultado);
+    }
+
+    public function devolverPedido(){
+        $pedido = $_POST['id'];
+        $resultado = $this->PedidosBL->devolverPedido($pedido);
+        $this->json($resultado);
+
     }
 }
