@@ -27,7 +27,10 @@
                                 <th>Nombre</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
+                                <th>Serial</th>
                                 <th>Tipo</th>
+                                <th>VDC</th>
+                                <th>VAC</th>
                                 <th>Disponible</th>
                                 <?php if ($_SESSION['usuario_INMASY']['rol'] == 1): ?>
                                     <th>Activo</th>
@@ -45,7 +48,12 @@
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['serial']) . "</td>";
+
                                         echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['vdc']) . "</td>";
+                                        echo (isset($articulo['vac'])?"<td>" . htmlspecialchars($articulo['vac']) . "</td>":"<td>No Requiere</td>");
+
                                         if ($articulo['disponibilidad'] == 1) {
                                             echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                         } else {

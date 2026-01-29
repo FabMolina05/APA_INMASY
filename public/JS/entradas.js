@@ -6,19 +6,31 @@ function mostrarCategoria() {
         contenidoCategoria.innerHTML = `
             <div class="mb-3">
                 <label for="tipo" class="form-label">Tipo</label>
-                <select class="form-select" id="tipo" name="tipo" required>
-                    <option value="">Seleccione un tipo</option>
-                    <option value="Laptop">Laptop</option>
-                    <option value="Desktop">Desktop</option>
-                </select>
+                <input type="text" class="form-control" id="tipoElectronica" name="tipoElectronica" required>
             </div>
         `;
     } else if (categoria === "2") {
         contenidoCategoria.innerHTML = `
             <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <input type="text" class="form-control" id="tipo" name="tipo" required>
-
+                <label for="tipo" class="form-label">Tipo de Rele</label>
+                <select class="form-select" id="tipo" name="tipo" required>
+                    <option value="">Seleccione un tipo</option>
+                    <option value="Circuito de Distribución">Circuito de Distribución</option>
+                    <option value="Transformador">Transformador</option>
+                    <option value="Trifásico">Trifásico</option>
+                </select>
+            </div>
+             <div class="mb-3">
+                <label for="vdc" class="form-label">Rango de VDC</label>
+                <input type="text" class="form-control" id="vdc" name="vdc" required>
+            </div>
+             <div class="mb-3">
+                <label for="vac" class="form-label">Rango de VAC</label>
+                <input type="text" class="form-control" id="vac" name="vac" >
+            </div>
+            <div class="mb-3">
+                <label for="aidi" class="form-label">Codigo AIDI</label>
+                <input type="text" class="form-control" id="aidi" name="aidi" >
             </div>
         `;
     } else if (categoria === "4") {
@@ -55,7 +67,7 @@ function mostrarCategoria() {
                 <input type="number" step="0.01" class="form-control" id="corriente" name="corriente" required>
         </div>
         <div class="mb-3">
-                <label for="numero" class="form-label">Número</label>
+                <label for="numero" class="form-label">Número de batería</label>
                 <input type="text" class="form-control" id="numero" name="numero" required>
         </div>
          `;
@@ -97,6 +109,10 @@ function mostrarCategoria() {
                     <option value='SUBESTACIÓN'>SUBESTACIÓN</option>
                 </select>
         </div>
+        <div class="mb-3">
+                <label for="aidi" class="form-label">Codigo AIDI</label>
+                <input type="text" class="form-control" id="aidi" name="aidi">
+            </div>
          `;
 
     } else if (categoria === "10") {
@@ -130,6 +146,10 @@ function mostrarCategoria() {
                     <option value='POSTE'>POSTE</option>
                 </select>
         </div>
+        <div class="mb-3">
+                <label for="aidi" class="form-label">Codigo AIDI</label>
+                <input type="text" class="form-control" id="aidi" name="aidi" >
+            </div>
          `;
 
     }
@@ -154,7 +174,7 @@ $('#persona_compra').on('change', function () {
 });
 
 
-$(document).on('change', '#protocolo',function () {
+$(document).on('change', '#protocolo', function () {
     const seleccion = $(this).val();
     const otro = document.querySelector('.otro_protocolo');
     if (seleccion === 'otro') {
@@ -228,28 +248,38 @@ $('#btnAdquisicion').on('click', function () {
 
 
 $(document).ready(function () {
-    $('#aceptarPedido').on('submit', function (e) {
+    $('#formEditarEntrante').on('submit', function (e) {
 
         e.preventDefault();
 
         $.ajax({
-            url: '/pedidos/aceptar', // tu endpoint
+            url: '/entrada/actualizar',
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Éxito!',
-                    text: 'Se acepto el pedido correctamente'
-                }).then(() => {
-                    location.reload();
-                });
+                if (response.success === false) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.data || 'Ocurrió un error al procesar la solicitud.'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Se acepto el pedido correctamente'
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
             },
-            error: function () {
+            error: function (xhr) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Ocurrió un problema al enviar el formulario'
+                    text: xhr.responseText || 'Ocurrió un error al procesar la solicitud.'
                 }).then(() => {
                     location.reload();
                 });

@@ -6,6 +6,8 @@ require_once __DIR__ . '/src/Controlador/UsuarioControlador.php';
 require_once __DIR__ . '/src/Controlador/InventarioControlador.php';
 require_once __DIR__ . '/src/Controlador/EntradaControlador.php';
 require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
+require_once __DIR__ . '/src/Controlador/ProveedoresControlador.php';
+
 
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
@@ -20,6 +22,7 @@ $usuarioController = new UsuarioControlador($conn);
 $inventarioController = new InventarioControlador($conn);
 $entradaController = new EntradaControlador($conn);
 $pedidosController = new PedidosControlador($conn);
+$proveedoresController = new ProveedoresControlador($conn);
 
 $request = $_SERVER['REQUEST_URI'];
 $request = strtok($request, '?');
@@ -102,6 +105,21 @@ switch ($request) {
         break;
     case '/pedidos/devolver':
         $pedidosController->devolverPedido();
+        break;
+    case '/proveedores/index':
+        $proveedoresController->index();
+        break;
+    case '/proveedores/agregar':
+        $proveedoresController->agregar();
+        break;
+    case '/proveedores/agregarProveedor':
+        $proveedoresController->agregarProveedor();
+        break;
+    case '/proveedores/actualizar':
+        $proveedoresController->actualizarUsuario();
+        break;
+    case '/proveedores/obtenerProveedorPorId':
+        $proveedoresController->obtenerProveedorPorId();
         break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';

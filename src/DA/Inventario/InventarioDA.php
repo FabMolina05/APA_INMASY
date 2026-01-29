@@ -18,7 +18,7 @@ class InventarioDA implements IInventarioDA
     public function obtenerArticulosPorCategoria($categoria)
     {
         $params = array($categoria);
-        $query = "SELECT a.ID_Articulo,a.id_caja,a.modelo,a.marca,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
+        $query = "SELECT a.ID_Articulo,a.id_caja,a.modelo,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
                  FROM dbo.INMASY_Articulos a
                  WHERE a.id_categoria = ?";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);

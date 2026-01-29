@@ -109,7 +109,26 @@ class ValidatePermissions
                 'request' => '/error501',
                 'roles' => ['1','2','3']
             ],
-
+            [
+                'request' => '/proveedores/index',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/proveedores/agregar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/proveedores/agregarProveedor',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/proveedores/actualizar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/proveedores/obtenerProveedorPorId',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 

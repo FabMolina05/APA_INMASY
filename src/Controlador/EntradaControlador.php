@@ -50,7 +50,7 @@ class EntradaControlador extends Controller
                 'marca' => $_POST['marca'],
                 'modelo' => $_POST['modelo'],
                 'serial' => $_POST['serial'],
-                'costo_unitario' => $_POST['costo_unitario'],
+                'costo_unitario' => isset($_POST['costo_unitario']) ? $_POST['costo_unitario'] : null,
                 'estado' => $_POST['estado'],
                 'direccion' => $_POST['direccion'],
                 'cantidad' => $_POST['cantidad'],
@@ -59,9 +59,13 @@ class EntradaControlador extends Controller
                 'id_caja' => $_POST['caja'],
 
             ];
-            if (isset($_POST['tipo'])) {
-                $articuloNuevo['atributos'] = json_encode(['tipo' => $_POST['tipo']]);
+            if (isset($_POST['tipoElectronica'])) {
+                $articuloNuevo['atributos'] = json_encode(['tipo' => $_POST['tipoElectronica']]);
             };
+            if(isset($_POST['vac'])){
+                $articuloNuevo['atributos'] = json_encode(['vac' => $_POST['vac'], 'aidi' => $_POST['aidi'],'vdc' => $_POST['vdc'],'tipo' => $_POST['tipo']]);
+                
+            }
             if (isset($_POST['peso'])) {
                 $articuloNuevo['atributos'] = json_encode(['peso' => $_POST['peso']]);
             };
@@ -80,7 +84,8 @@ class EntradaControlador extends Controller
                     'tension_nominal' => $_POST['tension'],
                     'control' => $_POST['control'],
                     'montaje' =>$_POST['montaje'],
-                    'protocolo' =>  (isset($_POST['protocolo'])) ? $_POST['protocolo'] : $_POST['otro_protocolo']
+                    'protocolo' =>  (isset($_POST['protocolo'])) ? $_POST['protocolo'] : $_POST['otro_protocolo'],
+                    'aidi' => $_POST['aidi']
                 ]);
             }
             if (isset($_POST['instalacion'])) {
@@ -89,7 +94,8 @@ class EntradaControlador extends Controller
                     'tension_nominal' => $_POST['tension'],
                     'operacion' => $_POST['operacion'],
                     'corte' =>$_POST['corte'],
-                    'instalacion'=>$_POST['instalacion']
+                    'instalacion'=>$_POST['instalacion'],
+                    'aidi' => $_POST['aidi']
                 ]);
             }
 
@@ -125,11 +131,19 @@ class EntradaControlador extends Controller
             'numero_fondo' => $_POST['numero_fondo'],
             'numero_factura' => $_POST['factura'],
             'fecha_adquisicion' => $_POST['fecha_adquisicion'],
-            'persona_compra' => $_POST['persona_compra'],
+            
             'garantia' => $_POST['garantia'],
             'proveedor' => $_POST['proveedor'],
             'id_entrada' => $_POST['id_entrante'],
         ];
+
+        if(isset($_POST['persona_compra'])){
+            if ($_POST['persona_compra'] == "otros") {
+                $entrada['persona_compra'] = $_POST['otra_persona'];
+            } else {
+                $entrada['persona_compra'] = $_POST['persona_compra'];
+            };
+        }
         $resultado = $this->entradaBL->editarEntrada($entrada);
 
         if (isset($resultado['error'])) {

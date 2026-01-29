@@ -87,7 +87,10 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
                 }
                 if (key === 'fecha_entrega') {
 
-
+                    if (entrada[key] == null) {
+                        $('#modalEditarEntrante').find(`#fecha_entrega `).val('');
+                        return;
+                    }
                     $('#modalEditarEntrante').find(`#fecha_adquisicion `).val(entrada[key].date.split(" ")[0])
 
                     return;
@@ -135,7 +138,7 @@ $('#modalEditarPedido').on('show.bs.modal', function (event) {
         type: "GET",
         url: "/pedidos/detalle",
         dataType: 'json',
-        data: { id: id},
+        data: { id: id },
         success: function (response) {
             response = response.data;
             let keys = Object.keys(response);
@@ -148,7 +151,7 @@ $('#modalEditarPedido').on('show.bs.modal', function (event) {
 
                     return;
                 }
-                
+
 
                 const elemento = $('#modalEditarPedido').find(`#${key}`);
 
@@ -167,6 +170,36 @@ $('#modalEditarPedido').on('show.bs.modal', function (event) {
     })
 
 });
+
+$('#modalEditarProveedores').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    modal.find('#ID').val(id);
+
+    $.ajax({
+        type: "GET",
+        url: "/proveedores/obtenerProveedorPorId",
+        dataType: 'json',
+        data: { id: id },
+        success: function (response) {
+            response = response.data;
+            let keys = Object.keys(response);
+            keys.forEach(key => {
+                const elemento = $('#modalEditarProveedores').find(`#${key}`);
+
+                if (elemento.length > 0) {
+                    elemento.val(response[key]);
+                }
+            });
+            $('#modalEditarProveedores').modal('show');
+        },
+        error: function (error) {
+            alert("Error: " + error);
+        }
+    })
+}
+);
 
 
 

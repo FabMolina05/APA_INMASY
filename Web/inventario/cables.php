@@ -42,8 +42,8 @@
                                         echo "<tr>";
                                         echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
+                                        echo ($articulo['marca']!="") ? "<td>" . htmlspecialchars($articulo['marca']) . "</td>" : "<td>N/A</td>";
+                                        echo ($articulo['modelo']!="") ? "<td>" . htmlspecialchars($articulo['modelo']) . "</td>" : "<td>N/A</td>";
                                         if ($articulo['peso'] == null || $articulo['peso'] == '') {
                                             $articulo['peso'] = 'N/A';
                                         }

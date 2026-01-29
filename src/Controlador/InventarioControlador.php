@@ -44,9 +44,13 @@ class InventarioControlador extends Controller{
                 'id_caja' => $_POST['CAJA']
 
             ];
-         if(isset($_POST['tipo'])){
-                $articuloActualizado['atributos'] = json_encode(['tipo' => $_POST['tipo']]);
+         if (isset($_POST['tipoElectronica'])) {
+                $articuloActualizado['atributos'] = json_encode(['tipo' => $_POST['tipoElectronica']]);
             };
+            if(isset($_POST['vac'])){
+                $articuloActualizado['atributos'] = json_encode(['vac' => $_POST['vac'], 'aidi' => $_POST['aidi'],'vdc' => $_POST['vdc'],'tipo' => $_POST['tipo']]);
+                
+            }
             if(isset($_POST['peso'])){
                 $articuloActualizado['atributos'] = json_encode(['peso' => $_POST['peso']]);
             };
