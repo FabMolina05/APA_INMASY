@@ -52,7 +52,7 @@
 
                                         echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['vdc']) . "</td>";
-                                        echo (isset($articulo['vac'])?"<td>" . htmlspecialchars($articulo['vac']) . "</td>":"<td>No Requiere</td>");
+                                        echo ($articulo['vac'] != "")?"<td>" . htmlspecialchars($articulo['vac']) . "</td>":"<td>No Requiere</td>";
 
                                         if ($articulo['disponibilidad'] == 1) {
                                             echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
