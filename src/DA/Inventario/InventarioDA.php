@@ -18,7 +18,7 @@ class InventarioDA implements IInventarioDA
     public function obtenerArticulosPorCategoria($categoria)
     {
         $params = array($categoria);
-        $query = "SELECT a.ID_Articulo,a.id_caja,a.modelo,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
+        $query = "SELECT a.ID_Articulo,a.num_articulo,a.modelo,a.cantidad,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
                  FROM dbo.INMASY_Articulos a
                  WHERE a.id_categoria = ?";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
@@ -46,7 +46,7 @@ class InventarioDA implements IInventarioDA
     {
 
 
-        $query = "SELECT a.id_caja as CAJA,a.nombre as Nombre,a.uso_equipo as Tecnico,a.modelo as Modelo,a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a    
+        $query = "SELECT a.num_articulo  ,a.nombre as Nombre,a.uso_equipo as Tecnico,a.modelo as Modelo,a.fecha_fabricacion as 'Fabricación',a.serial as Serial,a.estado as Estado,a.marca as  Marca,a.disponibilidad as Disponibilidad,a.direccion as Direccion,a.costo_unitario as Costo,a.cantidad as Cantidad,atributos_especificos as atributos,a.ID_Articulo as ID,a.activo as Activo FROM dbo.INMASY_Articulos a    
                  WHERE a.ID_Articulo = ?";
         $params = array($id);
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
@@ -61,7 +61,7 @@ class InventarioDA implements IInventarioDA
     public function editarArticulo($articulo)
     {
         sqlsrv_begin_transaction($this->conexion);
-        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? ,id_caja = ? WHERE ID_Articulo = ?;
+        $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? ,num_articulo = ? WHERE ID_Articulo = ?;
         SELECT id_categoria FROM dbo.INMASY_Articulos WHERE ID_Articulo = ?;";
         $params = [
             $articulo['nombre'],
@@ -73,7 +73,7 @@ class InventarioDA implements IInventarioDA
             $articulo['cantidad'],
             $articulo['direccion'],
             $articulo['activo'],
-            $articulo['id_caja'],
+            $articulo['num_articulo'],
             $articulo['ID_Articulo'],
             $articulo['ID_Articulo'],
         ];
@@ -114,93 +114,94 @@ class InventarioDA implements IInventarioDA
     {
 
         sqlsrv_begin_transaction($this->conexion);
-        try{
-        $queryFormula = "INSERT INTO dbo.INMASY_FormulaRetiro(fecha,direccion,num_orden) 
-                  VALUES (?,?,?);
+        try {
+            $queryFormula = "INSERT INTO dbo.INMASY_FormulaRetiro(fecha,direccion,cantidad,num_orden) 
+                  VALUES (?,?,?,?);
                   SELECT SCOPE_IDENTITY() AS id;
                   ";
 
-        $params = [
-            $pedido['fecha'],
-            $pedido['direccion'],
-            $pedido['num_orden'],
-        ];
+            $params = [
+                $pedido['fecha'],
+                !empty($pedido['direccion']) ? $pedido['direccion'] : null,
+                !empty($pedido['cantidad']) ? $pedido['cantidad'] : null,
+                $pedido['num_orden'],
+            ];
 
-        $stmt = sqlsrv_query($this->conexion, $queryFormula, $params);
-
-
-        if ($stmt == false) {
-            $e = sqlsrv_errors();
-            sqlsrv_rollback($this->conexion);
-
-            return ['error' => $e[0]['message']."linea 138"];
-        }
+            $stmt = sqlsrv_query($this->conexion, $queryFormula, $params);
 
 
-        $idFormula = $this->obtenerSiguienteId($stmt);
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
 
-       $query = "SELECT ID_Inventario as id
+                return ['error' => $e[0]['message'] . "linea 138"];
+            }
+
+
+            $idFormula = $this->obtenerSiguienteId($stmt);
+
+            $query = "SELECT ID_Inventario as id
                   FROM dbo.INMASY_Inventario
                   WHERE id_articulo = ?";
-            
-        $params = array($pedido['id_articulo']);
 
-        $stmt = sqlsrv_query($this->conexion, $query, $params);
+            $params = array($pedido['id_articulo']);
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
 
 
-        if ($stmt == false) {
-            $e = sqlsrv_errors();
-            sqlsrv_rollback($this->conexion);
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
 
-            return ['error' => $e[0]['message'] ."linea 157"];
-        }
+                return ['error' => $e[0]['message'] . "linea 157"];
+            }
 
-        $idInventario = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['id'];
+            $idInventario = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['id'];
 
-        sqlsrv_free_stmt($stmt);
+            sqlsrv_free_stmt($stmt);
 
-        $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,id_cliente,estado)
+            $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,id_cliente,estado)
                         VALUES (?,?,?,?)";
-        $params = [
-            $idInventario,
-            $idFormula,
-            $pedido['id_cliente'],
-            $pedido['estado']
+            $params = [
+                $idInventario,
+                $idFormula,
+                $pedido['id_cliente'],
+                $pedido['estado']
 
-        ];
+            ];
 
-        $stmt = sqlsrv_query($this->conexion, $queryPedido, $params);
+            $stmt = sqlsrv_query($this->conexion, $queryPedido, $params);
 
-        if ($stmt == false) {
-            $e = sqlsrv_errors();
-            sqlsrv_rollback($this->conexion);
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
 
-            return ['error' => $e[0]['message']."linea 180"];
-        }
+                return ['error' => $e[0]['message'] . "linea 180"];
+            }
 
-        sqlsrv_free_stmt($stmt);
+            sqlsrv_free_stmt($stmt);
 
-        $query = "UPDATE  a
+            $query = "UPDATE  a
                   SET a.disponibilidad = 1, uso_equipo = 'EN REVISIÓN'
                   FROM dbo.INMASY_Articulos a
                   INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ?
                   WHERE a.ID_Articulo = i.id_articulo";
-        
-        $params = array($idInventario);
 
-        $stmt = sqlsrv_query($this->conexion,$query,$params);
+            $params = array($idInventario);
 
-        if ($stmt == false) {
-            $e = sqlsrv_errors();
-            sqlsrv_rollback($this->conexion);
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
 
-            return ['error' => $e[0]['message']."linea 199"];
-        }
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
 
-        sqlsrv_commit($this->conexion);
+                return ['error' => $e[0]['message'] . "linea 199"];
+            }
 
-        return ['success' => true];
-        }catch(\Exception $e){
+            sqlsrv_commit($this->conexion);
+
+            return ['success' => true];
+        } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }
     }

@@ -27,7 +27,9 @@ class PedidosDA implements IPedidosDA
                 u.nombre_completo as encargado,
                 a.nombre as nombre_articulo,
                 a.serial,
-                a.modelo,
+                a.cantidad as 'cantidadActual',
+                fr.cantidad,
+                fr.direccion,
                 fr.fecha as fecha,
                 fr.num_orden as orden
               FROM dbo.INMASY_PedidosRetiro pr
@@ -60,7 +62,7 @@ class PedidosDA implements IPedidosDA
     {
         sqlsrv_begin_transaction($this->conexion);
         $query = "UPDATE dbo.INMASY_PedidosRetiro
-                  SET estado = 'DENEGADO',descripcion = ?,id_persona_taller = ?
+                  SET estado = 'DENEGADO',rechazo = ?,id_persona_taller = ?
                   WHERE ID_Pedido = ? ";
 
         $params = [$pedido['descripcion'], $pedido['encargado'], $pedido['id']];
@@ -137,15 +139,12 @@ class PedidosDA implements IPedidosDA
             sqlsrv_rollback($this->conexion);
             return ['error' => $e[0]['message']];
         }
-        sqlsrv_free_stmt($stmt);
-        $query = "UPDATE  a
-                  SET a.uso_equipo = u.nombre_completo, a.direccion = fr.direccion
-                  FROM dbo.INMASY_PedidosRetiro pr
-                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
-                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
-                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
-                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
-                  WHERE pr.ID_Pedido = ?";
+
+        $query = "SELECT cantidad FROM dbo.INMASY_FormulaRetiro
+                  WHERE ID_Formula = (SELECT id_formula
+                                      FROM dbo.INMASY_PedidosRetiro
+                                      WHERE ID_Pedido = ?) ;
+                   ";
 
         $params = array($pedido['id']);
 
@@ -154,10 +153,75 @@ class PedidosDA implements IPedidosDA
         if ($stmt == false) {
             $e = sqlsrv_errors();
             sqlsrv_rollback($this->conexion);
-
             return ['error' => $e[0]['message']];
         }
 
+        $cantidad = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['cantidad'];
+
+        sqlsrv_free_stmt($stmt);
+
+        if (!empty($cantidad)) {
+            $query = "UPDATE  a
+                  SET a.uso_equipo = u.nombre_completo, a.direccion = fr.direccion,a.cantidad = a.cantidad - ?
+                  FROM dbo.INMASY_PedidosRetiro pr
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
+                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
+                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE pr.ID_Pedido = ?";
+
+            $params = array($cantidad, $pedido['id']);
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message']];
+            }
+            $query = "UPDATE  a
+                  SET a.uso_equipo = null, a.direccion = '',a.disponibilidad = 0
+                  FROM dbo.INMASY_PedidosRetiro pr
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
+                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
+                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE pr.ID_Pedido = ?";
+
+
+            $params = array($pedido['id']);
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message']];
+            }
+            sqlsrv_free_stmt($stmt);
+        } else {
+            $query = "UPDATE  a
+                  SET a.uso_equipo = u.nombre_completo, a.direccion = fr.direccion
+                  FROM dbo.INMASY_PedidosRetiro pr
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
+                  INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
+                  INNER JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE pr.ID_Pedido = ?";
+
+            $params = array($pedido['id']);
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message']];
+            }
+        }
 
         sqlsrv_commit($this->conexion);
 
@@ -170,30 +234,32 @@ class PedidosDA implements IPedidosDA
     public function detallePedido($pedido)
     {
         $query = "SELECT 
-            pr.ID_Pedido as id,
-            pr.estado as estado,
-            pr.descripcion as descripcion,
-            c.nombre_completo as cliente,
-            u.nombre_completo as encargado,
-            a.nombre as nombre_articulo,
-            a.atributos_especificos,
-            a.serial,
-            a.modelo,
-            a.id_caja as caja,
-            fr.fecha as fecha,
-            fr.direccion as direccion,
-            fr.num_orden as orden
-        FROM dbo.INMASY_PedidosRetiro pr
-        LEFT JOIN dbo.INMASY_Usuarios u 
-            ON u.ID_Usuario = pr.id_persona_taller
-        LEFT JOIN dbo.INMASY_Usuarios c ON c.ID_Usuario = pr.id_cliente
-        LEFT JOIN dbo.INMASY_Inventario i 
-            ON i.ID_Inventario = pr.id_inventario
-        LEFT JOIN dbo.INMASY_Articulos a 
-            ON a.ID_Articulo = i.id_articulo
-        LEFT JOIN dbo.INMASY_FormulaRetiro fr 
-            ON fr.ID_Formula = pr.id_formula
-        WHERE pr.ID_Pedido = ?";
+          pr.ID_Pedido as id,
+          pr.estado as estado,
+          c.nombre_completo as cliente,
+          u.nombre_completo as encargado,
+          a.nombre as nombre_articulo,
+          a.atributos_especificos,
+          a.serial,
+          a.modelo,
+          a.cantidad as 'cantidadActual',
+          a.num_articulo as num_articulo,
+          a.id_categoria as categoria,
+          fr.fecha as fecha,
+          fr.direccion as direccion,
+          fr.cantidad as cantidad,
+          fr.num_orden as orden
+      FROM dbo.INMASY_PedidosRetiro pr
+      LEFT JOIN dbo.INMASY_Usuarios u 
+          ON u.ID_Usuario = pr.id_persona_taller
+      LEFT JOIN dbo.INMASY_Usuarios c ON c.ID_Usuario = pr.id_cliente
+      LEFT JOIN dbo.INMASY_Inventario i 
+          ON i.ID_Inventario = pr.id_inventario
+      LEFT JOIN dbo.INMASY_Articulos a 
+          ON a.ID_Articulo = i.id_articulo
+      LEFT JOIN dbo.INMASY_FormulaRetiro fr 
+          ON fr.ID_Formula = pr.id_formula
+      WHERE pr.ID_Pedido = ?";
 
         $params = array($pedido);
 
@@ -222,6 +288,7 @@ class PedidosDA implements IPedidosDA
                 a.atributos_especificos,
                 a.serial,
                 a.modelo,
+                
                 fr.fecha as fecha
               FROM dbo.INMASY_PedidosRetiro pr
               LEFT JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_persona_taller
@@ -254,7 +321,7 @@ class PedidosDA implements IPedidosDA
     {
         sqlsrv_begin_transaction($this->conexion);
         $query = "UPDATE  a
-                  SET a.uso_equipo = null, a.direccion = '',a.disponibilidad = 0
+                  SET a.uso_equipo = null, a.direccion = null,a.disponibilidad = 0
                   FROM dbo.INMASY_PedidosRetiro pr
                   INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = pr.id_inventario
                   INNER JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = pr.id_cliente
@@ -282,7 +349,7 @@ class PedidosDA implements IPedidosDA
         $zona = new DateTimeZone('America/Costa_Rica');
         $fechaConZona = new DateTime('now', $zona);
         $fecha_entrega = $fechaConZona->format('Y-m-d H:i:s');
-        $params = array($fecha_entrega,$pedido);
+        $params = array($fecha_entrega, $pedido);
 
         $stmt = sqlsrv_query($this->conexion, $query, $params);
 
@@ -302,45 +369,65 @@ class PedidosDA implements IPedidosDA
 
         sqlsrv_begin_transaction($this->conexion);
 
-        if(($estado = $this->EstadoValido($pedido))['success']==false){
+        if (($estado = $this->EstadoValido($pedido))['success'] == false) {
             return $estado;
         }
-        
-        $query = "UPDATE fr
-                SET fr.direccion = ?, fr.fecha = ?
+
+        if (empty($pedido['direccion'])) {
+            $query = "UPDATE fr
+                SET fr.cantidad = ?, fr.fecha = ? 
                 FROM dbo.INMASY_FormulaRetiro fr
                 JOIN dbo.INMASY_PedidosRetiro pr ON pr.ID_Pedido = ?
                 WHERE fr.ID_Formula =pr.id_formula";
 
-        $params = [
-            $pedido['direccion'],
-            $pedido['fecha'],
-            $pedido['id_pedido']
-        ];
+            $params = [
+                $pedido['cantidad'],
+                $pedido['fecha'],
+                $pedido['id_pedido']
+            ];
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
 
-        $stmt = sqlsrv_query($this->conexion, $query, $params);
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+                return ['error' => $e[0]['message']];
+            }
+            sqlsrv_free_stmt($stmt);
+        } else {
+            $query = "UPDATE fr
+                SET fr.direccion = ?, fr.fecha = ? 
+                FROM dbo.INMASY_FormulaRetiro fr
+                JOIN dbo.INMASY_PedidosRetiro pr ON pr.ID_Pedido = ?
+                WHERE fr.ID_Formula =pr.id_formula";
 
-        if ($stmt == false) {
-            $e = sqlsrv_errors();
-            sqlsrv_rollback($this->conexion);
-            return ['error' => $e[0]['message']];
+            $params = [
+                $pedido['direccion'],
+                $pedido['fecha'],
+                $pedido['id_pedido']
+            ];
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+                return ['error' => $e[0]['message']];
+            }
+            sqlsrv_free_stmt($stmt);
         }
-        sqlsrv_free_stmt($stmt);
-
-
 
         sqlsrv_commit($this->conexion);
 
         return ['success' => true];
     }
 
-    private function EstadoValido($pedido) {
+    private function EstadoValido($pedido)
+    {
         $query = "SELECT estado 
                 FROM dbo.INMASY_PedidosRetiro
                 WHERE ID_Pedido = ?";
 
         $params = [
-            
+
             $pedido['id_pedido']
         ];
 
@@ -349,17 +436,16 @@ class PedidosDA implements IPedidosDA
         if ($stmt == false) {
             $e = sqlsrv_errors();
             sqlsrv_rollback($this->conexion);
-            return ['success' =>false , 'error'=> $e[0]['message']];
+            return ['success' => false, 'error' => $e[0]['message']];
         }
 
-        $estado = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC);
+        $estado = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        if($estado['estado'] == "DENEGADO"){
+        if ($estado['estado'] == "DENEGADO") {
             sqlsrv_free_stmt($stmt);
-            return ['success' => false,'error'=>"Pedido Denegado"];
+            return ['success' => false, 'error' => "Pedido Denegado"];
         }
 
         return ['success' => true];
-
     }
 }

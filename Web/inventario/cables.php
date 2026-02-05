@@ -24,10 +24,10 @@
                     <table id="inventarioTable" class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>ID CAJA</th>
+                                <th>N° Artículo</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
-                                <th>Modelo</th>
+                                <th>Cantidad</th>
                                 <th>Peso</th>
                                 <th>Disponible</th>
                                 <th>activo</th>
@@ -36,14 +36,14 @@
                         </thead>
                         <tbody>
                             <?php
-                            if ($articulos != null && count($articulos) > 0) {
+                            if (isset($articulos) && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
                                     if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
                                         echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                         echo ($articulo['marca']!="") ? "<td>" . htmlspecialchars($articulo['marca']) . "</td>" : "<td>N/A</td>";
-                                        echo ($articulo['modelo']!="") ? "<td>" . htmlspecialchars($articulo['modelo']) . "</td>" : "<td>N/A</td>";
+                                        echo ($articulo['cantidad']!="") ? "<td>" . htmlspecialchars($articulo['cantidad']) . "</td>" : "<td>N/A</td>";
                                         if ($articulo['peso'] == null || $articulo['peso'] == '') {
                                             $articulo['peso'] = 'N/A';
                                         }
@@ -69,7 +69,7 @@
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
                                         if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
-                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='cables' data-cantidad=".htmlspecialchars($articulo['cantidad'])." class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
                                                     <i class='fa-solid fa-basket-shopping'></i>
                                                 </button>";
                                         }

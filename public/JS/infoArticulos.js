@@ -31,6 +31,33 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                             </div>`;
                         return;
                     }
+                    if (key === "Fabricación") {
+                        let fecha;
+                        if (response[key] === null) {
+                            fecha = "N/A"
+                        } else {
+                            fecha = response[key].date.split(" ")[0] ?? 'N/A'
+                        }
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">${key}:</span>
+                                    <span class="fw-semibold">${fecha}</span>
+                                </div>
+                            </div>`;
+                        return;
+                    }
+                    if (key === "num_articulo") {
+                        html += `<div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-start">
+                                    <span class="text-muted me-2">N° Artículo:</span>
+                                    <span class="fw-semibold">${response[key]}</span>
+                                </div>
+                            </div>`;
+                        return;
+                    }
+
+
+
                     if (key === "Tecnico" && response[key] === null) {
                         html += `<div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-start">
@@ -50,9 +77,8 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                                 atributos[attrKey] = 'N/A';
                             }
 
-                            if(attrKey == "corte")
-                            {
-                                atributos[attrKey] = (atributos[attrKey] == 1)? "SI" : "NO";
+                            if (attrKey == "corte") {
+                                atributos[attrKey] = (atributos[attrKey] == 1) ? "SI" : "NO";
                             }
                             word = attrKey;
                             if (attrKey.includes("_")) {
@@ -82,7 +108,7 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                     html += `<div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-start">
                                     <span class="text-muted me-2">${key}:</span>
-                                    <span class="fw-semibold">${response[key]}</span>
+                                    <span class="fw-semibold">${response[key]??'N/A'}</span>
                                 </div>
                             </div>`;
 

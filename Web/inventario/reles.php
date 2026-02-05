@@ -14,23 +14,23 @@
                                 <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                             </button>
                         </div>
-                    <?php endif; ?>
+                    <?php endif;?>
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="table-responsive">
+                
                     <table id="inventarioTable" class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>ID CAJA</th>
+                                <th>N° Artículo</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
-                                <th>Modelo</th>
                                 <th>Serial</th>
+                                <th>Phase</th>
+                                <th>Ground</th>
                                 <th>Tipo</th>
-                                <th>VDC</th>
-                                <th>VAC</th>
                                 <th>Disponible</th>
                                 <?php if ($_SESSION['usuario_INMASY']['rol'] == 1): ?>
                                     <th>Activo</th>
@@ -43,17 +43,16 @@
                             if ($articulos != null && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
                                     if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
-                                        echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
+                                        
+                                        echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['serial']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['phase']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['ground']) . "</td>";
 
                                         echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($articulo['vdc']) . "</td>";
-                                        echo ($articulo['vac'] != "")?"<td>" . htmlspecialchars($articulo['vac']) . "</td>":"<td>No Requiere</td>";
-
+                                       
                                         if ($articulo['disponibilidad'] == 1) {
                                             echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                         } else {
@@ -86,7 +85,7 @@
 
 
                                         echo    "</div>
-                                          </td>;
+                                          </td>
                                         </tr>";
                                     }
                                 }

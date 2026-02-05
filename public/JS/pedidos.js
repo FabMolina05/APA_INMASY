@@ -144,29 +144,32 @@ $(document).ready(function () {
         e.preventDefault();
 
         $.ajax({
-            url: '/pedidos/editarPedido', // tu endpoint
+            url: '/pedidos/editarPedido',
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
 
-                if (response.success == false) {
+                if (response.success) {
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: response.error
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Se acepto el pedido correctamente'
                     }).then(() => {
                         location.reload();
                     });
-
                     return;
                 }
+
+
                 Swal.fire({
-                    icon: 'success',
-                    title: '¡Éxito!',
-                    text: 'Se acepto el pedido correctamente'
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error
                 }).then(() => {
                     location.reload();
                 });
+
+                
             },
             error: function () {
                 Swal.fire({
@@ -230,12 +233,18 @@ $('#modalInfoPedido').on('show.bs.modal', function (event) {
                                                 <span class="badge bg-secondary fs-6">${data.orden ?? 'N/A'}</span>
                                             </div>
                                         </div>
-                                         <div class="col-md-12">
+                                        ${(data.direccion) ? `<div class="col-md-12">
                                             <div class="d-flex align-items-start">
                                                 <span class="text-muted  me-2">Dirección:</span>
                                                 <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.direccion ?? 'N/A'}</span>
                                             </div>
-                                        </div>
+                                        </div>`: `<div class="col-md-12">
+                                            <div class="d-flex align-items-start">
+                                                <span class="text-muted  me-2">Cantidad:</span>
+                                                <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.cantidad ?? 'N/A'}</span>
+                                            </div>
+                                        </div>`}
+                                         
                                         ${(data.estado == "DENEGADO") ? `<div class="col-md-12">
                                             <div class="d-flex align-items-start">
                                                 <span class="text-muted  me-2">Motivo de Rechazo:</span>
@@ -253,8 +262,8 @@ $('#modalInfoPedido').on('show.bs.modal', function (event) {
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="d-flex align-items-start">
-                                                <span class="text-muted me-2">N° Caja:</span>
-                                                <span class="badge bg-secondary fs-6">${data.caja ?? 'N/A'}</span>
+                                                <span class="text-muted me-2">N° Artículo:</span>
+                                                <span class="badge bg-secondary fs-6">${data.num_articulo ?? 'N/A'}</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

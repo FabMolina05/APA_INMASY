@@ -84,8 +84,8 @@
                     <!-- articulo -->
                     <h3 class="mb-3 mt-4">Información del artículo</h3>
                     <div class="mb-3">
-                        <label for="caja" class="form-label">Número de caja</label>
-                        <input type="number" step="1" class="form-control" id="caja" name="caja">
+                        <label for="num_articulo" class="form-label">Número de artículo</label>
+                        <input type="number" step="1" class="form-control" id="num_articulo" name="num_articulo">
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -125,17 +125,16 @@
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
                         <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" >
                     </div>
+                    <div class="mb-3">
+                        <label for="fecha_fabricacion" class="form-label">Fecha de Fabricación</label>
+                        <input type="date" class="form-control" id="fecha_fabricacion" name="fecha_fabricacion" >
+                    </div>
                     <!-- categoria -->
                     <h3 class="mb-3 mt-4">Categoría</h3>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
                         <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()" required>
-                            <?php if ($categoriaSeleccionada !== null): ?>
-                                <option>Seleccione una categoria</option>
-                            <?php else: ?>
-                                <option selected>Seleccione una categoria</option>
-                            <?php
-                            endif;
+                            <?php 
 
                             foreach ($categorias as $categoria) {
                                 $selected = ($categoriaSeleccionada == $categoria['id']) ? "selected" : "";

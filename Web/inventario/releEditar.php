@@ -7,8 +7,8 @@
                 </div>
                 <form method="POST" action="/inventario/actualizar">
                     <div class="mb-3">
-                        <label for="id_caja" class="form-label">ID Caja</label>
-                        <input type="number" step="0.01"  class="form-control" id="CAJA" name="CAJA"  required>
+                        <label for="num_articulo" class="form-label">Número de artículo</label>
+                        <input type="number" step="0.01"  class="form-control" id="num_articulo" name="num_articulo"  required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -45,6 +45,18 @@
                     <div class="mb-3">
                         <label for="vac" class="form-label">VAC</label>
                         <input type="text" class="form-control" id="vac" name="vac" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="phase" class="form-label">Phase</label>
+                        <input type="text" class="form-control" id="phase" name="phase" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ground" class="form-label">Ground</label>
+                        <input type="text" class="form-control" id="ground" name="ground" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="num_catalogo" class="form-label">Número de catalogo</label>
+                        <input type="text" class="form-control" id="numcatalogo" name="num_catalogo" >
                     </div>
                     <div class="mb-3">
                         <label for="aidi" class="form-label">Codigo AIDI</label>

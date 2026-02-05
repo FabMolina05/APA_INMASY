@@ -41,7 +41,7 @@ class InventarioControlador extends Controller{
                 'activo' => $_POST['activo'],
                 'disponibilidad' => 0,
                 'ID_Articulo' => $_POST['ID_Articulo'],
-                'id_caja' => $_POST['CAJA']
+                'num_articulo' => $_POST['num_articulo']
 
             ];
          if (isset($_POST['tipoElectronica'])) {
@@ -92,7 +92,6 @@ class InventarioControlador extends Controller{
     public function pedirArticulo(){
         $pedido = [
             'fecha' => $_POST['fecha'],
-            'direccion' => $_POST['direccion'],
             'num_orden' => null,
             'id_articulo' => $_POST['id_articulo'],
             'nombre_cliente' => $_POST['nombre_cliente'],
@@ -102,11 +101,17 @@ class InventarioControlador extends Controller{
 
         ];
 
+        if(isset($_POST['direccion'])){
+            $pedido['direccion'] = $_POST['direccion'];
+        }else{
+            $pedido['cantidad'] = $_POST['cantidad'];
+        }
+
         $resultado = $this->inventarioBL->pedirArticulo($pedido);
 
         
         
-        $this->redirect('/pedidos/index');
+        $this->json($resultado);
 
     }
    

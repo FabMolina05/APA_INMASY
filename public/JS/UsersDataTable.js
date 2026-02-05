@@ -110,7 +110,7 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[0, 'asc']],
+        order: [[0, 'desc']],
         searching: true,
         responsive: true
     });
@@ -134,7 +134,7 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[0, 'asc']],
+        order: [[0, 'desc']],
         searching: true,
         responsive: true
     });

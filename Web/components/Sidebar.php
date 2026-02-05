@@ -45,6 +45,7 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=baterias&id=8">Baterías</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reconectador&id=9">Reconectador</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=seccionador&id=10">Seccionador</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=etiquetas&id=11">Etiquetas</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
                 echo ' </li>';

@@ -23,7 +23,7 @@
                     <table id="inventarioTable" class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th>ID CAJA</th>
+                                <th>N° Artículo</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
@@ -40,7 +40,7 @@
                                 foreach ($articulos as $articulo) {
                                    if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
                                         echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($articulo['id_caja']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['modelo']) . "</td>";

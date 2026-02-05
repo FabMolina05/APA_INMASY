@@ -121,8 +121,8 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
-                        <span class="text-muted me-2">ID Caja:</span>
-                        <span class="badge bg-secondary fs-6">${data.caja}</span>
+                        <span class="text-muted me-2">Número de Artículo:</span>
+                        <span class="badge bg-secondary fs-6">${data.num_articulo}</span>
                     </div>
                 </div>
                 <div class="col-md-6">

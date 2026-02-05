@@ -27,14 +27,6 @@
                         <input type="text" class="form-control" id="Serial" name="serial" >
                     </div>
                     <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <textarea type="text" class="form-control" id="Direccion" name="direccion" ></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="aidi" class="form-label">Codigo AIDI</label>
-                        <input type="text" class="form-control" id="aidi" name="aidi">
-                    </div>
-                    <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select" id="Estado" name="estado" required>
                             <option value="NUEVO">NUEVO</option>
@@ -51,43 +43,19 @@
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="Cantidad" name="cantidad" required>
                     </div>
-                 
                     <div class="mb-3">
-                        <label for="tension" class="form-label">Tension Nominal (kV)</label>
-                        <input type="text" class="form-control" id="tension_nominal" name="tension_nominal" required>
+                        <label for="caja" class="form-label">Caja</label>
+                        <input type="text" class="form-control" id="Caja" name="caja" required>
                     </div>
                     <div class="mb-3">
-                        <label for="corrienteNominal" class="form-label">Corriente Nominal (A)</label>
-                        <input type="text" class="form-control" id="corriente_nominal" name="corriente_nominal" required>
+                        <label for="medida" class="form-label">Medida</label>
+                        <input type="text" class="form-control" id="Medida" name="medida" required>
                     </div>
                     <div class="mb-3">
-                        <label for="corte" class="form-label">Corte Bajo Carga</label>
-                        <select class="form-control" id="corte" name="corte" required>
-                            <option value='1'>SI</option>
-                            <option value='0'>NO</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="operacion" class="form-label">Tipo Operación</label>
-                        <select class="form-control" id="operacion" name="operacion" required>
-                            <option value='MANUAL'>MANUAL</option>
-                            <option value='MOTORIZADO'>MOTORIZADO</option>
-
-                        </select>
+                        <label for="numero" class="form-label">Número</label>
+                        <input type="text" class="form-control" id="Numero" name="numero" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="instalacion" class="form-label">Instalación</label>
-                        <select class="form-control" id="instalacion" name="instalacion" required>
-                            <option value='POSTE'>POSTE</option>
-                            <option value='LINEA AEREA'>LINEA AÉREA</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="tecnico" class="form-label">Técnico</label>
-                        <input type="text" class="form-control" id="Tecnico" name="tecnico" required disabled>
-                    </div>
                     <div class="mb-3">
                         <label for="disponibilidad" class="form-label">Disponibilidad</label>
                         <select class="form-select" id="Disponibilidad" name="disponibilidad" required disabled>
@@ -105,7 +73,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="seccionador">
+                    <input type="hidden" id="Categoria" name="categoria" value="otros">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

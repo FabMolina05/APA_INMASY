@@ -34,6 +34,7 @@ class EntradaDA implements IEntradaDA
                 $adquisicion['numero_fondo'] ?? null,
                 $adquisicion['tipo_pago'] ?? null,
                 $adquisicion['garantia'] ?? null
+                
             ];
             $stmtAdquisicion = sqlsrv_query($this->conexion, $queryAdquisicion, $paramsAdquisicion);
             if ($stmtAdquisicion === false) {
@@ -43,8 +44,8 @@ class EntradaDA implements IEntradaDA
 
             $idAdquisicion = $this->obtenerSiguienteId($stmtAdquisicion);
 
-            $queryArticulo = "INSERT INTO dbo.INMASY_Articulos (nombre, marca, modelo, serial, costo_unitario, estado, direccion, cantidad, activo, disponibilidad, id_caja, atributos_especificos, id_categoria) 
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            $queryArticulo = "INSERT INTO dbo.INMASY_Articulos (nombre, marca, modelo, serial, costo_unitario, estado, direccion, cantidad, activo, disponibilidad, num_articulo,fecha_fabricacion, atributos_especificos, id_categoria) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
                               SELECT SCOPE_IDENTITY() AS id;";
             $paramsArticulo = [
                 $articulo['nombre'],
@@ -57,7 +58,8 @@ class EntradaDA implements IEntradaDA
                 $articulo['cantidad'],
                 $articulo['activo'],
                 $articulo['disponibilidad'],
-                $articulo['id_caja'],
+                $articulo['num_articulo'],
+                $articulo['fecha_fabricacion'],
                 isset($articulo['atributos']) ? $articulo['atributos'] : null,
                 $categoria
             ];

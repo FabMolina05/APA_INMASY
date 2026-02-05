@@ -51,7 +51,7 @@ class PedidosControlador extends Controller
         $pedido = [
             'id' => $_POST['id'],
             'encargado' => $_POST['encargado'],
-            'num_orden' => $_POST['num_orden'],
+            'num_orden' => !empty($_POST['num_orden'])?$_POST['num_orden']: null,
         ];
 
         $resultado = $this->PedidosBL->aceptarPedido($pedido);
@@ -69,9 +69,11 @@ class PedidosControlador extends Controller
     public function editarPedido()
     {
         $pedido = [
-            'direccion' => $_POST['direccion'],
+            'direccion' => !empty($_POST['direccion'])?$_POST['direccion'] : null,
+            'cantidad'=> !empty($_POST['cantidad'])?$_POST['cantidad']: null,
             'fecha' => $_POST['fecha'],
-            'id_pedido' => $_POST['id_pedido']
+            'id_pedido' => $_POST['id_pedido'],
+            
         ];
 
         $resultado = $this->PedidosBL->editarPedido($pedido);
