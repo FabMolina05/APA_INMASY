@@ -2,6 +2,9 @@
 
 namespace DA\Inventario;
 
+use DateTimeZone;
+use DateTime;
+
 require_once dirname(__DIR__, 3) . "/src/ABS/Interfaces/DA/IInventarioDA.php";
 
 use ABS\Interfaces\DA\IInventarioDA;
@@ -18,9 +21,11 @@ class InventarioDA implements IInventarioDA
     public function obtenerArticulosPorCategoria($categoria)
     {
         $params = array($categoria);
-        $query = "SELECT a.ID_Articulo,a.num_articulo,a.modelo,a.cantidad,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
+        $query = "SELECT ea.ID_Entrante,a.ID_Articulo,a.num_articulo,a.modelo,a.cantidad,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
                  FROM dbo.INMASY_Articulos a
-                 WHERE a.id_categoria = ?";
+                 JOIN dbo.INMASY_Inventario i ON i.id_articulo = a.ID_Articulo
+                 JOIN dbo.INMASY_EntranteArticulo ea ON ea.id_inventario = i.ID_Inventario 
+                 WHERE a.id_categoria = ? and a.estado != 'DESECHO'";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
@@ -109,7 +114,67 @@ class InventarioDA implements IInventarioDA
         sqlsrv_commit($this->conexion);
         return ['success' => true, 'categoria' => $id];
     }
-    public function sacarArticulo($id) {}
+    public function sacarArticulo($id, $motivo)
+    {
+        sqlsrv_begin_transaction($this->conexion);
+        try {
+
+            $query = "UPDATE  a
+                  SET a.estado = 'DESECHO'
+                  FROM dbo.INMASY_EntranteArticulo ea
+                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ea.id_inventario
+                  INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
+                  WHERE ea.ID_Entrante = ?
+                  ";
+
+            $params = [
+                $id
+            ];
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message'] . "linea 138"];
+            }
+
+            sqlsrv_free_stmt($stmt);
+
+            $query = "INSERT INTO dbo.INMASY_SalidasCTM (id_entrante,motivo,fecha_salida) VALUES
+            (?,?,?)
+                  ";
+
+            $zona = new DateTimeZone('America/Costa_Rica');
+            $fechaConZona = new DateTime('now', $zona);
+            $params = [
+                $id,
+                $motivo,
+                $fechaConZona->format('Y-m-d H:i:s')
+            ];
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message'] . "linea 138"];
+            }
+
+            sqlsrv_free_stmt($stmt);
+
+            sqlsrv_commit($this->conexion);
+
+            return ['success' => true];
+            
+        } catch (\Exception $e) {
+            return ['error' => $e[0]['message']];
+        }
+    }
     public function pedirArticulo($pedido)
     {
 

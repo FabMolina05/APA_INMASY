@@ -129,6 +129,10 @@ class ValidatePermissions
                 'request' => '/proveedores/obtenerProveedorPorId',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/salidas/index',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 

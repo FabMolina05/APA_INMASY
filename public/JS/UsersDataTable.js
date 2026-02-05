@@ -140,3 +140,34 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('#salidasTable').DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Buscar salida...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ salidas",
+            infoEmpty: "Mostrando 0 a 0 de 0 salidas",
+            infoFiltered: "(filtrado de _MAX_ salidas totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
+        },
+       
+        pageLength: 10,
+        order: [[0, 'desc']],
+        searching: true,
+        responsive: true,
+        columnDefs: [
+            {
+                targets: 0,  
+                className: 'truncate-cell'
+            }
+        ]
+    });
+});
+

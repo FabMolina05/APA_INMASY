@@ -73,7 +73,7 @@
             // Salidas
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#salidas" class="nav-link">';
+                echo ' <a href="/salidas/index" class="nav-link">';
                 echo ' <i class="fas fa-arrow-circle-up"></i>';
                 echo ' <span>Salidas</span>';
                 echo ' </a>';

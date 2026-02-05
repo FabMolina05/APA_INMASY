@@ -137,7 +137,7 @@
                                                 </button>";
 
 
-                                    echo "            <button type='button' data-id=" . htmlspecialchars($pedido['id']) . "  class='btn btn-outline-danger' id='botonDenegar' title='Denegar'>
+                                    echo "            <button type='button' data-id=" . htmlspecialchars($pedido['id']) . "  class='btn btn-outline-danger btn-rechazo' title='Denegar'>
                                                     <i class='fa-solid fa-x'></i>
                                                 </button>
                 

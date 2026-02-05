@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="exampleModalLabel">Editar Pedido</h2>
+                    <h2 class="modal-title fs-5" id="exampleModalLabel">Rehacer Pedido</h2>
                 </div>
                 <form method="POST" action="/inventario/pedirArticulo" id="rehacer-pedido">
                     <div class="mb-3">
@@ -20,7 +20,7 @@
                     <input type="hidden" id="cantidadActual" name="cantidadActual" value="">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
 

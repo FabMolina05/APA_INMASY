@@ -87,6 +87,12 @@ class InventarioControlador extends Controller{
     }
 
     public function sacarArticulo(){
+        $entrada = $_POST['id'];
+        $motivo = $_POST['descripcion'];
+
+        $resultado = $this->inventarioBL->sacarArticulo($entrada,  $motivo);
+
+        $this->json($resultado);
 
     }
     public function pedirArticulo(){

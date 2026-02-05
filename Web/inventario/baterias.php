@@ -68,6 +68,12 @@
                                                 <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='baterias' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
+                                        
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger' id='botonSacar' title='Sacar'>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>";
+                                        }
                                         if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
                                             echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='baterias' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
                                                     <i class='fa-solid fa-basket-shopping'></i>

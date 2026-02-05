@@ -437,6 +437,58 @@ $('#modalRehacerPedido').on('show.bs.modal', function (event) {
 
 });
 
+$(document).on('click', '.btn-sacar', function () {
+
+    var id = $(this).data('id');
+
+
+    Swal.fire({
+        title: '¿Estás seguro de desechar este artículo?',
+        text: 'Escriba el motivo de la salida',
+        input: 'text',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, desechar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            var descripcion = result.value;
+
+            $.ajax({
+                url: '/inventario/sacarArticulo',
+                type: 'POST',
+                data: {
+                    id: id,
+                    descripcion: descripcion
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: 'Se denegó el pedido correctamente'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: xhr.responseText || 'Ocurrió un problema al procesar la solicitud'
+                    }).then(() => {
+                        location.reload();
+                    });
+
+                }
+            });
+        }
+    });
+});
+
+
 $('#modalEditarProveedores').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');

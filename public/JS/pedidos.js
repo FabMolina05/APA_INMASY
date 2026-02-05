@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
 });
 
-$('#botonDenegar').on('click', function () {
+$(document).on('click','.btn-rechazo' ,function () {
     var id = $(this).data('id');
 
     Swal.fire({
