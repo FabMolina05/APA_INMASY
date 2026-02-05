@@ -64,16 +64,16 @@
                                         echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='otros' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
+                                                <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='etiquetas' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
                                         if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
-                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='otros' data-cantidad=".htmlspecialchars($articulo['cantidad'])." class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='etiquetas' data-cantidad=".htmlspecialchars($articulo['cantidad'])." class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
                                                     <i class='fa-solid fa-basket-shopping'></i>
                                                 </button>";
                                         }
 
-                                        echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='otros' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                        echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='etiquetas' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                 
