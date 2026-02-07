@@ -33,13 +33,13 @@
                                     echo "<td>" . htmlspecialchars($salida['motivo']) . "</td>";
                                     echo "<td>" . date_format($salida['salida'], "d/m/Y") . "</td>";
                                     echo "<td>" . htmlspecialchars($salida['nombre']) . "</td>";
-                                    echo "<td>" . htmlspecialchars(empty($salida['serial'])?"N/A":$salida['serial']) . "</td>";
+                                    echo "<td>" . htmlspecialchars(empty($salida['serial']) ? "N/A" : $salida['serial']) . "</td>";
                                     echo "<td>" . htmlspecialchars($salida['categoria']) . "</td>";
 
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=" . htmlspecialchars($salida['entrante']) . " data-categoria='otros' class='btn btn-outline-info' id='botonModal' title='Info' >
+                                                <button type='button' data-id=" . htmlspecialchars($salida['id']) . " data-categoria='otros' class='btn btn-outline-info' id='botonModal' title='Informacion' data-bs-toggle='modal' data-bs-target='#modalInfoSalida' >
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>
                                       
@@ -56,4 +56,6 @@
             </div>
         </div>
     </div>
+    <?php include_once './Web/salidas/info.php' ?>
+
 </div>

@@ -251,7 +251,7 @@ $(document).on('change', '#protocolo', function () {
     if (seleccion === 'otro') {
         otro.innerHTML = `
             <label for= "otro_protocolo" class= "form-label"> Especifique el protocolo</label>
-                <input type="text" class="form-control" id="otro_protocolo" name="otro_protocolo" >
+                <input type="text" class="form-control" id="otro_protocolo" name="otro_protocolo" maxlength='50' >
                     `;
     } else {
         otro.innerHTML = '';

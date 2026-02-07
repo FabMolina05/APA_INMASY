@@ -124,7 +124,7 @@ class UsuarioDA implements IUsuarioDA
 
     public function obtenerUsuarios()
     {
-        $query = "SELECT u.ID_Usuario,u.nombre_completo, r.nombre as rol ,u.estado FROM dbo.INMASY_Usuarios u JOIN dbo.INMASY_Roles r ON u.ID_rol = r.ID_rol";
+        $query = "SELECT u.ID_Usuario,u.nombre_completo, r.nombre as rol ,u.estado FROM dbo.INMASY_Usuarios u JOIN dbo.INMASY_Roles r ON u.ID_rol = r.ID_rol ";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();

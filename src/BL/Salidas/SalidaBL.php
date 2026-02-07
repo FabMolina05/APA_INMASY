@@ -1,6 +1,7 @@
 <?php
 
 namespace BL\Salidas;
+
 require_once dirname(__DIR__, 3) . "/src/DA/Salidas/SalidaDA.php";
 
 require_once dirname(__DIR__, 3) . "/src/ABS/Interfaces/BL/ISalidaBL.php";
@@ -8,6 +9,7 @@ require_once dirname(__DIR__, 3) . "/src/ABS/Interfaces/BL/ISalidaBL.php";
 use ABS\Interfaces\BL\ISalidaBL;
 use DA\Salidas\SalidaDA;
 use Exception;
+
 class SalidaBL implements ISalidaBL
 {
     private $salidaDA;
@@ -18,19 +20,25 @@ class SalidaBL implements ISalidaBL
     }
 
 
-    public function obtenerSalidas() {
+    public function obtenerSalidas()
+    {
         try {
             $salidas = $this->salidaDA->obtenerSalidas();
 
             return $salidas;
-
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-    
-    public function obtenerSalidaPorID($salida) {
 
+    public function obtenerSalidaPorID($salida)
+    {
+        try {
+            $response = $this->salidaDA->obtenerSalidaPorID($salida);
 
+            return $response;
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }

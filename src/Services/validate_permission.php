@@ -133,6 +133,10 @@ class ValidatePermissions
                 'request' => '/salidas/index',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/salidas/obtenerSalidaPorId',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 

@@ -7,6 +7,8 @@
 <script src="/public/JS/modales.js"></script>
 <script src="/public/JS/infoArticulos.js"></script>
 <script src="/public/JS/infoEntradas.js"></script>
+<script src="/public/JS/infoSalidas.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="/public/JS/pedidos.js"></script>

@@ -38,7 +38,8 @@ class PedidosDA implements IPedidosDA
                                                               FROM dbo.INMASY_Inventario i
                                                               WHERE ID_Inventario = pr.id_inventario)
               JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
-              WHERE pr.id_cliente = ?";
+              WHERE pr.id_cliente = ?
+              ORDER BY pr.ID_Pedido DESC";
 
         $params = array($usuario);
 
@@ -297,6 +298,7 @@ class PedidosDA implements IPedidosDA
                                                               FROM dbo.INMASY_Inventario i
                                                               WHERE ID_Inventario = pr.id_inventario)
               JOIN dbo.INMASY_FormulaRetiro fr ON fr.ID_Formula = pr.id_formula
+              ORDER BY pr.ID_Pedido DESC
               ";
 
 

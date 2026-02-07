@@ -221,6 +221,7 @@ class EntradaDA implements IEntradaDA
                             )
                         END
                     )
+                    ORDER BY e.ID_Entrante DESC
                     ";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {

@@ -446,6 +446,7 @@ $(document).on('click', '.btn-sacar', function () {
         title: '¿Estás seguro de desechar este artículo?',
         text: 'Escriba el motivo de la salida',
         input: 'text',
+        inputAttributes:{'maxLength':'100'},
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',

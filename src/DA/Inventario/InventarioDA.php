@@ -25,7 +25,8 @@ class InventarioDA implements IInventarioDA
                  FROM dbo.INMASY_Articulos a
                  JOIN dbo.INMASY_Inventario i ON i.id_articulo = a.ID_Articulo
                  JOIN dbo.INMASY_EntranteArticulo ea ON ea.id_inventario = i.ID_Inventario 
-                 WHERE a.id_categoria = ? and a.estado != 'DESECHO'";
+                 WHERE a.id_categoria = ? and a.estado != 'DESECHO'
+                 ORDER BY a.ID_Articulo DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
@@ -170,7 +171,7 @@ class InventarioDA implements IInventarioDA
             sqlsrv_commit($this->conexion);
 
             return ['success' => true];
-            
+
         } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }

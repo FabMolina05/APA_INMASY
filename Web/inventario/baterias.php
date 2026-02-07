@@ -69,8 +69,8 @@
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
                                         
-                                        if ($_SESSION['usuario_INMASY']['rol'] == 1) {
-                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger' id='botonSacar' title='Sacar'>
+                                       if ($_SESSION['usuario_INMASY']['rol'] == 1 && $articulo['disponibilidad'] == 0) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
                                                     <i class='fa-solid fa-trash'></i>
                                                 </button>";
                                         }

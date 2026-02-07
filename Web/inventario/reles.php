@@ -14,13 +14,13 @@
                                 <i class="bi bi-plus-circle me-1"></i> Agregar artículo
                             </button>
                         </div>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="table-responsive">
-                
+
                     <table id="inventarioTable" class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
@@ -43,7 +43,7 @@
                             if ($articulos != null && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
                                     if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
-                                        
+
                                         echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['marca']) . "</td>";
@@ -52,7 +52,7 @@
                                         echo "<td>" . htmlspecialchars($articulo['ground']) . "</td>";
 
                                         echo "<td>" . htmlspecialchars($articulo['tipo']) . "</td>";
-                                       
+
                                         if ($articulo['disponibilidad'] == 1) {
                                             echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
                                         } else {
@@ -72,6 +72,11 @@
                                                 <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 && $articulo['disponibilidad'] == 0) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>";
+                                        }
                                         if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
                                             echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reles' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
                                                     <i class='fa-solid fa-basket-shopping'></i>

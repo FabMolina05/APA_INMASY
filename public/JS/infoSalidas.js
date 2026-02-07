@@ -1,10 +1,10 @@
-$('#modalInfoEntrada').on('show.bs.modal', function (event) {
+$('#modalInfoSalida').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');
 
     $.ajax({
         type: "GET",
-        url: "/entrada/obtenerEntradaPorId",
+        url: "/salidas/obtenerSalidaPorId",
         dataType: 'json',
         data: { id: id },
         success: function (response) {
@@ -51,23 +51,23 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
         </div>
     </div>
 
-    <!-- Proveedor -->
+    <!-- Salida -->
     <div class="card border-0 shadow-sm mb-3">
         <div class="card-header bg-success text-white">
-            <h5 class="mb-0"><i class="bi bi-building me-2"></i>Proveedor</h5>
+            <h5 class="mb-0"><i class="bi bi-building me-2"></i>Salida</h5>
         </div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
-                        <span class="text-secondary me-2">Proveedor:</span>
-                        <span class="fw-semibold">${data.proveedor ?? 'N/A'}</span>
+                        <span class="text-secondary me-2">Fecha de salida:</span>
+                        <span class="fw-semibold">${data.fecha_salida.date.split(" ")[0] ?? 'N/A'}</span>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="d-flex align-items-start">
-                        <span class="text-muted me-2">Teléfono:</span>
-                        <span class="fw-semibold">${data.tel_proveedor ?? 'N/A'}</span>
+                         <span class="text-muted me-2">Motivo:</span>
+                        <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.motivo}</span>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
 
 
 
-            $('#infoEntradaContenido').html(html);
+            $('#infoSalidaContenido').html(html);
         },
         error: function (error) {
             alert("Error: " + error);
@@ -149,52 +149,3 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
 
 
 });
-
-$('#modalFechaEntrada').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var id = button.data('id');
-
-    $('#btnAgregar').val(id);
-
-
-})
-
-function agregarFecha() {
-    var id = $('#btnAgregar').val();
-
-    $.ajax({
-        type: "GET",
-        url: "/entrada/establecerFecha",
-        dataType: 'json',
-        data: { id: id },
-        success: function (response) {
-            console.log(response)
-            if (response.success) {
-                Swal.fire({
-                    title: 'Exito!!',
-                    icon: 'success',
-                    timer: 4000,
-                    showConfirmButton: false,
-                }).then(()=>{
-                    location.reload();
-                })
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'No se pudo agregar la fecha',
-                    icon: 'error',
-                    timer: 6000
-                }).then(()=>{
-                    
-                        location.reload();
-                    
-                })
-            }
-        },
-        error: function (error) {
-            alert("Error: " + error.responseText);
-        }
-
-
-    });
-}

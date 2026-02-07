@@ -38,7 +38,7 @@
                             <?php
                             if ($articulos != null && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
-                                   if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
+                                    if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
                                         echo "<tr>";
                                         echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
@@ -65,6 +65,11 @@
                                                 <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reconector' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 && $articulo['disponibilidad'] == 0) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
+                                                    <i class='fa-solid fa-trash'></i>
+                                                </button>";
+                                        }
                                         if ($articulo['disponibilidad'] == 0 && $articulo['activo'] != 0) {
                                             echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='reconector' class='btn btn-outline-success' id='botonModal' title='Pedir' data-bs-toggle='modal' data-bs-target='#modalPedirArticulo'>
                                                     <i class='fa-solid fa-basket-shopping'></i>

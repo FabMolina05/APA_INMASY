@@ -24,13 +24,13 @@ class EntradaControlador extends Controller
 
             if (filter_var($_POST['adquisicionAgregada'], FILTER_VALIDATE_BOOLEAN)) {
                 $adquisicion = [
-                    'fecha_adquisicion' => $_POST['fecha_adquisicion'],
-                    'persona_compra' => $_POST['persona_compra'],
-                    'proveedor' => $_POST['proveedor'],
-                    'numero_factura' => $_POST['factura'],
-                    'numero_fondo' => $_POST['numero_fondo'],
-                    'tipo_pago' => $_POST['tipo_pago'],
-                    'garantia' => $_POST['garantia'],
+                    'fecha_adquisicion' => !empty($_POST['fecha_adquisicion']) ? $_POST['fecha_adquisicion'] : null,
+                    'persona_compra' => !empty($_POST['persona_compra']) ? $_POST['persona_compra'] : null,
+                    'proveedor' => !empty($_POST['proveedor']) ? $_POST['proveedor'] : null,
+                    'numero_factura' => !empty($_POST['factura']) ? $_POST['factura'] : null,
+                    'numero_fondo' => !empty($_POST['numero_fondo']) ? $_POST['numero_fondo'] : null,
+                    'tipo_pago' => !empty($_POST['tipo_pago']) ? $_POST['tipo_pago'] : null,
+                    'garantia' => !empty($_POST['garantia']) ? $_POST['garantia'] : null,
                 ];
 
                 if ($_POST['persona_compra'] == "otros") {

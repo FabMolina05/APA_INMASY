@@ -129,6 +129,9 @@ switch ($request) {
     case '/salidas/index':
         $salidasControlador->index();
         break;
+    case '/salidas/obtenerSalidaPorId':
+        $salidasControlador->obtenerSalidaPorID();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;

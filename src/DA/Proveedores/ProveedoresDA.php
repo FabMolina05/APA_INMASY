@@ -38,7 +38,7 @@ class ProveedoresDA implements IProveedoresDA
 
     public function obtenerProveedores()
     {
-        $query = "SELECT ID_Proveedor, nombre, direccion, telefono, correo FROM dbo.INMASY_Proveedores";
+        $query = "SELECT ID_Proveedor, nombre, direccion, telefono, correo FROM dbo.INMASY_Proveedores ORDER BY ID_Proveedor DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
