@@ -50,6 +50,21 @@ $('#modalEditarArticulo').on('show.bs.modal', function (event) {
 
 });
 
+$(document).on('change', '#tipo', function () {
+    const seleccion = $(this).val();
+    const otro = document.querySelector('.otro_tipo');
+    if (seleccion === 'otro') {
+        otro.innerHTML = `
+            <label for= "otro_tipo" class= "form-label"> Especifique el tipo</label>
+                <input type="text" class="form-control" id="otro_tipo" name="otro_tipo" >
+                    `;
+    } else {
+        otro.innerHTML = '';
+    }
+});
+
+
+
 $('#modalEditarEntrante').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');

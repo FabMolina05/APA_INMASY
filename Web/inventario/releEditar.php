@@ -62,6 +62,7 @@
                         <label for="aidi" class="form-label">Codigo AIDI</label>
                         <input type="text" class="form-control" id="aidi" name="aidi" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
                         <select class="form-select" id="Estado" name="estado" required>

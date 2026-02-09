@@ -45,15 +45,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="caja" class="form-label">Caja</label>
-                        <input type="text" class="form-control" id="Caja" name="caja" required>
+                        <input type="text" class="form-control" id="caja" name="caja" required>
                     </div>
                     <div class="mb-3">
                         <label for="medida" class="form-label">Medida</label>
-                        <input type="text" class="form-control" id="Medida" name="medida" required>
+                        <input type="text" class="form-control" id="medida" name="medida" required>
                     </div>
                     <div class="mb-3">
                         <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="Numero" name="numero" required>
+                        <input type="text" class="form-control" id="numero" name="numero" required>
                     </div>
 
                     <div class="mb-3">
@@ -73,7 +73,7 @@
 
 
                     <input type="hidden" id="ID" name="ID_Articulo" value="">
-                    <input type="hidden" id="Categoria" name="categoria" value="otros">
+                    <input type="hidden" id="Categoria" name="categoria" value="etiquetas">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>

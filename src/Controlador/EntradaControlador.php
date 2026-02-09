@@ -77,7 +77,7 @@ class EntradaControlador extends Controller
                 $articuloNuevo['atributos'] = json_encode(['peso' => $_POST['peso']]);
             };
             if (isset($_POST['puertos'])) {
-                $articuloNuevo['atributos'] = json_encode(['puertos' => $_POST['puertos']]);
+                $articuloNuevo['atributos'] = json_encode(['puertos' => $_POST['puertos'],'tipo'=>$_POST['tipo']]);
             };
             if (isset($_POST['descripcion1'])) {
                 $articuloNuevo['atributos'] = json_encode(['descripcion1' => $_POST['descripcion1'], 'descripcion2' => $_POST['descripcion2']]);

@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . '/Controller.php';
-require_once dirname(__DIR__,2) . "/src/BL/Inventario/InventarioBL.php";
+require_once dirname(__DIR__, 2) . "/src/BL/Inventario/InventarioBL.php";
+
 use BL\Inventario\InventarioBL;
 
 
-class InventarioControlador extends Controller{
+class InventarioControlador extends Controller
+{
     private InventarioBL $inventarioBL;
 
     public function __construct($conn)
@@ -12,90 +14,118 @@ class InventarioControlador extends Controller{
         $this->inventarioBL = new InventarioBL($conn);
     }
 
-    public function obtenerArticulosPorCategoria($id,$categoria){
+    public function obtenerArticulosPorCategoria($id, $categoria)
+    {
         $articulos = $this->inventarioBL->obtenerArticulosPorCategoria($id);
-        $this->view('inventario/'.$categoria,['articulos'=>$articulos]);
+        $this->view('inventario/' . $categoria, ['articulos' => $articulos]);
     }
-    
-    public function obtenerArticuloPorId(){
+
+    public function obtenerArticuloPorId()
+    {
         $id = $_GET['id'];
         $categoria = $_GET['categoria'];
         $articulo = $this->inventarioBL->obtenerArticuloPorId($categoria, $id);
 
-        
+
         $this->json(['success' => true, 'data' => $articulo]);
-
-
     }
-    public function editarArticulo(){
+    public function editarArticulo()
+    {
         $categoria = $_POST['categoria'];
         $articuloActualizado = [
-                'nombre' => $_POST['nombre'],
-                'marca' => $_POST['marca'],
-                'modelo' => $_POST['modelo'],
-                'serial' => $_POST['serial'],
-                'costo_unitario' => $_POST['costo_unitario'],
-                'estado' => $_POST['estado'],
-                'direccion' => $_POST['direccion'],
-                'cantidad' => $_POST['cantidad'],
-                'activo' => $_POST['activo'],
-                'disponibilidad' => 0,
-                'ID_Articulo' => $_POST['ID_Articulo'],
-                'num_articulo' => $_POST['num_articulo']
+            'nombre' => $_POST['nombre'],
+            'marca' => $_POST['marca'],
+            'modelo' => $_POST['modelo'],
+            'serial' => $_POST['serial'],
+            'costo_unitario' => $_POST['costo_unitario'],
+            'estado' => $_POST['estado'],
+            'direccion' => isset($_POST['direccion']) ? $_POST['direccion'] : null,
+            'cantidad' => $_POST['cantidad'],
+            'activo' => $_POST['activo'],
+            'disponibilidad' => 0,
+            'ID_Articulo' => $_POST['ID_Articulo'],
+            'num_articulo' => $_POST['num_articulo']
 
-            ];
-         if (isset($_POST['tipoElectronica'])) {
-                $articuloActualizado['atributos'] = json_encode(['tipo' => $_POST['tipoElectronica']]);
-            };
-            if(isset($_POST['vac'])){
-                $articuloActualizado['atributos'] = json_encode(['vac' => $_POST['vac'], 'aidi' => $_POST['aidi'],'vdc' => $_POST['vdc'],'tipo' => $_POST['tipo']]);
-                
-            }
-            if(isset($_POST['peso'])){
-                $articuloActualizado['atributos'] = json_encode(['peso' => $_POST['peso']]);
-            };
-            if(isset($_POST['puertos'])){
-                $articuloActualizado['atributos'] = json_encode(['puertos' => $_POST['puertos']]);
-            };
-            if(isset($_POST['descripcion1'])){
-                $articuloActualizado['atributos'] = json_encode(['descripcion1' => $_POST['descripcion1'], 'descripcion2' => $_POST['descripcion2']]);
-            };
-            if(isset($_POST['corriente'])){
-                $articuloActualizado['atributos'] = json_encode(['corriente' => $_POST['corriente'], 'numero' => $_POST['numero']]);
-            }; 
-            if (isset($_POST['montaje'])) {
+        ];
+        if (isset($_POST['tipoElectronica'])) {
+            $articuloActualizado['atributos'] = json_encode(['tipo' => $_POST['tipoElectronica']]);
+        };
+        if (isset($_POST['vac'])) {
+            $articuloActualizado['atributos'] = json_encode(['vac' => $_POST['vac'], 'aidi' => $_POST['aidi'], 'vdc' => $_POST['vdc'], 'tipo' => $_POST['tipo'], 'ground' => $_POST['ground'], 'phase' => $_POST['phase'], 'num_catalogo' => $_POST['num_catalogo']]);
+        }
+        if (isset($_POST['peso'])) {
+            $articuloActualizado['atributos'] = json_encode(['peso' => $_POST['peso']]);
+        };
+        if (isset($_POST['puertos'])) {
+            $articuloActualizado['atributos'] = json_encode(['puertos' => $_POST['puertos'], 'tipo' => $_POST['tipo']]);
+        };
+        if (isset($_POST['descripcion1'])) {
+            $articuloActualizado['atributos'] = json_encode(['descripcion1' => $_POST['descripcion1'], 'descripcion2' => $_POST['descripcion2']]);
+        };
+        if (isset($_POST['corriente'])) {
+            $articuloActualizado['atributos'] = json_encode(['corriente' => $_POST['corriente'], 'numero' => $_POST['numero']]);
+        };
+        if (isset($_POST['montaje'])) {
+
+            if (!empty($_POST['otro_protocolo'])) {
                 $articuloActualizado['atributos'] = json_encode([
+                    'protocolo' => $_POST['otro_protocolo'],
                     'corriente_nominal' => $_POST['corriente_nominal'],
                     'tension_nominal' => $_POST['tension_nominal'],
                     'control' => $_POST['control'],
-                    'montaje' =>$_POST['montaje'],
-                    'protocolo' =>  (isset($_POST['protocolo'])) ? $_POST['protocolo'] : $_POST['otro_protocolo']
+                    'montaje' => $_POST['montaje'],
                 ]);
-            }
-            if (isset($_POST['instalacion'])) {
+            } else {
                 $articuloActualizado['atributos'] = json_encode([
+                    'protocolo' => $_POST['protocolo'],
                     'corriente_nominal' => $_POST['corriente_nominal'],
                     'tension_nominal' => $_POST['tension_nominal'],
-                    'operacion' => $_POST['operacion'],
-                    'corte' =>$_POST['corte'],
-                    'instalacion'=>$_POST['instalacion']
+                    'control' => $_POST['control'],
+                    'montaje' => $_POST['montaje'],
                 ]);
             }
-          
+        }
+        if (isset($_POST['instalacion'])) {
+            $articuloActualizado['atributos'] = json_encode([
+                'corriente_nominal' => $_POST['corriente_nominal'],
+                'tension_nominal' => $_POST['tension_nominal'],
+                'operacion' => $_POST['operacion'],
+                'corte' => $_POST['corte'],
+                'instalacion' => $_POST['instalacion']
+            ]);
+        }
+        if (isset($_POST['medida'])) {
+            $articuloActualizado['atributos'] = json_encode([
+                'medida' => $_POST['medida'],
+                'numero' => $_POST['numero'],
+                'caja' => $_POST['caja'],
+
+            ]);
+        }
+        if (isset($_POST['tipoTarjeta'])) {
+            if (isset($_POST['otro_tipo'])) {
+                $tipo = $_POST['otro_tipo'];
+                $articuloActualizado['atributos'] = json_encode(['tipo' => $tipo]);
+            } else {
+                $articuloActualizado['atributos'] = json_encode(['tipo' => $_POST['tipoTarjeta']]);
+            }
+        }
+
         $resultado = $this->inventarioBL->editarArticulo($articuloActualizado);
-        $this->redirect('/inventario/categoria?categoria=' . $categoria. '&id=' . $resultado['categoria']);
+        $this->redirect('/inventario/categoria?categoria=' . $categoria . '&id=' . $resultado['categoria']);
     }
 
-    public function sacarArticulo(){
+    public function sacarArticulo()
+    {
         $entrada = $_POST['id'];
         $motivo = $_POST['descripcion'];
 
         $resultado = $this->inventarioBL->sacarArticulo($entrada,  $motivo);
 
         $this->json($resultado);
-
     }
-    public function pedirArticulo(){
+    public function pedirArticulo()
+    {
         $pedido = [
             'fecha' => $_POST['fecha'],
             'num_orden' => null,
@@ -107,20 +137,16 @@ class InventarioControlador extends Controller{
 
         ];
 
-        if(isset($_POST['direccion'])){
+        if (isset($_POST['direccion'])) {
             $pedido['direccion'] = $_POST['direccion'];
-        }else{
+        } else {
             $pedido['cantidad'] = $_POST['cantidad'];
         }
 
         $resultado = $this->inventarioBL->pedirArticulo($pedido);
 
-        
-        
+
+
         $this->json($resultado);
-
     }
-   
-
-
 }

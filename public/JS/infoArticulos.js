@@ -80,14 +80,19 @@ $('#modalInfoArticulo').on('show.bs.modal', function (event) {
                             if (attrKey == "corte") {
                                 atributos[attrKey] = (atributos[attrKey] == 1) ? "SI" : "NO";
                             }
+
+                            
                             word = attrKey;
                             if (attrKey.includes("_")) {
                                 split = attrKey.split("_")
                                 word = `${split[0]} ${split[1]}`
                             }
+                            if(word == 'num catalogo'){
+                                word = 'Número Catálogo';
+                            }
                             html += `<div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-start">
-                                    <span class="text-muted me-2">${word}:</span>
+                                    <span class="text-muted me-2">${word.charAt(0).toUpperCase() + word.slice(1)}:</span>
                                     <span class="fw-semibold">${atributos[attrKey]}</span>
                                 </div>
                             </div>`;

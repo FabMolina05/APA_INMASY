@@ -8,7 +8,7 @@
                 <form method="POST" action="/inventario/actualizar">
                     <div class="mb-3">
                         <label for="num_articulo" class="form-label">N° Artículo</label>
-                        <input type="number" step="0.01" class="form-control" id="num_articulo" name="num_articulo"  required>
+                        <input type="number" step="0.01" class="form-control" id="num_articulo" name="num_articulo" required>
                     </div>
                     <div class="mb-3 mt-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -16,15 +16,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="Marca" name="marca" >
+                        <input type="text" class="form-control" id="Marca" name="marca">
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="Modelo" name="modelo" >
+                        <input type="text" class="form-control" id="Modelo" name="modelo">
                     </div>
                     <div class="mb-3">
                         <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="Serial" name="serial" >
+                        <input type="text" class="form-control" id="Serial" name="serial">
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -37,15 +37,31 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario" >
+                        <input type="number" step="0.01" class="form-control" id="Costo" name="costo_unitario">
                     </div>
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="Cantidad" name="cantidad" required>
                     </div>
                     <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-select" id="tipo" name="tipoTarjeta" required>
+                            <option value="">Seleccione un tipo</option>
+                            <option value="Comunicación">Comunicación</option>
+                            <option value="CPU">CPU</option>
+                            <option value="Cargador">Cargador</option>
+                            <option value="otro">Otro</option>
+
+
+                        </select>
+                    </div>
+                    <div class='mb-3'>
+                        <div class="otro_tipo">
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="Direccion" name="direccion" >
+                        <input type="text" class="form-control" id="Direccion" name="direccion">
                     </div>
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>

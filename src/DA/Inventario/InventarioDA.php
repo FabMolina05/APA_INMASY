@@ -70,18 +70,18 @@ class InventarioDA implements IInventarioDA
         $queryArticulo = "UPDATE dbo.INMASY_Articulos SET nombre = ?, marca = ?, modelo = ?, serial = ?,estado = ?, costo_unitario = ?, cantidad = ?, direccion = ?, activo = ? ,num_articulo = ? WHERE ID_Articulo = ?;
         SELECT id_categoria FROM dbo.INMASY_Articulos WHERE ID_Articulo = ?;";
         $params = [
-            $articulo['nombre'],
-            $articulo['marca'],
-            $articulo['modelo'],
-            $articulo['serial'],
-            $articulo['estado'],
-            $articulo['costo_unitario'],
-            $articulo['cantidad'],
-            $articulo['direccion'],
-            $articulo['activo'],
-            $articulo['num_articulo'],
-            $articulo['ID_Articulo'],
-            $articulo['ID_Articulo'],
+            $articulo['nombre'] ?: null,
+            $articulo['marca'] ?: null,
+            $articulo['modelo'] ?: null,
+            $articulo['serial'] ?: null,
+            $articulo['estado'] ?: null,
+            $articulo['costo_unitario'] ?: null,
+            $articulo['cantidad'] ?: null,
+            $articulo['direccion'] ?: null,
+            $articulo['activo'] ?: null,
+            $articulo['num_articulo'] ?: null,
+            $articulo['ID_Articulo'] ?: null,
+            $articulo['ID_Articulo'] ?: null,
         ];
         $stmt = sqlsrv_prepare($this->conexion, $queryArticulo, $params);
         if (!sqlsrv_execute($stmt)) {
@@ -171,7 +171,6 @@ class InventarioDA implements IInventarioDA
             sqlsrv_commit($this->conexion);
 
             return ['success' => true];
-
         } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }

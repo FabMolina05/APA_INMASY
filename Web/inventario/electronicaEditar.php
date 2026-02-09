@@ -49,7 +49,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" required>
+                        <input type="text" class="form-control" id="tipo" name="tipoElectronica" required>
                     </div>
                     <div class="mb-3">
                         <label for="tecnico" class="form-label">Técnico</label>
