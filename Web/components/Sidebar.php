@@ -1,3 +1,4 @@
+
 <div class="sidebar">
     <div class="sidebar-header">
         <h3><a href="/" style="text-decoration: none; color : white"><img src="/public/Assets/logo.png"> INMASY</a></h3>
@@ -11,7 +12,7 @@
             // Dashboard     
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#dashboard" class="nav-link">';
+                echo ' <a href="/registros/index" class="nav-link">';
                 echo ' <i class="fas fa-chart-line"></i>';
                 echo ' <span>Dashboard</span>';
                 echo ' </a>';
@@ -50,16 +51,8 @@
                 echo ' </ul>';
                 echo ' </li>';
             }
-            // Bodega
-            if ($usuario['rol'] == 1) {
-                echo ' <li class="nav-item">';
-                echo ' <a href="/bodega/index" class="nav-link">';
-                echo ' <i class="fa-solid fa-box"></i>';
-                echo ' <span>Bodega</span>';
-                echo ' </a>';
-                echo ' </li>';
-            }
-
+         
+         
             // Entradas
             if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
@@ -83,9 +76,9 @@
             // Registros
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#Registros" class="nav-link">';
+                echo ' <a href="/bitacora/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-clock-rotate-left"></i>';
-                echo ' <span>Registros</span>';
+                echo ' <span>Bitacora</span>';
                 echo ' </a>';
                 echo ' </li>';
             }

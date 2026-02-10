@@ -59,3 +59,4 @@
     <?php include_once './Web/salidas/info.php' ?>
 
 </div>
+

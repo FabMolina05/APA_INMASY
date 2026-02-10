@@ -137,6 +137,22 @@ class ValidatePermissions
                 'request' => '/salidas/obtenerSalidaPorId',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/registros/totalRegistros',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/totalCapital',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/totalPorCategoria',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/index',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 

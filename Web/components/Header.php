@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/public/CSS/proveedores.css">
     <link rel="stylesheet" href="/public/CSS/salidas.css">
     <link rel="stylesheet" href="/public/CSS/general.css">
+    <link rel="stylesheet" href="/public/CSS/registros.css">
+
 
 
 

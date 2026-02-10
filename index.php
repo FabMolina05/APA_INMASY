@@ -8,9 +8,7 @@ require_once __DIR__ . '/src/Controlador/EntradaControlador.php';
 require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
 require_once __DIR__ . '/src/Controlador/ProveedoresControlador.php';
 require_once __DIR__ . '/src/Controlador/SalidasControlador.php';
-
-
-
+require_once __DIR__ . '/src/Controlador/RegistrosControlador.php';
 
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
@@ -27,6 +25,7 @@ $entradaController = new EntradaControlador($conn);
 $pedidosController = new PedidosControlador($conn);
 $proveedoresController = new ProveedoresControlador($conn);
 $salidasControlador = new SalidasControlador($conn);
+$registrosControlador = new RegistrosControlador($conn);
 
 
 $request = $_SERVER['REQUEST_URI'];
@@ -132,6 +131,18 @@ switch ($request) {
     case '/salidas/obtenerSalidaPorId':
         $salidasControlador->obtenerSalidaPorID();
         break;
+    case '/registros/totalRegistros':
+        $registrosControlador->totalRegistros();
+        break;
+    case '/registros/totalCapital':
+        $registrosControlador->totalCapital();
+        break;
+    case '/registros/totalPorCategoria':
+        $registrosControlador->totalPorCategoria();
+        break;
+    case '/registros/index':
+        $registrosControlador->index();
+        break;
     case '/error403':
         require_once __DIR__ . '/Web/vistas/error403.php';
         break;
@@ -141,6 +152,8 @@ switch ($request) {
     case '/error501':
         require_once __DIR__ . '/Web/vistas/error501.php';
         break;
+
+
     default:
         http_response_code(404);
         break;

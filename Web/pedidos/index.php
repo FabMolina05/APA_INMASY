@@ -165,3 +165,5 @@
 
 
 </div>
+
+<?php $page = 'pedidos'?>
