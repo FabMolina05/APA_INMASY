@@ -140,6 +140,32 @@ $(document).ready(function() {
     });
 });
 
+
+$(document).ready(function() {
+    $('#bitacoraTable').DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Buscar bitacora...",
+            lengthMenu: "Mostrar _MENU_ bitacora",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ bitacoras",
+            infoEmpty: "Mostrando 0 a 0 de 0 bitacora",
+            infoFiltered: "(filtrado de _MAX_ bitacoras totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
+        },
+        pageLength: 10,
+        order: [],
+        searching: true,
+        responsive: true
+    });
+});
+
+
 $(document).ready(function() {
     $('#salidasTable').DataTable({
         language: {

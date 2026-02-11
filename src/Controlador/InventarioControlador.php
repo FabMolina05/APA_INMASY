@@ -1,17 +1,21 @@
 <?php
 require_once __DIR__ . '/Controller.php';
 require_once dirname(__DIR__, 2) . "/src/BL/Inventario/InventarioBL.php";
+require_once __DIR__ . '/../BL/Bitacora/BitacoraBL.php';
 
 use BL\Inventario\InventarioBL;
+use BL\Bitacora\BitacoraBL;
 
 
 class InventarioControlador extends Controller
 {
     private InventarioBL $inventarioBL;
+    private BitacoraBL $bitacoraBL;
 
     public function __construct($conn)
     {
         $this->inventarioBL = new InventarioBL($conn);
+        $this->bitacoraBL = new BitacoraBL($conn);
     }
 
     public function obtenerArticulosPorCategoria($id, $categoria)
@@ -112,6 +116,28 @@ class InventarioControlador extends Controller
         }
 
         $resultado = $this->inventarioBL->editarArticulo($articuloActualizado);
+        if (isset($resultado['error'])) {
+            $this->bitacoraBL->registrarBitacora([
+                'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+                'categoria' => 'INVENTARIO',
+                'fecha' => $this->registrarFechaHora(),
+                'descripcion' => "editar articulo error: {$resultado['error']}",
+                'accion' => 'UPDATE',
+                'estado' => 'ERROR'
+            ]);
+            $this->view('/Vistas/error501', ['mensaje' => $resultado['error']]);
+
+            return;
+        }
+
+        $this->bitacoraBL->registrarBitacora([
+            'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+            'categoria' => 'INVENTARIO',
+            'fecha' => $this->registrarFechaHora(),
+            'descripcion' => "Editar articulo ID: {$resultado['id']}",
+            'accion' => 'UPDATE',
+            'estado' => 'SUCCESS'
+        ]);
         $this->redirect('/inventario/categoria?categoria=' . $categoria . '&id=' . $resultado['categoria']);
     }
 
@@ -122,6 +148,28 @@ class InventarioControlador extends Controller
 
         $resultado = $this->inventarioBL->sacarArticulo($entrada,  $motivo);
 
+        if (isset($resultado['error'])) {
+            $this->bitacoraBL->registrarBitacora([
+                'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+                'categoria' => 'INVENTARIO',
+                'fecha' => $this->registrarFechaHora(),
+                'descripcion' => "Sacar articulo error: {$resultado['error']}",
+                'accion' => 'DELETE',
+                'estado' => 'ERROR'
+            ]);
+            $this->view('/Vistas/error501', ['mensaje' => $resultado['error']]);
+
+            return;
+        }
+
+        $this->bitacoraBL->registrarBitacora([
+            'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+            'categoria' => 'INVENTARIO',
+            'fecha' => $this->registrarFechaHora(),
+            'descripcion' => "Sacar articulo ID: {$resultado['id']}",
+            'accion' => 'DELETE',
+            'estado' => 'SUCCESS'
+        ]);
         $this->json($resultado);
     }
     public function pedirArticulo()
@@ -144,9 +192,36 @@ class InventarioControlador extends Controller
         }
 
         $resultado = $this->inventarioBL->pedirArticulo($pedido);
+        if (isset($resultado['error'])) {
+            $this->bitacoraBL->registrarBitacora([
+                'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+                'categoria' => 'PEDIDOS',
+                'fecha' => $this->registrarFechaHora(),
+                'descripcion' => "Inserta pedido error: {$resultado['error']}",
+                'accion' => 'INSERT',
+                'estado' => 'ERROR'
+            ]);
+            $this->view('/Vistas/error501', ['mensaje' => $resultado['error']]);
 
+            return;
+        }
+
+        $this->bitacoraBL->registrarBitacora([
+            'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+            'categoria' => 'PEDIDOS',
+            'fecha' => $this->registrarFechaHora(),
+            'descripcion' => "Insertar pedido ID: {$resultado['id']}",
+            'accion' => 'INSERT',
+            'estado' => 'SUCCESS'
+        ]);
 
 
         $this->json($resultado);
+    }
+    private function registrarFechaHora()
+    {
+        $zona = new DateTimeZone('America/Costa_Rica');
+        $fechaConZona = new DateTime('now', $zona);
+        return $fechaConZona->format('Y-m-d H:i:s');
     }
 }

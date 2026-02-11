@@ -73,12 +73,12 @@
                 echo ' </li>';
             }
 
-            // Registros
+            // Bitacora
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/bitacora/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-clock-rotate-left"></i>';
-                echo ' <span>Bitacora</span>';
+                echo ' <span>Bitácora</span>';
                 echo ' </a>';
                 echo ' </li>';
             }

@@ -117,7 +117,8 @@ class EntradaDA implements IEntradaDA
                     throw new \Exception("Error al insertar el artículo en inventario.");
                 }
                 $idInventario = $this->obtenerSiguienteId($stmtInventario);
-                $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_inventario, id_adquisicion,fecha_entrada) VALUES (?, ?, ?)";
+                $queryEntrante = "INSERT INTO dbo.INMASY_EntranteArticulo (id_inventario, id_adquisicion,fecha_entrada) VALUES (?, ?, ?);
+                SELECT SCOPE_IDENTITY() AS id;";
                 if (!isset($adquisicion['fecha_adquisicion'])) {
                     $zona = new DateTimeZone('America/Costa_Rica');
                     $fechaConZona = new DateTime('now', $zona);
@@ -137,8 +138,10 @@ class EntradaDA implements IEntradaDA
                 if ($stmtEntrante === false) {
                     throw new \Exception("Error al insertar el artículo entrante.");
                 }
+
+                $idEntrante = $this->obtenerSiguienteId($stmtEntrante);
                 sqlsrv_commit($this->conexion);
-                return ['success' => true];
+                return ['success' => true,'id'=>$idEntrante];
             }
         } catch (\Exception $e) {
             sqlsrv_rollback($this->conexion);
@@ -178,12 +181,13 @@ class EntradaDA implements IEntradaDA
 
             if ($stmt === false) {
                 sqlsrv_rollback($this->conexion);
-                throw new \Exception("Error al insertar el entrada en entrantes.");
+                $errors = sqlsrv_errors();
+                return ['error' => $errors[0]['message']];
             }
 
             sqlsrv_commit($this->conexion);
 
-            return ["success" => true];
+            return ["success" => true,'id'=>$entrada['id_entrada']];
         } catch (\Exception $e) {
             sqlsrv_rollback($this->conexion);
             return ['error' => $e->getMessage()];

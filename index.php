@@ -9,6 +9,8 @@ require_once __DIR__ . '/src/Controlador/PedidosControlador.php';
 require_once __DIR__ . '/src/Controlador/ProveedoresControlador.php';
 require_once __DIR__ . '/src/Controlador/SalidasControlador.php';
 require_once __DIR__ . '/src/Controlador/RegistrosControlador.php';
+require_once __DIR__ . '/src/Controlador/BitacoraControlador.php';
+
 
 require_once __DIR__ . '/src/Services/validate_session.php';
 require_once __DIR__ . '/src/Services/validate_permission.php';
@@ -26,6 +28,8 @@ $pedidosController = new PedidosControlador($conn);
 $proveedoresController = new ProveedoresControlador($conn);
 $salidasControlador = new SalidasControlador($conn);
 $registrosControlador = new RegistrosControlador($conn);
+$bitacoraControlador = new BitacoraControlador($conn);
+
 
 
 $request = $_SERVER['REQUEST_URI'];
@@ -141,6 +145,12 @@ switch ($request) {
         $registrosControlador->totalPorCategoria();
         break;
     case '/registros/index':
+        $registrosControlador->index();
+        break;
+    case '/bitacora/index':
+        $bitacoraControlador->index();
+        break;
+    case '/bitacora/detalle':
         $registrosControlador->index();
         break;
     case '/error403':

@@ -1,20 +1,27 @@
 <?php
 require_once __DIR__ . '/../BL/Entradas/EntradaBL.php';
 require_once __DIR__ . '/../BL/Usuario/UsuarioBL.php';
+require_once __DIR__ . '/../BL/Bitacora/BitacoraBL.php';
+
 require_once __DIR__ . '/Controller.php';
 
 use BL\Entradas\EntradaBL;
 use BL\Usuario\UsuarioBL;
+use BL\Bitacora\BitacoraBL;
+
 
 class EntradaControlador extends Controller
 {
     private EntradaBL $entradaBL;
     private UsuarioBL $usuarioBL;
+    private BitacoraBL $bitacoraBL;
+
 
     public function __construct($conn)
     {
         $this->entradaBL = new EntradaBL($conn);
         $this->usuarioBL = new UsuarioBL($conn);
+        $this->bitacoraBL = new BitacoraBL($conn);
     }
 
     public function agregarArticulo()
@@ -118,9 +125,27 @@ class EntradaControlador extends Controller
             $resultado = $this->entradaBL->agregarArticulo($articuloNuevo, $adquisicion, $categoria, $almacenamiento);
 
             if (isset($resultado['error'])) {
+                 $this->bitacoraBL->registrarBitacora([
+                    'id_usuario'=>$_SESSION['usuario_INMASY']['ID_Usuario'],
+                    'categoria'=>'ENTRADAS',
+                    'fecha'=> $this->registrarFechaHora(),
+                    'descripcion'=>"Agregar entrante error: {$resultado['error']}",
+                    'accion'=>'INSERT',
+                    'estado'=>'ERROR'
+                    ]);
                 $this->view('/Vistas/error501', ['mensaje' => $resultado['error']]);
+               
                 return;
             }
+
+             $this->bitacoraBL->registrarBitacora([
+                    'id_usuario'=>$_SESSION['usuario_INMASY']['ID_Usuario'],
+                    'categoria'=>'ENTRADAS',
+                    'fecha'=> $this->registrarFechaHora(),
+                    'descripcion'=>"Agregar Entrante ID: {$resultado['id']}",
+                    'accion'=>'INSERT',
+                    'estado'=>'SUCCESS'
+                    ]);
 
             $this->redirect('/entrada/index');
         }
@@ -157,8 +182,25 @@ class EntradaControlador extends Controller
         $resultado = $this->entradaBL->editarEntrada($entrada);
 
         if (isset($resultado['error'])) {
+            $this->bitacoraBL->registrarBitacora([
+                    'id_usuario'=>$_SESSION['usuario_INMASY']['ID_Usuario'],
+                    'categoria'=>'ENTRADAS',
+                    'fecha'=> $this->registrarFechaHora(),
+                    'descripcion'=>"Editar entrante error: {$resultado['error']}",
+                    'accion'=>'UPDATE',
+                    'estado'=>'ERROR'
+                    ]);
             $this->view('/Vistas/error403', ['error' => $resultado['error']]);
         }
+
+         $this->bitacoraBL->registrarBitacora([
+                    'id_usuario'=>$_SESSION['usuario_INMASY']['ID_Usuario'],
+                    'categoria'=>'ENTRADAS',
+                    'fecha'=> $this->registrarFechaHora(),
+                    'descripcion'=>"Editar Entrante ID: {$resultado['id']}",
+                    'accion'=>'UPDATE',
+                    'estado'=>'SUCCESS'
+                    ]);
         $this->json($resultado);
     }
 
@@ -185,5 +227,11 @@ class EntradaControlador extends Controller
         $id = $_GET['id'];
         $resultado = $this->entradaBL->establecerFecha($id);
         $this->json($resultado);
+    }
+
+    private function registrarFechaHora(){
+        $zona = new DateTimeZone('America/Costa_Rica');
+        $fechaConZona = new DateTime('now', $zona);
+        return $fechaConZona->format('Y-m-d H:i:s');
     }
 }

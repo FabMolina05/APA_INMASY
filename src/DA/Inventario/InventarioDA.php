@@ -113,7 +113,7 @@ class InventarioDA implements IInventarioDA
         }
 
         sqlsrv_commit($this->conexion);
-        return ['success' => true, 'categoria' => $id];
+        return ['success' => true, 'categoria' => $id, 'id' => $articulo['ID_Articulo']];
     }
     public function sacarArticulo($id, $motivo)
     {
@@ -170,7 +170,7 @@ class InventarioDA implements IInventarioDA
 
             sqlsrv_commit($this->conexion);
 
-            return ['success' => true];
+            return ['success' => true, 'id' => $id];
         } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }
@@ -226,7 +226,8 @@ class InventarioDA implements IInventarioDA
             sqlsrv_free_stmt($stmt);
 
             $queryPedido = "INSERT INTO dbo.INMASY_PedidosRetiro(id_inventario,id_formula,id_cliente,estado)
-                        VALUES (?,?,?,?)";
+                        VALUES (?,?,?,?);
+                         SELECT SCOPE_IDENTITY() AS id";
             $params = [
                 $idInventario,
                 $idFormula,
@@ -244,7 +245,8 @@ class InventarioDA implements IInventarioDA
                 return ['error' => $e[0]['message'] . "linea 180"];
             }
 
-            sqlsrv_free_stmt($stmt);
+            $idPedido= $this->obtenerSiguienteId($stmt);
+
 
             $query = "UPDATE  a
                   SET a.disponibilidad = 1, uso_equipo = 'EN REVISIÓN'
@@ -265,7 +267,7 @@ class InventarioDA implements IInventarioDA
 
             sqlsrv_commit($this->conexion);
 
-            return ['success' => true];
+            return ['success' => true,'id'=>$idPedido];
         } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }

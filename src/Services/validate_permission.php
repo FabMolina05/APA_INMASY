@@ -153,6 +153,14 @@ class ValidatePermissions
                 'request' => '/registros/index',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/bitacora/index',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/bitacora/detalle',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 
