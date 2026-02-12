@@ -60,7 +60,7 @@
                                     }
                                     if ($pedido['estado'] == "ACEPTADO" && !empty($pedido['direccion'])) {
                                         echo "
-                                                <button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-warning' id='botonDevolver' title='Devolver'>
+                                                <button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-success' id='botonDevolver' title='Devolver'>
                                                    <i class='fa-solid fa-arrow-right-from-bracket'></i>
                                                 </button>
                                             ";
@@ -68,7 +68,7 @@
 
                                     if ($pedido['estado'] == "DENEGADO" && $pedido['estado_articulo']!='DESECHO' && $pedido['activo']!= 0) {
                                         echo "
-                                                <button type='button' data-articulo=" . htmlspecialchars($pedido['id_articulo']) . " data-id=".htmlspecialchars($pedido['id'])." class='btn btn-outline-warning' id='botonRehacer' data-cantidad=".htmlspecialchars($pedido['cantidadActual'])." title='Rehacer' data-bs-toggle='modal' data-bs-target='#modalRehacerPedido'>
+                                                <button type='button' data-articulo=" . htmlspecialchars($pedido['id_articulo']) . " data-id=".htmlspecialchars($pedido['id'])." class='btn btn-outline-danger' id='botonRehacer' data-cantidad=".htmlspecialchars($pedido['cantidadActual'])." title='Rehacer' data-bs-toggle='modal' data-bs-target='#modalRehacerPedido'>
                                                    <i class='fa-solid fa-arrow-rotate-left'></i>
                                                 </button>
                                             ";
