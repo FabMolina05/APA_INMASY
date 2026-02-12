@@ -152,7 +152,6 @@
                         <label for="almacenamiento" class="form-label">Almacenamiento</label>
                         <select class="form-select" id="almacenamiento" name="almacenamiento" required>
                             <option value="inventario">Inventario</option>
-                            <option value="bodega">Bodega</option>
                         </select>
                     </div>
                     <div class="num_catalogo">

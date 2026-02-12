@@ -30,7 +30,7 @@
                                 foreach ($salidas as $salida) {
 
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($salida['motivo']) . "</td>";
+                                    echo (!empty($salida['motivo']))?"<td>" . htmlspecialchars($salida['motivo']) . "</td>":"<td>N/A</td>";
                                     echo "<td>" . date_format($salida['salida'], "d/m/Y") . "</td>";
                                     echo "<td>" . htmlspecialchars($salida['nombre']) . "</td>";
                                     echo "<td>" . htmlspecialchars(empty($salida['serial']) ? "N/A" : $salida['serial']) . "</td>";
