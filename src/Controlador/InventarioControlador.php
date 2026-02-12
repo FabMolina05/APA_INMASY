@@ -174,6 +174,7 @@ class InventarioControlador extends Controller
     }
     public function pedirArticulo()
     {
+        
         $pedido = [
             'fecha' => $_POST['fecha'],
             'num_orden' => null,

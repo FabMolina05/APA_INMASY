@@ -103,7 +103,7 @@ class PedidosDA implements IPedidosDA
 
 
 
-        return ['success' => true];
+        return ['success' => true, 'id' => $pedido['id']];
     }
     public function aceptarPedido($pedido)
     {
@@ -162,6 +162,36 @@ class PedidosDA implements IPedidosDA
         sqlsrv_free_stmt($stmt);
 
         if (!empty($cantidad)) {
+            $query = "SELECT 
+                    a.cantidad
+                    FROM dbo.INMASY_PedidosRetiro pr
+                    LEFT JOIN dbo.INMASY_Inventario i 
+                        ON i.ID_Inventario = pr.id_inventario
+                    LEFT JOIN dbo.INMASY_Articulos a 
+                        ON a.ID_Articulo = i.id_articulo
+                    WHERE pr.ID_Pedido = ?";
+            $params = array($pedido['id']);
+
+            $stmt = sqlsrv_query($this->conexion, $query, $params);
+
+            if ($stmt == false) {
+                $e = sqlsrv_errors();
+                sqlsrv_rollback($this->conexion);
+
+                return ['error' => $e[0]['message']];
+            }
+
+            $cantidadActual = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)['cantidad'];
+
+            if (($cantidadActual - $cantidad) < 0) {
+
+                sqlsrv_rollback($this->conexion);
+                return ['error' => "la cantidad solicitada es mayor que la actual"];
+            }
+
+            sqlsrv_free_stmt($stmt);
+
+
             $query = "UPDATE  a
                   SET a.uso_equipo = u.nombre_completo, a.direccion = fr.direccion,a.cantidad = a.cantidad - ?
                   FROM dbo.INMASY_PedidosRetiro pr
@@ -181,6 +211,8 @@ class PedidosDA implements IPedidosDA
 
                 return ['error' => $e[0]['message']];
             }
+            sqlsrv_free_stmt($stmt);
+
             $query = "UPDATE  a
                   SET a.uso_equipo = null, a.direccion = '',a.disponibilidad = 0
                   FROM dbo.INMASY_PedidosRetiro pr
@@ -230,7 +262,7 @@ class PedidosDA implements IPedidosDA
 
 
 
-        return ['success' => true];
+        return ['success' => true, 'id' => $pedido['id']];
     }
     public function detallePedido($pedido)
     {
@@ -419,7 +451,7 @@ class PedidosDA implements IPedidosDA
 
         sqlsrv_commit($this->conexion);
 
-        return ['success' => true];
+        return ['success' => true, 'id' => $pedido['id_pedido']];
     }
 
     private function EstadoValido($pedido)

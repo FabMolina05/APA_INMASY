@@ -22,6 +22,7 @@ $(document).ready(function () {
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
+                if(response.success){
                 Swal.fire({
                     icon: 'success',
                     title: '¡Éxito!',
@@ -29,6 +30,15 @@ $(document).ready(function () {
                 }).then(() => {
                     location.reload();
                 });
+            }else{
+                 Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error
+                }).then(() => {
+                    location.reload();
+                });
+            }
             },
             error: function () {
                 Swal.fire({

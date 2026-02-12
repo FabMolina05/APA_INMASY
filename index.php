@@ -124,7 +124,7 @@ switch ($request) {
         $proveedoresController->agregarProveedor();
         break;
     case '/proveedores/actualizar':
-        $proveedoresController->actualizarUsuario();
+        $proveedoresController->actualizarProveedor();
         break;
     case '/proveedores/obtenerProveedorPorId':
         $proveedoresController->obtenerProveedorPorId();

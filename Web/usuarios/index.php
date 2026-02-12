@@ -44,7 +44,7 @@
                                     echo "<td class='text-center'>
                                             <div class='btn-group btn-group-sm' role='group'>
                                                
-                                                <button type='button' data-id=". htmlspecialchars($usuario['ID_Usuario'])." class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarUsuario'>
+                                                <button type='button' data-id=". htmlspecialchars($usuario['ID_Usuario'])." data-rol=".htmlspecialchars($usuario['rol'])." data-estado=".htmlspecialchars($usuario['estado'])." class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarUsuario'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
                                                 

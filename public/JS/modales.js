@@ -1,8 +1,13 @@
 $('#modalEditarUsuario').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');
+    var estado = button.data('estado')
+    var rol = button.data('rol')
     var modal = $(this);
     modal.find('#ID_Usuario').val(id);
+    $('#modalEditarUsuario').find(`#rol option:contains(${rol})`).prop('selected',true)
+    modal.find('#estado').val(estado);
+
 });
 
 $('#modalEditarArticulo').on('show.bs.modal', function (event) {

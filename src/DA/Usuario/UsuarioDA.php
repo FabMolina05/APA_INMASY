@@ -85,7 +85,7 @@ class UsuarioDA implements IUsuarioDA
             $errors = sqlsrv_errors();
             return ['error' => $errors[0]['message']];
         }
-        return ['success' => true];
+        return ['success' => true,'id'=>$user['id']];
     }
 
     public function actualizarUsuario($user)

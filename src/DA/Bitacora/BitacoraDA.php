@@ -22,7 +22,8 @@ class BitacoraDA implements IBitacoraDA
     {
         $query = "SELECT b.ID_Bitacora, u.nombre_completo as usuario,b.categoria,b.fecha,b.descripcion,b.accion,b.estado
                   FROM dbo.INMASY_Bitacora b
-                  JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = b.id_usuario";
+                  JOIN dbo.INMASY_Usuarios u ON u.ID_Usuario = b.id_usuario
+                  ORDER BY b.ID_Bitacora DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
