@@ -38,7 +38,7 @@ class ProveedoresDA implements IProveedoresDA
 
     public function obtenerProveedores()
     {
-        $query = "SELECT ID_Proveedor, nombre, direccion, telefono, correo FROM dbo.INMASY_Proveedores";
+        $query = "SELECT ID_Proveedor, nombre, direccion, telefono, correo FROM dbo.INMASY_Proveedores ORDER BY ID_Proveedor DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
@@ -53,7 +53,8 @@ class ProveedoresDA implements IProveedoresDA
 
     public function agregarProveedor($proveedor)
     {
-        $query = "INSERT INTO dbo.INMASY_Proveedores (nombre, direccion, telefono, correo) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO dbo.INMASY_Proveedores (nombre, direccion, telefono, correo) VALUES (?, ?, ?, ?);
+        SELECT SCOPE_IDENTITY() AS id;";
         $params = [
             $proveedor['nombre'],
             $proveedor['direccion'],
@@ -65,7 +66,9 @@ class ProveedoresDA implements IProveedoresDA
             $errors = sqlsrv_errors();
             return ['error' => $errors[0]['message']];
         }
-        return ['success' => true];
+
+        $id = $this->obtenerSiguienteId($stmt);
+        return ['success' => true,'id'=>$id];
     }
 
     public function actualizarProveedor($proveedor)
@@ -84,5 +87,17 @@ class ProveedoresDA implements IProveedoresDA
             return ['error' => $errors[0]['message']];
         }
         return ['success' => true];
+    }
+     private function obtenerSiguienteId($stmt)
+    {
+        sqlsrv_next_result($stmt);
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        sqlsrv_free_stmt($stmt);
+
+        if (!isset($row['id']) || $row['id'] === null) {
+            throw new \Exception("SCOPE_IDENTITY retornó NULL");
+        }
+
+        return (int)$row['id'];
     }
 }

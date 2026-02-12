@@ -50,7 +50,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="factura" class="form-label">Número de Factura</label>
-                            <input type="text" class="form-control" id="factura" name="factura">
+                            <input type="text" class="form-control" id="factura" name="factura" maxlength="50">
                         </div>
                         <div class="mb-3">
                             <label for="tipo_pago" class="form-label">Tipo de Pago</label>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="garantia" class="form-label">Garantía</label>
-                            <textarea type="text" class="form-control" id="garantia" name="garantia"></textarea>
+                            <textarea type="text" class="form-control" id="garantia" name="garantia" maxlength="100"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>
@@ -84,8 +84,8 @@
                     <!-- articulo -->
                     <h3 class="mb-3 mt-4">Información del artículo</h3>
                     <div class="mb-3">
-                        <label for="caja" class="form-label">Número de caja</label>
-                        <input type="number" step="1" class="form-control" id="caja" name="caja">
+                        <label for="num_articulo" class="form-label">Número de artículo</label>
+                        <input type="number" step="1" class="form-control" id="num_articulo" name="num_articulo">
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -93,19 +93,19 @@
                     </div>
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca">
+                        <input type="text" class="form-control" id="marca" name="marca" maxlength="50">
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo">
+                        <input type="text" class="form-control" id="modelo" name="modelo" maxlength="50">
                     </div>
                     <div class="mb-3">
                         <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="serial" name="serial">
+                        <input type="text" class="form-control" id="serial" name="serial" maxlength="100">
                     </div>
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <textarea type="text" class="form-control" id="direccion" name="direccion"></textarea>
+                        <textarea type="text" class="form-control" id="direccion" name="direccion" maxlength="100"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado</label>
@@ -123,19 +123,18 @@
                     </div>
                     <div class="mb-3">
                         <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" >
+                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_fabricacion" class="form-label">Fecha de Fabricación</label>
+                        <input type="date" class="form-control" id="fecha_fabricacion" name="fecha_fabricacion">
                     </div>
                     <!-- categoria -->
                     <h3 class="mb-3 mt-4">Categoría</h3>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
                         <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()" required>
-                            <?php if ($categoriaSeleccionada !== null): ?>
-                                <option>Seleccione una categoria</option>
-                            <?php else: ?>
-                                <option selected>Seleccione una categoria</option>
                             <?php
-                            endif;
 
                             foreach ($categorias as $categoria) {
                                 $selected = ($categoriaSeleccionada == $categoria['id']) ? "selected" : "";
@@ -153,7 +152,6 @@
                         <label for="almacenamiento" class="form-label">Almacenamiento</label>
                         <select class="form-select" id="almacenamiento" name="almacenamiento" required>
                             <option value="inventario">Inventario</option>
-                            <option value="bodega">Bodega</option>
                         </select>
                     </div>
                     <div class="num_catalogo">

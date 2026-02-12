@@ -91,7 +91,7 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">N° de Catálogo:</span>
-                        <span class="fw-semibold">${data.num_catalogo}</span>
+                        <span class="fw-semibold">${data.num_catalogo ?? 'N/A'}</span>
                     </div>
                 </div>
                 ` : ''}
@@ -104,31 +104,31 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">Serial:</span>
-                        <span class="fw-semibold">${data.serial}</span>
+                        <span class="fw-semibold">${data.serial ?? 'N/A'}</span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">Modelo:</span>
-                        <span class="fw-semibold">${data.modelo}</span>
+                        <span class="fw-semibold">${data.modelo ?? 'N/A'}</span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">Categoria:</span>
-                        <span class="fw-semibold">${data.categoria}</span>
+                        <span class="fw-semibold">${data.categoria ?? 'N/A'}</span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
-                        <span class="text-muted me-2">ID Caja:</span>
-                        <span class="badge bg-secondary fs-6">${data.caja}</span>
+                        <span class="text-muted me-2">Número de Artículo:</span>
+                        <span class="badge bg-secondary fs-6">${data.num_articulo ?? 'N/A'}</span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
-                        <span class="text-muted me-2">Cantidad:</span>
-                        <span class="badge bg-secondary fs-6">${data.cantidad}</span>
+                        <span class="text-muted me-2">Cantidad:</span> 
+                        <span class="badge bg-secondary fs-6">${data.cantidad ?? 'N/A'}</span>
                     </div>
                 </div>
             </div>

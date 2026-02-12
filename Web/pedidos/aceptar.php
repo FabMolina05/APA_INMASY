@@ -9,7 +9,7 @@
                     
                     <div class="mb-3 mt-3 my-2">
                         <label for="num_orden" class="form-label">Número de orden</label>
-                        <input type="text" class="form-control" id="num_orden" name="num_orden" required>
+                        <input type="text" class="form-control" id="num_orden" name="num_orden" >
                     </div>
                    
 

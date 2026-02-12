@@ -1,3 +1,4 @@
+
 <div class="sidebar">
     <div class="sidebar-header">
         <h3><a href="/" style="text-decoration: none; color : white"><img src="/public/Assets/logo.png"> INMASY</a></h3>
@@ -11,7 +12,7 @@
             // Dashboard     
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#dashboard" class="nav-link">';
+                echo ' <a href="/registros/index" class="nav-link">';
                 echo ' <i class="fas fa-chart-line"></i>';
                 echo ' <span>Dashboard</span>';
                 echo ' </a>';
@@ -45,20 +46,13 @@
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=baterias&id=8">Baterías</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=reconectador&id=9">Reconectador</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=seccionador&id=10">Seccionador</a></li>';
+                echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=etiquetas&id=11">Etiquetas</a></li>';
                 echo ' <li><a class="nav-link" href="/inventario/categoria?categoria=otros&id=7">Otros</a></li>';
                 echo ' </ul>';
                 echo ' </li>';
             }
-            // Bodega
-            if ($usuario['rol'] == 1) {
-                echo ' <li class="nav-item">';
-                echo ' <a href="/bodega/index" class="nav-link">';
-                echo ' <i class="fa-solid fa-box"></i>';
-                echo ' <span>Bodega</span>';
-                echo ' </a>';
-                echo ' </li>';
-            }
-
+         
+         
             // Entradas
             if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
@@ -72,19 +66,19 @@
             // Salidas
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#salidas" class="nav-link">';
+                echo ' <a href="/salidas/index" class="nav-link">';
                 echo ' <i class="fas fa-arrow-circle-up"></i>';
                 echo ' <span>Salidas</span>';
                 echo ' </a>';
                 echo ' </li>';
             }
 
-            // Registros
+            // Bitacora
             if ($usuario['rol'] == 1) {
                 echo ' <li class="nav-item">';
-                echo ' <a href="#Registros" class="nav-link">';
+                echo ' <a href="/bitacora/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-clock-rotate-left"></i>';
-                echo ' <span>Registros</span>';
+                echo ' <span>Bitácora</span>';
                 echo ' </a>';
                 echo ' </li>';
             }

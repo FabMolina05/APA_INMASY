@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalInfoEntrada" tabindex="-1" aria-labelledby="infor" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-mid">
         <div class="modal-content">
             <div class="modal-body">
                 <div id="infoEntradaContenido">

@@ -17,7 +17,6 @@ function mostrarCategoria() {
                     <option value="">Seleccione un tipo</option>
                     <option value="Circuito de Distribución">Circuito de Distribución</option>
                     <option value="Transformador">Transformador</option>
-                    <option value="Trifásico">Trifásico</option>
                 </select>
             </div>
              <div class="mb-3">
@@ -29,9 +28,42 @@ function mostrarCategoria() {
                 <input type="text" class="form-control" id="vac" name="vac" >
             </div>
             <div class="mb-3">
+                <label for="phase" class="form-label">Phase</label>
+                <input type="text" class="form-control" id="phase" name="phase" >
+            </div>
+            <div class="mb-3">
+                <label for="ground" class="form-label">Ground</label>
+                <input type="text" class="form-control" id="ground" name="ground" >
+            </div>
+            <div class="mb-3">
+                <label for="num_catalogo" class="form-label">Número de catalogo</label>
+                <input type="text" class="form-control" id="numcatalogo" name="num_catalogo" >
+            </div>
+            <div class="mb-3">
                 <label for="aidi" class="form-label">Codigo AIDI</label>
                 <input type="text" class="form-control" id="aidi" name="aidi" >
             </div>
+
+        `;
+    } else if (categoria === "3") {
+        contenidoCategoria.innerHTML = `
+        <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo</label>
+                <select class="form-select" id="tipoTarjeta" name="tipoTarjeta" required>
+                    <option value="">Seleccione un tipo</option>
+                    <option value="Comunicación">Comunicación</option>
+                    <option value="CPU">CPU</option>
+                    <option value="Cargador">Cargador</option>
+                    <option value="otro">Otro</option>
+
+
+                </select>
+            </div>
+            <div class='mb-3'>
+            <div class="otro_tipo">
+            </div>
+        </div>
+        
         `;
     } else if (categoria === "4") {
         contenidoCategoria.innerHTML = `
@@ -47,6 +79,15 @@ function mostrarCategoria() {
                 <label for="puertos" class="form-label">Puertos</label>
                 <input type="number" step="1" min="1" class="form-control" id="puertos" name="puertos" required>
             </div>
+             <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo </label>
+                 <select class="form-select" id="tipo" name="tipo" required>
+                    <option value="">Seleccione un tipo</option>
+                    <option value="Fibra">Fibra</option>
+                    <option value="Cobre">Cobre</option>
+                    <option value="No Aplica">No Aplica</option>
+                </select>
+        </div>
         `;
     } else if (categoria === "7") {
         contenidoCategoria.innerHTML = `
@@ -152,6 +193,23 @@ function mostrarCategoria() {
             </div>
          `;
 
+    } else if (categoria === "11") {
+        contenidoCategoria.innerHTML = `
+       <div class="mb-3">
+                <label for="caja" class="form-label">Caja</label>
+                <input type="text"  class="form-control" id="caja" name="caja" required>
+        </div>
+        <div class="mb-3">
+                <label for="numero" class="form-label">Numero</label>
+                <input type="number" step="1" class="form-control" id="numero" name="numero" required>
+        </div>
+        <div class="mb-3">
+                <label for="operacion" class="form-label">Medida</label>
+                <input type="text" class="form-control" id="medida" name="medida" required>
+
+        </div>
+         `;
+
     }
     else {
         contenidoCategoria.innerHTML = "";
@@ -174,18 +232,32 @@ $('#persona_compra').on('change', function () {
 });
 
 
+$(document).on('change', '#tipoTarjeta', function () {
+    const seleccion = $(this).val();
+    const otro = document.querySelector('.otro_tipo');
+    if (seleccion === 'otro') {
+        otro.innerHTML = `
+            <label for= "otro_tipo" class= "form-label"> Especifique el tipo</label>
+                <input type="text" class="form-control" id="otro_tipo" name="otro_tipo" >
+                    `;
+    } else {
+        otro.innerHTML = '';
+    }
+});
+
 $(document).on('change', '#protocolo', function () {
     const seleccion = $(this).val();
     const otro = document.querySelector('.otro_protocolo');
     if (seleccion === 'otro') {
         otro.innerHTML = `
             <label for= "otro_protocolo" class= "form-label"> Especifique el protocolo</label>
-                <input type="text" class="form-control" id="otro_protocolo" name="otro_protocolo" >
+                <input type="text" class="form-control" id="otro_protocolo" name="otro_protocolo" maxlength='50' >
                     `;
     } else {
         otro.innerHTML = '';
     }
 });
+
 
 
 

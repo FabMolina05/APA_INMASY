@@ -50,8 +50,15 @@ class InventarioBL implements IInventarioBL{
             return ['error' => $e->getMessage()];
         }
     }
-    public function sacarArticulo($id){
+    public function sacarArticulo($id,$motivo){
+        try {
+            $resultado = $this->inventarioDA->sacarArticulo($id,$motivo);
 
+            return $resultado;
+
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
     public function pedirArticulo($id){
          try {

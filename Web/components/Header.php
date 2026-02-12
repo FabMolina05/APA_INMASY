@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="/public/CSS/entradas.css">
     <link rel="stylesheet" href="/public/CSS/pedidos.css">
     <link rel="stylesheet" href="/public/CSS/proveedores.css">
+    <link rel="stylesheet" href="/public/CSS/salidas.css">
+    <link rel="stylesheet" href="/public/CSS/general.css">
+    <link rel="stylesheet" href="/public/CSS/registros.css">
+    <link rel="stylesheet" href="/public/CSS/bitacora.css">
+
+
+
+
 
    
 </head>

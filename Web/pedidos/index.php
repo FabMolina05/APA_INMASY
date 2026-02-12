@@ -15,7 +15,7 @@
                         <th>Encargado</th>
                         <th>Artículo</th>
                         <th>Serial</th>
-                        <th>Modelo</th>
+                        <th>Cantidad</th>
                         <th>Fecha</th>
                         <th>N° Orden</th>
                         <th>Acciones</th>
@@ -43,35 +43,36 @@
                             ?>
 
                             <td><?= htmlspecialchars($pedido['nombre_articulo']) ?></td>
-                            <td><?= htmlspecialchars($pedido['serial']) ?></td>
-                            <td><?= htmlspecialchars($pedido['modelo']) ?></td>
+                            <td><?= htmlspecialchars($pedido['serial'] ?? "N/A") ?></td>
+                            <td><?= htmlspecialchars($pedido['cantidad'] ?? "N/A") ?></td>
                             <td><?php echo date_format($pedido['fecha'], "d/m/Y"); ?></td>
                             <td><?php echo (isset($pedido['orden'])) ? htmlspecialchars($pedido['orden']) : "<span class='badge bg-danger'>N/A</span>" ?></td>
 
-                            <td >
+                            <td>
                                 <div class='btn-group btn-group-sm' role='group'>
                                     <?php
                                     if ($pedido['estado'] == "PENDIENTE") {
                                         echo "
-                                               
                                                 <button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarPedido'>
                                                     <i class='fa-solid fa-pen'></i>
                                                 </button>
-                                                
-                                            
                                             ";
                                     }
-                                    if ($pedido['estado'] == "ACEPTADO") {
+                                    if ($pedido['estado'] == "ACEPTADO" && !empty($pedido['direccion'])) {
                                         echo "
-                                               
-                                                <button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-warning' id='botonDevolver' title='Devolver'>
+                                                <button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-success' id='botonDevolver' title='Devolver'>
                                                    <i class='fa-solid fa-arrow-right-from-bracket'></i>
                                                 </button>
-                                                
-                                            
                                             ";
                                     }
 
+                                    if ($pedido['estado'] == "DENEGADO" && $pedido['estado_articulo']!='DESECHO' && $pedido['activo']!= 0) {
+                                        echo "
+                                                <button type='button' data-articulo=" . htmlspecialchars($pedido['id_articulo']) . " data-id=".htmlspecialchars($pedido['id'])." class='btn btn-outline-danger' id='botonRehacer' data-cantidad=".htmlspecialchars($pedido['cantidadActual'])." title='Rehacer' data-bs-toggle='modal' data-bs-target='#modalRehacerPedido'>
+                                                   <i class='fa-solid fa-arrow-rotate-left'></i>
+                                                </button>
+                                            ";
+                                    }
                                     echo "<button type='button' data-id=" . htmlspecialchars($pedido['id']) . " class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoPedido'>
                                             <i class='fa-regular fa-eye'></i>
                                 </button>
@@ -98,7 +99,6 @@
                             <th>Cliente</th>
                             <th>Artículo</th>
                             <th>Serial</th>
-                            <th>Modelo</th>
                             <th>Fecha</th>
                             <th>Acciones</th>
                         </tr>
@@ -108,21 +108,20 @@
                             <tr>
                                 <?php
                                 if ($pedido['estado'] == "PENDIENTE") {
-                                echo "<td><span class='badge bg-warning'>PENDIENTE</span></td>";
-                            } elseif ($pedido['estado'] == "ACEPTADO") {
-                                echo "<td><span class='badge bg-success'>ACEPTADO</span></td>";
-                            } elseif ($pedido['estado'] == "DEVUELTO") {
-                                echo "<td><span class='badge bg-secondary'>DEVUELTO</span></td>";
-                            } else {
-                                echo "<td><span class='badge bg-danger'>DENEGADO</span></td>";
-                            };
+                                    echo "<td><span class='badge bg-warning'>PENDIENTE</span></td>";
+                                } elseif ($pedido['estado'] == "ACEPTADO") {
+                                    echo "<td><span class='badge bg-success'>ACEPTADO</span></td>";
+                                } elseif ($pedido['estado'] == "DEVUELTO") {
+                                    echo "<td><span class='badge bg-secondary'>DEVUELTO</span></td>";
+                                } else {
+                                    echo "<td><span class='badge bg-danger'>DENEGADO</span></td>";
+                                };
 
                                 ?>
                                 <td><?php echo (isset($pedido['encargado'])) ?  htmlspecialchars($pedido['encargado']) : "<span class='badge bg-warning'>SIN REVISAR</span>"; ?></td>
                                 <td><?php echo htmlspecialchars($pedido['cliente']); ?></td>
                                 <td><?php echo htmlspecialchars($pedido['nombre_articulo']); ?></td>
                                 <td><?php echo htmlspecialchars($pedido['serial']); ?></td>
-                                <td><?php echo htmlspecialchars($pedido['modelo']); ?></td>
                                 <td><?php echo date_format($pedido['fecha'], "d/m/Y"); ?></td>
                                 <?php
                                 echo "<td class='text-center'>
@@ -138,7 +137,7 @@
                                                 </button>";
 
 
-                                    echo "            <button type='button' data-id=" . htmlspecialchars($pedido['id']) . "  class='btn btn-outline-danger' id='botonDenegar' title='Denegar'>
+                                    echo "            <button type='button' data-id=" . htmlspecialchars($pedido['id']) . "  class='btn btn-outline-danger btn-rechazo' title='Denegar'>
                                                     <i class='fa-solid fa-x'></i>
                                                 </button>
                 
@@ -158,9 +157,13 @@
     <?php include_once './Web/pedidos/aceptar.php' ?>
     <?php include_once './Web/pedidos/denegar.php' ?>
     <?php include_once './Web/pedidos/editarPedido.php' ?>
+        <?php include_once './Web/pedidos/rehacerPedido.php' ?>
+
     <?php include_once './Web/pedidos/info.php' ?>
 
 
 
 
 </div>
+
+<?php $page = 'pedidos'?>

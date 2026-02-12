@@ -5,14 +5,14 @@
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">Editar Adquisición</h2>
                 </div>
-                <form method="POST" action="/entrada/actualizar" id="formEditarEntrante">
+                <form method="POST" action="/entrada/actualizar" id="formEditarEntrante" >
                     <div class="mb-3">
                             <label for="fecha_adquisicion" class="form-label">Fecha de Entrega</label>
                             <input type="date" class="form-control date" id="fecha_adquisicion" name="fecha_adquisicion">
                         </div>
                     <div class="mb-3">
                             <label for="proveedor" class="form-label">Proveedor</label>
-                            <select class="form-select" id="proveedor" name="proveedor">
+                            <select class="form-select" id="proveedor" name="proveedor" required>
                                 <option value="">Seleccione un proveedor</option>
                                 <?php
                                 foreach ($proveedores as $proveedor) {
@@ -23,20 +23,20 @@
                     </div>
                    <div class="mb-3">
                             <label for="factura" class="form-label">Número de Factura</label>
-                            <input type="text" class="form-control" id="factura" name="factura">
+                            <input type="text" class="form-control" id="factura" name="factura" required>
                         </div>
                         <div class="mb-3">
                             <label for="tipo_pago" class="form-label">Tipo de Pago</label>
-                            <input type="text" class="form-control" id="tipo_pago" name="tipo_pago">
+                            <input type="text" class="form-control" id="tipo_pago" name="tipo_pago"required>
                         </div>
 
                         <div class="mb-3">
                             <label for="numero_fondo" class="form-label">Número de Fondo</label>
-                            <input type="text" class="form-control" id="num_fondo" name="numero_fondo">
+                            <input type="text" class="form-control" id="num_fondo" name="numero_fondo"required>
                         </div>
                         <div class="mb-3">
                             <label for="garantia" class="form-label">Garantía</label>
-                            <textarea type="text" class="form-control" id="garantia" name="garantia"></textarea>
+                            <textarea type="text" class="form-control" id="garantia" name="garantia"required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>

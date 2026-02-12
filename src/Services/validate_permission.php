@@ -129,6 +129,38 @@ class ValidatePermissions
                 'request' => '/proveedores/obtenerProveedorPorId',
                 'roles' => ['1']
             ],
+            [
+                'request' => '/salidas/index',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/salidas/obtenerSalidaPorId',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/totalRegistros',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/totalCapital',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/totalPorCategoria',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/registros/index',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/bitacora/index',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/bitacora/detalle',
+                'roles' => ['1']
+            ],
         ];
         $rqExist = false;
 

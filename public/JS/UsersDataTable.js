@@ -86,7 +86,7 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[3, 'desc']],
+        order: [],
         searching: true,
         responsive: true
     });
@@ -110,7 +110,7 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[0, 'asc']],
+        order: [],
         searching: true,
         responsive: true
     });
@@ -134,9 +134,66 @@ $(document).ready(function() {
             emptyTable: "No hay datos disponibles"
         },
         pageLength: 10,
-        order: [[0, 'asc']],
+        order: [],
         searching: true,
         responsive: true
+    });
+});
+
+
+$(document).ready(function() {
+    $('#bitacoraTable').DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Buscar bitacora...",
+            lengthMenu: "Mostrar _MENU_ bitacora",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ bitacoras",
+            infoEmpty: "Mostrando 0 a 0 de 0 bitacora",
+            infoFiltered: "(filtrado de _MAX_ bitacoras totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
+        },
+        pageLength: 10,
+        order: [],
+        searching: true,
+        responsive: true
+    });
+});
+
+
+$(document).ready(function() {
+    $('#salidasTable').DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Buscar salida...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ salidas",
+            infoEmpty: "Mostrando 0 a 0 de 0 salidas",
+            infoFiltered: "(filtrado de _MAX_ salidas totales)",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles"
+        },
+       
+        pageLength: 10,
+        order: [],
+        searching: true,
+        responsive: true,
+        columnDefs: [
+            {
+                targets: 0,  
+                className: 'truncate-cell'
+            }
+        ]
     });
 });
 
