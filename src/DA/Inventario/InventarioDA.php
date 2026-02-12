@@ -245,29 +245,30 @@ class InventarioDA implements IInventarioDA
                 return ['error' => $e[0]['message'] . "linea 180"];
             }
 
-            $idPedido= $this->obtenerSiguienteId($stmt);
+            $idPedido = $this->obtenerSiguienteId($stmt);
 
-
-            $query = "UPDATE  a
+            if (empty($pedido['cantidad'])) {
+                $query = "UPDATE  a
                   SET a.disponibilidad = 1, uso_equipo = 'EN REVISIÓN'
                   FROM dbo.INMASY_Articulos a
                   INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ?
                   WHERE a.ID_Articulo = i.id_articulo";
 
-            $params = array($idInventario);
+                $params = array($idInventario);
 
-            $stmt = sqlsrv_query($this->conexion, $query, $params);
+                $stmt = sqlsrv_query($this->conexion, $query, $params);
 
-            if ($stmt == false) {
-                $e = sqlsrv_errors();
-                sqlsrv_rollback($this->conexion);
+                if ($stmt == false) {
+                    $e = sqlsrv_errors();
+                    sqlsrv_rollback($this->conexion);
 
-                return ['error' => $e[0]['message'] . "linea 199"];
+                    return ['error' => $e[0]['message'] . "linea 199"];
+                }
             }
 
             sqlsrv_commit($this->conexion);
 
-            return ['success' => true,'id'=>$idPedido];
+            return ['success' => true, 'id' => $idPedido];
         } catch (\Exception $e) {
             return ['error' => $e[0]['message']];
         }

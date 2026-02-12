@@ -250,7 +250,7 @@ $('#modalInfoPedido').on('show.bs.modal', function (event) {
                                             </div>
                                         </div>`: `<div class="col-md-12">
                                             <div class="d-flex align-items-start">
-                                                <span class="text-muted  me-2">Cantidad:</span>
+                                                <span class="text-muted  me-2">Cantidad Solicitada:</span>
                                                 <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.cantidad ?? 'N/A'}</span>
                                             </div>
                                         </div>`}
@@ -292,6 +292,12 @@ $('#modalInfoPedido').on('show.bs.modal', function (event) {
                                             <div class="d-flex align-items-start">
                                                 <span class="text-muted me-2">Modelo:</span>
                                                 <span class="fw-semibold">${data.modelo ?? 'N/A'}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-start">
+                                                <span class="text-muted me-2">Cantidad Actual:</span>
+                                                <span class="badge bg-secondary fs-6">${data.cantidadActual ?? 'N/A'}</span>
                                             </div>
                                         </div>
 

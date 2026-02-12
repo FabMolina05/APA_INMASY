@@ -29,7 +29,6 @@
                                 <th>Marca</th>
                                 <th>Cantidad</th>
                                 <th>Peso</th>
-                                <th>Disponible</th>
                                 <th>activo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
@@ -49,12 +48,7 @@
                                         }
                                         echo "<td>" . htmlspecialchars($articulo['peso']) . "</td>";
 
-                                        if ($articulo['disponibilidad'] == 1) {
-                                            echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
-                                        } else {
-                                            echo "<td><span class='badge bg-success'>Libre</span></td>";
-                                        };
-
+                                        
                                         if ($_SESSION['usuario_INMASY']['rol'] == 1) {
                                             if ($articulo['activo'] == 0) {
                                                 echo "<td><span class='badge bg-danger'>Inactivo</span></td>";

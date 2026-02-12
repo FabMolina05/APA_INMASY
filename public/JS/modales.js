@@ -5,7 +5,7 @@ $('#modalEditarUsuario').on('show.bs.modal', function (event) {
     var rol = button.data('rol')
     var modal = $(this);
     modal.find('#ID_Usuario').val(id);
-    $('#modalEditarUsuario').find(`#rol option:contains(${rol})`).prop('selected',true)
+    $('#modalEditarUsuario').find(`#rol option:contains(${rol})`).prop('selected', true)
     modal.find('#estado').val(estado);
 
 });
@@ -382,12 +382,13 @@ $('#modalEditarPedido').on('show.bs.modal', function (event) {
 $('#modalRehacerPedido').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');
+    var articulo = button.data('articulo');
     var cantActual = button.data('cantidad');
 
 
     $(this).find('#cantidadActual').val(cantActual);
 
-    $(this).find('#ID').val(id);
+    $(this).find('#ID').val(articulo);
 
     $.ajax({
         type: "GET",
@@ -466,7 +467,7 @@ $(document).on('click', '.btn-sacar', function () {
         title: '¿Estás seguro de desechar este artículo?',
         text: 'Escriba el motivo de la salida',
         input: 'text',
-        inputAttributes:{'maxLength':'100'},
+        inputAttributes: { 'maxLength': '100' },
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',

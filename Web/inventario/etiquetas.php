@@ -29,7 +29,7 @@
                                 <th>Caja</th>
                                 <th>Número</th>
                                 <th>Medida</th>
-                                <th>Disponible</th>
+                                <th>Cantidad</th>
                                 <th>activo</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
@@ -46,13 +46,10 @@
                                         echo "<td>" . htmlspecialchars($articulo['caja']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['numero']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['medida']) . "</td>";
+                                        echo "<td>" . htmlspecialchars($articulo['cantidad']) . "</td>";
 
 
-                                        if ($articulo['disponibilidad'] == 1) {
-                                            echo "<td><span class='badge bg-danger'>Ocupado</span></td>";
-                                        } else {
-                                            echo "<td><span class='badge bg-success'>Libre</span></td>";
-                                        };
+                                        
 
                                         if ($_SESSION['usuario_INMASY']['rol'] == 1) {
                                             if ($articulo['activo'] == 0) {
