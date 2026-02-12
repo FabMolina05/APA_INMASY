@@ -14,8 +14,20 @@
 
 <script src="/public/JS/pedidos.js"></script>
 
-<script src="/public/JS/entradas.js"></script>
-<script src="/public/JS/registros.js"></script>
+<?php
+$request = $_SERVER['REQUEST_URI'];
+$request = strtok($request, '?');
+$request = str_replace('/index.php', '', $request);
+$request = $request ?: '/';
+
+
+if (str_contains($request, 'registros')) {
+    echo '<script src="/public/JS/registros.js"></script>';
+} elseif (str_contains($request, 'entrada')) {
+    echo '<script src="/public/JS/entradas.js"></script>';
+}
+?>
+
 
 
 </html>
