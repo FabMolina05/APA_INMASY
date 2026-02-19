@@ -30,7 +30,23 @@ class ProveedoresDA implements IProveedoresDA
 
         $proveedor = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        return $proveedor;
+        sqlsrv_free_stmt($stmt);
+
+        $query = "SELECT ID_Contacto as id, nombre_contacto as nombre,correo as correo FROM dbo.INMASY_proveedor_contactos WHERE id_proveedor = ?";
+        $params = [$id];
+        $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            return ['error' => $errors[0]['message']];
+        }
+
+        $contactos = [];
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $contactos[] = $row;
+        }
+        sqlsrv_free_stmt($stmt);
+        return ['contactos' => $contactos, 'proveedor' => $proveedor];
     }
 
 
@@ -38,7 +54,7 @@ class ProveedoresDA implements IProveedoresDA
 
     public function obtenerProveedores()
     {
-        $query = "SELECT ID_Proveedor, nombre, direccion, telefono, correo FROM dbo.INMASY_Proveedores ORDER BY ID_Proveedor DESC";
+        $query = "SELECT ID_Proveedor, nombre, direccion, telefono,activo FROM dbo.INMASY_Proveedores ORDER BY ID_Proveedor DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
@@ -53,13 +69,14 @@ class ProveedoresDA implements IProveedoresDA
 
     public function agregarProveedor($proveedor)
     {
-        $query = "INSERT INTO dbo.INMASY_Proveedores (nombre, direccion, telefono, correo) VALUES (?, ?, ?, ?);
+        $query = "INSERT INTO dbo.INMASY_Proveedores (nombre, direccion, telefono,direccion_url,activo) VALUES (?, ?, ?,?,?);
         SELECT SCOPE_IDENTITY() AS id;";
         $params = [
             $proveedor['nombre'],
             $proveedor['direccion'],
             $proveedor['telefono'],
-            $proveedor['correo']
+            $proveedor['url'],
+            1
         ];
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
         if (!sqlsrv_execute($stmt)) {
@@ -68,27 +85,118 @@ class ProveedoresDA implements IProveedoresDA
         }
 
         $id = $this->obtenerSiguienteId($stmt);
-        return ['success' => true,'id'=>$id];
+
+        if (isset($proveedor['correos']) && is_array($proveedor['correos'])) {
+            $query = "INSERT INTO dbo.INMASY_proveedor_contactos (id_proveedor, nombre_contacto, correo) VALUES (?, ?, ?)";
+
+            foreach ($proveedor['correos'] as $index => $correo) {
+                if (!empty($correo['correo'])) {
+                    $params = [
+                        $id,
+                        $correo['nombre'] ?? null,
+                        $correo['correo']
+                    ];
+
+                    $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+
+                    if (!sqlsrv_execute($stmt)) {
+                        $errors = sqlsrv_errors();
+                        return ['error' => $errors[0]['message']];
+                    }
+                }
+            }
+        }
+
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true, 'id' => $id];
     }
 
     public function actualizarProveedor($proveedor)
     {
-        $query = "UPDATE dbo.INMASY_Proveedores SET nombre = ?, direccion = ?, telefono = ?, correo = ? WHERE ID_Proveedor = ?";
+        $query = "UPDATE dbo.INMASY_Proveedores SET nombre = ?, direccion = ?, telefono = ?,direccion_url = ?, activo = ? WHERE ID_Proveedor = ?";
         $params = [
             $proveedor['nombre'],
             $proveedor['direccion'],
             $proveedor['telefono'],
-            $proveedor['correo'],
+            $proveedor['url'],
+            $proveedor['activo'],
             $proveedor['id']
         ];
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
         if (!sqlsrv_execute($stmt)) {
             $errors = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
             return ['error' => $errors[0]['message']];
         }
+        if (isset($proveedor['correosNuevos']) && is_array($proveedor['correosNuevos'])) {
+            $query = "INSERT INTO dbo.INMASY_proveedor_contactos (id_proveedor, nombre_contacto, correo) VALUES (?, ?, ?)";
+
+            foreach ($proveedor['correosNuevos'] as $index => $correo) {
+                if (!empty($correo['correo'])) {
+                    $params = [
+                        $proveedor['id'],
+                        $correo['nombre'] ?? null,
+                        $correo['correo']
+                    ];
+
+                    $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+
+                    if (!sqlsrv_execute($stmt)) {
+                        $errors = sqlsrv_errors();
+                        sqlsrv_rollback($this->conexion);
+
+                        return ['error' => $errors[0]['message']];
+                    }
+                }
+            }
+        }
+
+        $query = "UPDATE dbo.INMASY_proveedor_contactos SET nombre_contacto = ?, correo = ? WHERE id_contacto = ?";
+        foreach ($proveedor['correosExiste'] as $index => $correo) {
+            if (!empty($correo['correo'])) {
+                $params = [
+
+                    $correo['nombre'] ?? null,
+                    $correo['correo'],
+                    $correo['id']
+                ];
+
+                $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+
+                if (!sqlsrv_execute($stmt)) {
+                    $errors = sqlsrv_errors();
+                    sqlsrv_rollback($this->conexion);
+                    return ['error' => $errors[0]['message']];
+                }
+            }
+        }
+
+        sqlsrv_commit($this->conexion);
         return ['success' => true];
     }
-     private function obtenerSiguienteId($stmt)
+
+    public function desactivarProveedor($id)
+    {
+        $query = "UPDATE dbo.INMASY_Proveedores SET activo = ? WHERE ID_Proveedor = ?";
+        $params = [
+            0,
+            $id
+        ];
+        $stmt = sqlsrv_prepare($this->conexion, $query, $params);
+        if (!sqlsrv_execute($stmt)) {
+            $errors = sqlsrv_errors();
+            sqlsrv_rollback($this->conexion);
+
+            return ['error' => $errors[0]['message']];
+        }
+
+        sqlsrv_commit($this->conexion);
+
+        return ['success' => true];
+    }
+    private function obtenerSiguienteId($stmt)
     {
         sqlsrv_next_result($stmt);
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);

@@ -27,8 +27,7 @@ class SalidaDA implements ISalidaDA
        a.serial,
        c.nombre_categoria as categoria
         FROM dbo.INMASY_SalidasCTM s
-        JOIN dbo.INMASY_EntranteArticulo ea ON ea.ID_Entrante = s.id_entrante
-        JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ea.id_inventario
+        JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = s.id_inventario
         JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
         JOIN dbo.INMASY_Categorias c on c.ID_Categoria = a.id_categoria
         ORDER BY s.ID_Salida DESC
@@ -41,6 +40,7 @@ class SalidaDA implements ISalidaDA
             return ['error' => $errors[0]['message']];
         }
 
+        $salida = [];
          while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
             $salida[] = $row;
         }

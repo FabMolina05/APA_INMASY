@@ -70,7 +70,7 @@
                                                 </button>";
                                         
                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 && $articulo['disponibilidad'] == 0) {
-                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Inventario']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
                                                     <i class='fa-solid fa-trash'></i>
                                                 </button>";
                                         }

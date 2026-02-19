@@ -5,6 +5,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">Editar Adquisición</h2>
                 </div>
+                
                 <form method="POST" action="/entrada/actualizar" id="formEditarEntrante" >
                     <div class="mb-3">
                             <label for="fecha_adquisicion" class="form-label">Fecha de Entrega</label>

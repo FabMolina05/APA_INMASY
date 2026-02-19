@@ -34,7 +34,8 @@ class ProveedoresControlador extends Controller
             'nombre' => $_POST['nombre'],
             'direccion' => $_POST['direccion'],
             'telefono' => $_POST['telefono'],
-            'correo' => $_POST['correo']
+            'correos' => $_POST['correos'],
+            'url' => $_POST['url']
         ];
         $resultado = $this->proveedoresBL->agregarProveedor($proveedor);
 
@@ -71,8 +72,13 @@ class ProveedoresControlador extends Controller
                 'nombre' => $_POST['nombre'],
                 'direccion' => $_POST['direccion'],
                 'telefono' => $_POST['telefono'],
-                'correo' => $_POST['correo']
+                'url'=>$_POST['url'],
+                'activo'=>$_POST['estado'],
+                'correosExiste' => $_POST['correosExiste'],
             ];
+            if (!empty($_POST['correos'])) {
+                $proveedor['correosNuevos'] = $_POST['correos'];
+            }
 
             $resultado = $this->proveedoresBL->actualizarProveedor($proveedor);
 
@@ -102,6 +108,34 @@ class ProveedoresControlador extends Controller
         }
     }
 
+    public function desactivarProveedor()
+    {
+        $resultado = $this->proveedoresBL->desactivarProveedor($_POST['id']);
+        if (isset($resultado['error'])) {
+            $this->bitacoraBL->registrarBitacora([
+                'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+                'categoria' => 'PROVEEDORES',
+                'fecha' => $this->registrarFechaHora(),
+                'descripcion' => "Actualizar proveedor error: {$resultado['error']}",
+                'accion' => 'UPDATE',
+                'estado' => 'ERROR'
+            ]);
+            $this->json(['error' => $resultado['error']]);
+
+            return;
+        } else {
+            $this->bitacoraBL->registrarBitacora([
+                'id_usuario' => $_SESSION['usuario_INMASY']['ID_Usuario'],
+                'categoria' => 'PROVEEDORES',
+                'fecha' => $this->registrarFechaHora(),
+                'descripcion' => "Actualizar proveedor ID: {$_POST['id']}",
+                'accion' => 'UPDATE',
+                'estado' => 'SUCCESS'
+            ]);
+            $this->json($resultado);
+        }
+    }
+
     public function obtenerProveedorPorId()
     {
         $id = $_GET['id'];
@@ -109,7 +143,7 @@ class ProveedoresControlador extends Controller
 
 
 
-        $this->json(['success' => true, 'data' => $proveedor]);
+        $this->json(['success' => true, 'data' => ['proveedor' => $proveedor['proveedor'], 'contactos' => $proveedor['contactos']]]);
     }
     private function registrarFechaHora()
     {

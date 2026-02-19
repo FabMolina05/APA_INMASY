@@ -84,6 +84,9 @@ switch ($request) {
     case '/entrada/index':
         $entradaController->obtenerEntradas();
         break;
+    case '/entrada/reponer':
+        $entradaController->reponerStock();
+        break;
     case '/entrada/obtenerEntradaPorId':
         $entradaController->obtenerEntradaPorId();
         break;
@@ -116,6 +119,9 @@ switch ($request) {
         break;
     case '/proveedores/index':
         $proveedoresController->index();
+        break;
+    case '/proveedores/desactivar':
+        $proveedoresController->desactivarProveedor();
         break;
     case '/proveedores/agregar':
         $proveedoresController->agregar();

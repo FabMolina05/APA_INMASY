@@ -53,6 +53,10 @@ class ValidatePermissions
                 'request' => '/entrada/agregarArticulo',
                 'roles' => ['1']
             ],
+             [
+                'request' => '/entrada/reponer',
+                'roles' => ['1']
+            ],
             [
                 'request' => '/entrada/index',
                 'roles' => ['1']
@@ -123,6 +127,10 @@ class ValidatePermissions
             ],
             [
                 'request' => '/proveedores/actualizar',
+                'roles' => ['1']
+            ],
+            [
+                'request' => '/proveedores/desactivar',
                 'roles' => ['1']
             ],
             [

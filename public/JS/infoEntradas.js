@@ -41,6 +41,12 @@ $('#modalInfoEntrada').on('show.bs.modal', function (event) {
                         <span class="fw-semibold">${data.num_fondo ?? 'N/A'}</span>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Cantidad:</span>
+                        <span class="badge bg-secondary fs-6">${data.cantidadAdquisicion ?? 'N/A'}</span>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="d-flex align-items-start">
                         <span class="text-muted  me-2">Garantía:</span>

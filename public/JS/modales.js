@@ -510,6 +510,49 @@ $(document).on('click', '.btn-sacar', function () {
     });
 });
 
+$(document).on('click', '.btn-desactivar-proveedor', function () {
+
+    var id = $(this).data('id');
+    $.ajax({
+        url: '/proveedores/desactivar',
+        type: 'POST',
+        data: {
+            id: id
+        },
+        success: function (response) {
+            if (response.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error || 'Ocurrió un problema al procesar la solicitud'
+                }).then(() => {
+                    location.reload();
+                });
+                return;
+            }
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Se desactivo el proveedor correctamente'
+            }).then(() => {
+                location.reload();
+            });
+        },
+        error: function (xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: xhr.responseText || 'Ocurrió un problema al procesar la solicitud'
+            }).then(() => {
+                location.reload();
+            });
+
+        }
+    });
+});
+   
+
+
 
 $('#modalEditarProveedores').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
@@ -523,15 +566,41 @@ $('#modalEditarProveedores').on('show.bs.modal', function (event) {
         dataType: 'json',
         data: { id: id },
         success: function (response) {
-            response = response.data;
-            let keys = Object.keys(response);
+            proveedor = response.data.proveedor;
+            contactos = response.data.contactos;
+            let keys = Object.keys(proveedor);
             keys.forEach(key => {
                 const elemento = $('#modalEditarProveedores').find(`#${key}`);
 
                 if (elemento.length > 0) {
-                    elemento.val(response[key]);
+                    elemento.val(proveedor[key]);
                 }
             });
+            let html = `<h2 class="fs-5" >Contactos</h2>`;
+            contactos.forEach((contacto, index) => {
+                html += `
+        <div class="correo-item border p-3 mb-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Nombre del Contacto</label>
+                    <input type="text" class="form-control" name="correosExiste[${index}][nombre]" value="${contacto.nombre}">
+                </div>
+                
+                <div class="col-md-6">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" name="correosExiste[${index}][correo]" value="${contacto.correo}" required>
+                </div>
+                <input type="hidden" id="ID_correo" name="correosExiste[${index}][id]" value="${contacto.id}">
+
+                
+            </div>
+        </div>
+    `
+                correoIndex = index + 1;
+
+            })
+
+            $('#modalEditarProveedores').find('#contactos').html(html);
             $('#modalEditarProveedores').modal('show');
         },
         error: function (error) {
@@ -541,7 +610,106 @@ $('#modalEditarProveedores').on('show.bs.modal', function (event) {
 }
 );
 
+$('#modalInfoProveedor').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
 
+    $.ajax({
+        type: "GET",
+        url: "/proveedores/obtenerProveedorPorId",
+        dataType: 'json',
+        data: { id: id },
+        success: function (response) {
+            proveedor = response.data.proveedor;
+            contactos = response.data.contactos;
+            let html = ` <div class="container-fluid p-0">
+    <div class="card border-0 shadow-sm mb-3">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Datos del Proveedor</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Nombre:</span>
+                        <span class="fw-semibold">${proveedor.nombre ?? 'N/A'}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Teléfono:</span>
+                        <span class="fw-semibold">${proveedor.telefono}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">URL:</span>
+                        <a class="fw-semibold" href="${proveedor.direccion_url??''}" target="_blank">${proveedor.direccion_url ?? 'N/A'}</a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Dirección:</span>
+                        <span class="fw-semibold">${proveedor.direccion ?? 'N/A'}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm mb-3">
+         <div class="card-header bg-danger text-white">
+            <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Contactos</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">`;
+
+            contactos.forEach(contacto => {
+                html += `
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Nombre:</span>
+                        <span class="fw-semibold">${contacto.nombre ?? 'N/A'}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-start">
+                        <span class="text-muted me-2">Correo:</span>
+                        <span class="fw-semibold">${contacto.correo ?? 'N/A'}</span>
+                    </div>
+                </div>
+                <hr>
+
+                `;
+            });
+
+
+            html += "</div></div></div>"
+
+            $('#infoProveedorContenido').html(html);
+        },
+        error: function (error) {
+            alert("Error: " + error);
+        }
+    })
+
+
+});
+
+$('#modalStockEntrada').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    $(this).find('#id').val(id);
+
+
+});
+
+$('#modalStockEntrada').on('hidden.bs.modal', function (event) {
+
+    $(this).find('#cantidad').val(0);
+
+
+});
 
 
 function existeOpcion(valor, nombre) {
