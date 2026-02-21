@@ -258,7 +258,7 @@ $('#modalInfoPedido').on('show.bs.modal', function (event) {
                                         ${(data.estado == "DENEGADO") ? `<div class="col-md-12">
                                             <div class="d-flex align-items-start">
                                                 <span class="text-muted  me-2">Motivo de Rechazo:</span>
-                                                <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.descripcion ?? 'N/A'}</span>
+                                                <span class="fw-semibold" style="word-wrap: break-word; word-break: break-word;">${data.rechazo ?? 'N/A'}</span>
                                             </div>
                                         </div>`: ""}
                                     </div>

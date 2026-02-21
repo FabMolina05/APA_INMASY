@@ -13,7 +13,7 @@
             <div class="card-body">
                 <form method="POST" action="/entrada/agregarArticulo">
                     <!-- adquisicion -->
-                    <h3 class="mb-3">Información de la adquisicion</h3>
+                    <h3 class="mb-3">Información de la adquisición</h3>
                     <button
                         id="btnAdquisicion"
                         type="buttons"
