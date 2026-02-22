@@ -4,6 +4,12 @@
             <div class="modal-body">
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">Editar Adquisición</h2>
+                    <div class="col-auto">
+                        <button class="btn btn-danger" onclick="eliminarInformacion()">
+                            Eliminar Información
+                        </button>
+
+                    </div>
                 </div>
                 
                 <form method="POST" action="/entrada/actualizar" id="formEditarEntrante" >
@@ -13,8 +19,8 @@
                         </div>
                     <div class="mb-3">
                             <label for="proveedor" class="form-label">Proveedor</label>
-                            <select class="form-select" id="proveedor" name="proveedor" required>
-                                <option value="">Seleccione un proveedor</option>
+                            <select class="form-select" id="proveedor" name="proveedor" >
+                                <option value="" disabled selected hidden>Seleccione un proveedor</option>
                                 <?php
                                 foreach ($proveedores as $proveedor) {
                                     echo "<option value=" . htmlspecialchars($proveedor['id']) . ">" . htmlspecialchars($proveedor['nombre']) . "</option>";
@@ -24,25 +30,25 @@
                     </div>
                    <div class="mb-3">
                             <label for="factura" class="form-label">Número de Factura</label>
-                            <input type="text" class="form-control" id="factura" name="factura" required>
+                            <input type="text" class="form-control" id="factura" name="factura" >
                         </div>
                         <div class="mb-3">
                             <label for="tipo_pago" class="form-label">Tipo de Pago</label>
-                            <input type="text" class="form-control" id="tipo_pago" name="tipo_pago"required>
+                            <input type="text" class="form-control" id="tipo_pago" name="tipo_pago">
                         </div>
 
                         <div class="mb-3">
                             <label for="numero_fondo" class="form-label">Número de Fondo</label>
-                            <input type="text" class="form-control" id="num_fondo" name="numero_fondo"required>
+                            <input type="text" class="form-control" id="num_fondo" name="numero_fondo">
                         </div>
                         <div class="mb-3">
                             <label for="garantia" class="form-label">Garantía</label>
-                            <textarea type="text" class="form-control" id="garantia" name="garantia"required></textarea>
+                            <textarea type="text" class="form-control" id="garantia" name="garantia"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="persona_compra" class="form-label">Responsable de la Adquisición</label>
-                            <select class="form-select" id="persona_compra" name="persona_compra" required>
-                                <option disabled selected hidden>Seleccione una persona</option>
+                            <select class="form-select" id="persona_compra" name="persona_compra" >
+                                <option value="" disabled selected hidden>Seleccione una persona</option>
                                 <option value="otros">Otros</option>
                                 <?php
                                 foreach ($usuarios as $usuario) {
@@ -51,7 +57,7 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="otra_persona">
+                        <div class="otro_encargado">
 
                         </div>
                         <input type="hidden" id="id_entrante" name="id_entrante" value="">

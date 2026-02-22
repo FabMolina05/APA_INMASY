@@ -77,7 +77,7 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="otra_persona">
+                        <div class="otro_encargado">
 
                         </div>
                     </div>

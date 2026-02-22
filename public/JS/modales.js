@@ -97,12 +97,24 @@ $('#modalEditarEntrante').on('show.bs.modal', function (event) {
                 }
 
                 if (key === 'encargado') {
-
+                    var found = false
 
                     $('#modalEditarEntrante').find(`#persona_compra option`).filter(function () {
-                        return $(this).val() == entrada['encargado'];
+                        if ($(this).val() == entrada['encargado']) {
+                            found = true;
+                            return $(this).val() == entrada['encargado'];
+                        };
                     }).prop("selected", true);
 
+                    if (!found) {
+                        $('#modalEditarEntrante').find(`#persona_compra option:contains(Otros)`).prop('selected', true)
+                        const otro = document.querySelector('.otro_encargado');
+                        otro.innerHTML = `
+         <label for="otra_persona" class="form-label">Especifique otra persona</label>
+                        <input type="text" class="form-control" id="otra_persona" name="otra_persona" required>
+        `;
+                        $('#modalEditarEntrante').find('#otra_persona').val(entrada['encargado'])
+                    }
                     return;
                 }
                 if (key === 'fecha_entrega') {
@@ -550,7 +562,7 @@ $(document).on('click', '.btn-desactivar-proveedor', function () {
         }
     });
 });
-   
+
 
 
 
@@ -644,7 +656,7 @@ $('#modalInfoProveedor').on('show.bs.modal', function (event) {
                 <div class="col-md-6">
                     <div class="d-flex align-items-start">
                         <span class="text-muted me-2">URL:</span>
-                        <a class="fw-semibold" href="${proveedor.direccion_url??''}" target="_blank">${proveedor.direccion_url ?? 'N/A'}</a>
+                        <a class="fw-semibold" href="${proveedor.direccion_url ?? ''}" target="_blank">${proveedor.direccion_url ?? 'N/A'}</a>
                     </div>
                 </div>
                 <div class="col-md-12">

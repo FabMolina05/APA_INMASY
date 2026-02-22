@@ -193,22 +193,24 @@ class EntradaControlador extends Controller
     public function editarEntrada()
     {
         $entrada = [
-            'tipo_pago' => $_POST['tipo_pago'],
-            'numero_fondo' => $_POST['numero_fondo'],
-            'numero_factura' => $_POST['factura'],
-            'fecha_adquisicion' => $_POST['fecha_adquisicion'],
+            'tipo_pago' => !empty($_POST['tipo_pago']) ?: null,
+            'numero_fondo' =>  !empty($_POST['numero_fondo']) ?: null,
+            'numero_factura' => !empty($_POST['factura']) ?: null,
+            'fecha_adquisicion' => !empty( $_POST['fecha_adquisicion'])? $_POST['fecha_adquisicion'] : null,
 
-            'garantia' => $_POST['garantia'],
-            'proveedor' => $_POST['proveedor'],
+            'garantia' =>  !empty($_POST['garantia']) ?: null,
+            'proveedor' =>  !empty($_POST['proveedor']) ?: null,
             'id_entrada' => $_POST['id_entrante'],
         ];
 
-        if (isset($_POST['persona_compra'])) {
+        if (!empty($_POST['persona_compra'])) {
             if ($_POST['persona_compra'] == "otros") {
                 $entrada['persona_compra'] = $_POST['otra_persona'];
             } else {
                 $entrada['persona_compra'] = $_POST['persona_compra'];
             };
+        } else {
+            $entrada['persona_compra'] = $_SESSION['usuario_INMASY']['nombre_completo'];
         }
         $resultado = $this->entradaBL->editarEntrada($entrada);
 
