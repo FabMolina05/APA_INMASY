@@ -199,7 +199,7 @@ class EntradaControlador extends Controller
             'fecha_adquisicion' => !empty( $_POST['fecha_adquisicion'])? $_POST['fecha_adquisicion'] : null,
 
             'garantia' =>  !empty($_POST['garantia']) ?: null,
-            'proveedor' =>  !empty($_POST['proveedor']) ?: null,
+            'proveedor' => !empty( $_POST['proveedor'])? $_POST['proveedor'] : null,
             'id_entrada' => $_POST['id_entrante'],
         ];
 
