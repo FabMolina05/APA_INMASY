@@ -5,7 +5,7 @@
             <div class="card-header bg-white border-0 py-3">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h2 class="mb-0">Bitacora</h2>
+                        <h2 class="mb-0">Bitácora</h2>
                         <p class="text-muted small mb-0">Gestiona los movimientos realizados en el sistema</p>
                     </div>
                     

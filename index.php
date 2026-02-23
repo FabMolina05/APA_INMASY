@@ -38,7 +38,7 @@ $request = str_replace('/index.php', '', $request);
 $request = $request ?: '/';
 
 ValidateSession::validate($conn);
-ValidatePermissions::validate($request);
+ValidatePermissions::validate($request,$conn);
 
 ob_start();
 
