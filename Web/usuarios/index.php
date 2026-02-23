@@ -1,5 +1,3 @@
-
-
 <div class="content">
     <div class="container-fluid">
         <!-- Card principal -->
@@ -17,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="usuariosTable" class="table table-hover align-middle">
@@ -36,23 +34,24 @@
                                     echo "<tr>";
                                     echo "<td><strong>" . htmlspecialchars($usuario['nombre_completo']) . "</strong></td>";
                                     echo "<td><span class='badge bg-info text-dark'>" . htmlspecialchars($usuario['rol']) . "</span></td>";
-                                    if($usuario['estado'] == 0){
+                                    if ($usuario['estado'] == 0) {
                                         echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
                                     } else {
-                                    echo "<td><span class='badge bg-success'>Activo</span></td>";
+                                        echo "<td><span class='badge bg-success'>Activo</span></td>";
                                     };
+
                                     echo "<td class='text-center'>
-                                            <div class='btn-group btn-group-sm' role='group'>
-                                               
-                                                <button type='button' data-id=". htmlspecialchars($usuario['ID_Usuario'])." data-rol=".htmlspecialchars($usuario['rol'])." data-estado=".htmlspecialchars($usuario['estado'])." class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarUsuario'>
+                                            <div class='btn-group btn-group-sm' role='group'>";
+                                    if ($_SESSION['usuario_INMASY']['ID_Usuario']!= $usuario['ID_Usuario']) {
+                                        echo "<button type='button' data-id=" . htmlspecialchars($usuario['ID_Usuario']) . " data-rol=" . htmlspecialchars($usuario['rol']) . " data-estado=" . htmlspecialchars($usuario['estado']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarUsuario'>
                                                     <i class='fa-solid fa-pen'></i>
-                                                </button>
-                                                
-                                            </div>
+                                                </button>";
+                                    }
+                                    echo "</div>
                                           </td>";
                                     echo "</tr>";
                                 }
-                            } 
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -61,7 +60,6 @@
         </div>
     </div>
 
-<?php include_once './Web/usuarios/editar.php' ?>
+    <?php include_once './Web/usuarios/editar.php' ?>
 
 </div>
-
