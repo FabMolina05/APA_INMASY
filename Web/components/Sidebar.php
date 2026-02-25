@@ -10,7 +10,7 @@
             $usuario = $_SESSION['usuario_INMASY'];
 
             // Dashboard     
-            if ($usuario['rol'] == 1) {
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/registros/index" class="nav-link">';
                 echo ' <i class="fas fa-chart-line"></i>';
@@ -20,7 +20,7 @@
             }
 
             // Pedidos
-            if ($usuario['rol'] == 1 || $usuario['rol'] == 3) {
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2 || $usuario['rol'] == 3 ||$usuario['rol'] == 4 ) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/pedidos/index" class="nav-link">';
                 echo ' <i class="fas fa-shopping-cart"></i>';
@@ -30,7 +30,7 @@
             }
 
             // Inventario con dropdown
-            if ($usuario['rol'] == 1 || $usuario['rol'] == 2 || $usuario['rol'] == 3) {
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2 || $usuario['rol'] == 3||$usuario['rol'] == 4) {
                 echo ' <li class="nav-item dropdown">';
                 echo ' <a class="nav-link dropdown-toggle" id="inventario" href="#inventario" data-bs-toggle="dropdown" aria-expanded="false">';
                 echo ' <i class="fas fa-warehouse"></i>';
@@ -54,7 +54,7 @@
          
          
             // Entradas
-            if ($usuario['rol'] == 1 || $usuario['rol'] == 2) {
+            if ($usuario['rol'] == 1 || $usuario['rol'] == 2||$usuario['rol'] == 3) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/entrada/index" class="nav-link">';
                 echo ' <i class="fas fa-arrow-circle-down"></i>';
@@ -64,7 +64,7 @@
             }
 
             // Salidas
-            if ($usuario['rol'] == 1) {
+            if ($usuario['rol'] == 1|| $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/salidas/index" class="nav-link">';
                 echo ' <i class="fas fa-arrow-circle-up"></i>';
@@ -74,7 +74,7 @@
             }
 
             // Bitacora
-            if ($usuario['rol'] == 1) {
+            if ($usuario['rol'] == 1|| $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/bitacora/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-clock-rotate-left"></i>';
@@ -84,7 +84,7 @@
             }
 
             // Usuarios
-            if ($usuario['rol'] == 1) {
+            if ($usuario['rol'] == 1|| $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/usuarios/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-user-gear"></i>';
@@ -94,7 +94,7 @@
             }
 
             // Proveedores
-            if ($usuario['rol'] == 1) {
+            if ($usuario['rol'] == 1|| $usuario['rol'] == 2) {
                 echo ' <li class="nav-item">';
                 echo ' <a href="/proveedores/index" class="nav-link">';
                 echo ' <i class="fa-solid fa-truck"></i>';

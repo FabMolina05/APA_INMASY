@@ -21,11 +21,10 @@ class InventarioDA implements IInventarioDA
     public function obtenerArticulosPorCategoria($categoria)
     {
         $params = array($categoria);
-        $query = "SELECT ea.ID_Entrante,a.ID_Articulo,a.num_articulo,a.modelo,a.cantidad,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
+        $query = "SELECT DISTINCT  i.ID_Inventario,a.ID_Articulo,a.num_articulo,a.modelo,a.cantidad,a.direccion,a.marca,a.serial,a.nombre,a.disponibilidad,a.activo,atributos_especificos as atributos
                  FROM dbo.INMASY_Articulos a
                  JOIN dbo.INMASY_Inventario i ON i.id_articulo = a.ID_Articulo
-                 JOIN dbo.INMASY_EntranteArticulo ea ON ea.id_inventario = i.ID_Inventario 
-                 WHERE a.id_categoria = ? and a.estado != 'DESECHO'
+                 WHERE a.id_categoria = ? and a.estado != 'DESECHO' 
                  ORDER BY a.ID_Articulo DESC";
         $stmt = sqlsrv_prepare($this->conexion, $query, $params);
         if (!sqlsrv_execute($stmt)) {
@@ -78,7 +77,7 @@ class InventarioDA implements IInventarioDA
             $articulo['costo_unitario'] ?: null,
             $articulo['cantidad'] ?: null,
             $articulo['direccion'] ?: null,
-            $articulo['activo'] ?: null,
+            $articulo['activo'],
             $articulo['num_articulo'] ?: null,
             $articulo['ID_Articulo'] ?: null,
             $articulo['ID_Articulo'] ?: null,
@@ -122,10 +121,9 @@ class InventarioDA implements IInventarioDA
 
             $query = "UPDATE  a
                   SET a.estado = 'DESECHO'
-                  FROM dbo.INMASY_EntranteArticulo ea
-                  INNER JOIN dbo.INMASY_Inventario i ON i.ID_Inventario = ea.id_inventario
+                  FROM dbo.INMASY_Inventario i
                   INNER JOIN dbo.INMASY_Articulos a ON a.ID_Articulo = i.id_articulo
-                  WHERE ea.ID_Entrante = ?
+                  WHERE i.ID_Inventario= ?
                   ";
 
             $params = [
@@ -144,7 +142,7 @@ class InventarioDA implements IInventarioDA
 
             sqlsrv_free_stmt($stmt);
 
-            $query = "INSERT INTO dbo.INMASY_SalidasCTM (id_entrante,motivo,fecha_salida) VALUES
+            $query = "INSERT INTO dbo.INMASY_SalidasCTM (id_inventario,motivo,fecha_salida) VALUES
             (?,?,?)
                   ";
 

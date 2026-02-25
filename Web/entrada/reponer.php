@@ -4,16 +4,15 @@
             <div class="card-header bg-white border-0 py-3">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h2 class="mb-0">Entrada de Artículos</h2>
-                        <p class="text-muted small mb-0">Agregar Artículo</p>
+                        <h2 class="mb-0">Reponer stock de Artículos</h2>
+                        <p class="text-muted small mb-0">Reponer stock</p>
                     </div>
 
                 </div>
             </div>
             <div class="card-body">
                 <form method="POST" action="/entrada/agregarArticulo">
-                    <!-- adquisicion -->
-                    <h3 class="mb-3">Información de la adquisición</h3>
+                    <h3 class="mb-3">Información de la adquisicion</h3>
                     <button
                         id="btnAdquisicion"
                         type="buttons"
@@ -77,87 +76,46 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="otro_encargado">
+                        <div class="otra_persona">
 
                         </div>
-                    </div>
-                    <!-- articulo -->
-                    <h3 class="mb-3 mt-4">Información del artículo</h3>
-                    <div class="mb-3">
-                        <label for="num_articulo" class="form-label">Número de artículo</label>
-                        <input type="number" step="1" class="form-control" id="num_articulo" name="num_articulo">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca" maxlength="50">
-                    </div>
-                    <div class="mb-3">
-                        <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" maxlength="50">
-                    </div>
-                    <div class="mb-3">
-                        <label for="serial" class="form-label">Serial</label>
-                        <input type="text" class="form-control" id="serial" name="serial" maxlength="100">
-                    </div>
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <textarea type="text" class="form-control" id="direccion" name="direccion" maxlength="100"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="estado" class="form-label">Estado</label>
-                        <select class="form-select" id="estado" name="estado" required>
-                            <option value="NUEVO">NUEVO</option>
-                            <option value="USADO">USADO</option>
-                            <option value="REPARADO">REPARADO</option>
-                            <option value="ROTO">ROTO</option>
-                        </select>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="cantidad" class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="costo_unitario" class="form-label">Costo Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario">
-                    </div>
-                    <div class="mb-3">
-                        <label for="fecha_fabricacion" class="form-label">Fecha de Fabricación</label>
-                        <input type="date" class="form-control" id="fecha_fabricacion" name="fecha_fabricacion">
-                    </div>
-                    <!-- categoria -->
-                    <h3 class="mb-3 mt-4">Categoría</h3>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoría</label>
-                        <select class="form-select" id="categoria" name="categoria" onchange="mostrarCategoria()" required>
+                        <select class="form-select" id="categoria" name="categoria" onchange="cargarTabla()" required>
+                            <option disabled selected hidden>Seleccione una categoria</option>
+
                             <?php
 
+
                             foreach ($categorias as $categoria) {
-                                $selected = ($categoriaSeleccionada == $categoria['id']) ? "selected" : "";
-                                echo "<option value='" . htmlspecialchars($categoria['id']) . "' $selected>" . htmlspecialchars($categoria['nombre']) . "</option>";
+                                echo "<option value='" . htmlspecialchars($categoria['id']) . "' >" . htmlspecialchars($categoria['nombre']) . "</option>";
                             }
                             ?>
                         </select>
                     </div>
-                    <div class="contenido-categoria">
+                    <div class="card-body my-4">
+                        <div class="table-responsive">
+                            <table id="reponerTable" class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>N° Articulo</th>
+                                        <th>Nombre</th>
+                                        <th>Marca</th>
+                                        <th>Serial</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-                    <h3 class="mb-3 mt-4">Almacenamiento</h3>
-                    <div class="mb-3">
-                        <label for="almacenamiento" class="form-label">Almacenamiento</label>
-                        <select class="form-select" id="almacenamiento" name="almacenamiento" required>
-                            <option value="inventario">Inventario</option>
-                        </select>
-                    </div>
-                    <div class="num_catalogo">
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-3 mt-3">Agregar Artículo</button>
+                    <?php include_once './Web/entrada/modal.php' ?>
                 </form>
+
             </div>
         </div>
     </div>

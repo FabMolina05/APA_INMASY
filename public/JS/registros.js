@@ -138,7 +138,22 @@ $(window).on('load', function () {
 
 
                             capitalChart.data.datasets[0].backgroundColor = backgroundColors;
-                            capitalChart.update('active'); 
+                            capitalChart.update('active');
+                            setTimeout(() => {
+                                if (categoria == "Equipo Electrónico") {
+                                    window.location.href = `/inventario/categoria?categoria=electronica&id=${index + 1}`;
+                                } else if (categoria == "Relés") {
+                                    window.location.href = `/inventario/categoria?categoria=reles&id=${index + 1}`;
+                                }
+                                else if (categoria == "Tarjetas Electrónicas") {
+                                    window.location.href = `/inventario/categoria?categoria=tarjetas&id=${index + 1}`;
+                                } else {
+                                    window.location.href = `/inventario/categoria?categoria=${categoria.toLocaleLowerCase()}&id=${index + 1}`;
+
+                                }
+
+
+                            }, 500);
                         }
                     },
                     onHover: (event, activeElements) => {

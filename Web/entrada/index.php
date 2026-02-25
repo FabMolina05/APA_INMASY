@@ -9,8 +9,11 @@
                         <p class="text-muted small mb-0">Gestiona los entrantes</p>
                     </div>
                     <div class="col-auto">
+                        <button class="btn btn-success" onclick="location.href='/entrada/reponer'">
+                            <i class="fa fa-plus-circle me-1"></i> Reponer Stock de artículo
+                        </button>
                         <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo'">
-                            <i class="bi bi-plus-circle me-1"></i> Agregar artículo
+                            <i class="fa fa-plus-circle me-1"></i> Agregar artículo
                         </button>
                     </div>
                 </div>
@@ -65,16 +68,15 @@
                                                     <i class='fa-regular fa-calendar'></i>
                                                 </button>";
                                     };
-
-                                    echo "
+                                    if ($entrada['estado'] != 'DESECHO') {
+                                        echo "
                                                 <button type='button' data-id=" . htmlspecialchars($entrada['id']) . " class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarEntrante'>
                                                     <i class='fa-solid fa-pen'></i>
-                                                </button>
-                
-                                                
-                                            </div>
-                                          </td>";
-                                    echo "</tr>";
+                                                </button>";
+                                    }
+                                    echo       "</div>
+                                          </td>
+                                     </tr>";
                                 }
                             }
                             ?>
@@ -105,9 +107,9 @@
     </div>
 
     <?php include_once './Web/entrada/info.php' ?>
-        <?php include_once './Web/entrada/editar.php' ?>
+    <?php include_once './Web/entrada/editar.php' ?>
 
 
 
 </div>
-<?php $page = 'entradas'?>
+<?php $page = 'entradas' ?>

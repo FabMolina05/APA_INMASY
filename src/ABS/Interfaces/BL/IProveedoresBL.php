@@ -6,6 +6,7 @@ interface IProveedoresBL {
     public function actualizarProveedor($proveedor);
     public function obtenerProveedores();
     public function obtenerProveedorPorId($id);
+    public function desactivarProveedor($id);
 
 }
     

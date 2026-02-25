@@ -29,3 +29,31 @@
     padding: 12px;
     vertical-align: middle;
 }
+
+#reponerTable {
+    margin-bottom: 0;
+}
+
+#reponerTable thead th {
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px;
+}
+
+#reponerTable tbody tr {
+    transition: all 0.2s ease;
+}
+
+#reponerTable tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+}
+
+#reponerTable tbody td {
+    padding: 12px;
+    vertical-align: middle;
+}

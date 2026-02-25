@@ -8,7 +8,7 @@
                         <h2 class="mb-0">Inventario</h2>
                         <p class="text-muted small mb-0">Gestiona Gabinetes</p>
                     </div>
-                    <?php if ($_SESSION['usuario_INMASY']['rol'] == 1): ?>
+                    <?php if ($_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2): ?>
                         <div class="col-auto">
                             <button class="btn btn-primary" onclick="location.href='/entrada/agregarArticulo?categoria=6'">
                                 <i class="bi bi-plus-circle me-1"></i> Agregar artículo
@@ -29,7 +29,12 @@
                                 <th>Modelo</th>
 
                                 <th>Disponible</th>
-                                <th>activo</th>
+                                <?php
+                                if ($_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2) {
+                                    echo '<th>activo</th>';
+                                };
+
+                                ?>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -37,7 +42,7 @@
                             <?php
                             if ($articulos != null && count($articulos) > 0) {
                                 foreach ($articulos as $articulo) {
-                                    if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1) {
+                                    if ($articulo['activo'] != 0 || $_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2) {
                                         echo "<tr>";
                                         echo "<td>" . htmlspecialchars($articulo['num_articulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($articulo['nombre']) . "</td>";
@@ -49,7 +54,7 @@
                                             echo "<td><span class='badge bg-success'>Libre</span></td>";
                                         };
 
-                                        if ($_SESSION['usuario_INMASY']['rol'] == 1) {
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2) {
                                             if ($articulo['activo'] == 0) {
                                                 echo "<td><span class='badge bg-danger'>Inactivo</span></td>";
                                             } else {
@@ -62,8 +67,8 @@
                                                 <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='gabinetes' class='btn btn-outline-info' id='botonModal' title='Info' data-bs-toggle='modal' data-bs-target='#modalInfoArticulo'>
                                                     <i class='fa-regular fa-eye'></i>
                                                 </button>";
-                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 && $articulo['disponibilidad'] == 0) {
-                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Entrante']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2 && $articulo['disponibilidad'] == 0) {
+                                            echo "<button type='button' data-id=" . htmlspecialchars($articulo['ID_Inventario']) . " data-categoria='baterias' class='btn btn-outline-danger btn-sacar'  title='Sacar'>
                                                     <i class='fa-solid fa-trash'></i>
                                                 </button>";
                                         }
@@ -72,13 +77,14 @@
                                                     <i class='fa-solid fa-basket-shopping'></i>
                                                 </button>";
                                         }
-
-                                        echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='gabinetes' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
+                                        if ($_SESSION['usuario_INMASY']['rol'] == 1 || $_SESSION['usuario_INMASY']['rol'] == 2) {
+                                            echo "            <button type='button' data-id=" . htmlspecialchars($articulo['ID_Articulo']) . " data-categoria='gabinetes' class='btn btn-outline-warning' id='botonModal' title='Editar' data-bs-toggle='modal' data-bs-target='#modalEditarArticulo'>
                                                     <i class='fa-solid fa-pen'></i>
-                                                </button>
-                
-                                                
-                                            </div>
+                                                </button>";
+                                        }
+
+
+                                        echo "</div>
                                           </td>";
                                         echo "</tr>";
                                     }

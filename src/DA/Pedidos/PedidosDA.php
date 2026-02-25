@@ -272,6 +272,7 @@ class PedidosDA implements IPedidosDA
         $query = "SELECT 
           pr.ID_Pedido as id,
           pr.estado as estado,
+          pr.rechazo,
           c.nombre_completo as cliente,
           u.nombre_completo as encargado,
           a.nombre as nombre_articulo,

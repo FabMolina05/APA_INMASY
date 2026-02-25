@@ -56,7 +56,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="num_catalogo" class="form-label">Número de catalogo</label>
-                        <input type="text" class="form-control" id="numcatalogo" name="num_catalogo" >
+                        <input type="text" class="form-control" id="num_catalogo" name="num_catalogo" >
                     </div>
                     <div class="mb-3">
                         <label for="aidi" class="form-label">Codigo AIDI</label>

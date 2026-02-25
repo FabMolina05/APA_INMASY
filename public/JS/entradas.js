@@ -220,7 +220,7 @@ window.addEventListener('DOMContentLoaded', mostrarCategoria);
 
 $('#persona_compra').on('change', function () {
     const seleccion = $(this).val();
-    const otro = document.querySelector('.otra_persona');
+    const otro = document.querySelector('.otro_encargado');
     if (seleccion === 'otros') {
         otro.innerHTML = `
          <label for="otra_persona" class="form-label">Especifique otra persona</label>
@@ -312,11 +312,20 @@ $('#btnAdquisicion').on('click', function () {
             $(this).find('input[type="checkbox"], input[type="radio"]').prop('checked', false).prop('required', false);
 
             // Limpiar contenido dinámico
-            $(this).find('.otra_persona').empty().prop('required', false);
+            $(this).find('.otro_encargado').empty().prop('required', false);
 
         });
     }
 });
+
+function eliminarInformacion() {
+    var id = $('#formEditarEntrante').find('#id_entrante').val()
+    $('#formEditarEntrante').find('input,textarea,select').val('')
+    $('#formEditarEntrante').find('select').prop('selectedIndex', 0)
+    $('#formEditarEntrante').find('#id_entrante').val(id)
+    $('#formEditarEntrante').find('.otro_encargado').empty()
+
+}
 
 
 $(document).ready(function () {
@@ -324,10 +333,11 @@ $(document).ready(function () {
 
         e.preventDefault();
 
+        var data = $(this).serialize();
         $.ajax({
             url: '/entrada/actualizar',
             type: 'POST',
-            data: $(this).serialize(),
+            data: data,
             success: function (response) {
                 if (response.success === false) {
                     Swal.fire({
@@ -359,6 +369,58 @@ $(document).ready(function () {
         });
     });
 });
+
+function cargarTabla() {
+    const categoria = document.getElementById("categoria").value;
+
+
+    $.ajax({
+        url: '/entrada/reponer',
+        type: 'POST',
+        dataType: 'json',
+        data: { categoria: categoria },
+        success: function (response) {
+            if (response.success) {
+                reponerTable.clear();
+
+                response.data.forEach(articulo => {
+                    if (articulo.activo == 0) {
+                        reponerTable.row.add([
+                            articulo.num_articulo,
+                            articulo.nombre,
+                            articulo.marca,
+                            articulo.serial,
+                            `<span class='badge bg-danger'>Inactivo</span>`
+                        ]);
+                    } else {
+                        reponerTable.row.add([
+                            articulo.num_articulo,
+                            articulo.nombre,
+                            articulo.marca,
+                            articulo.serial,
+                            `<div class='btn-group btn-group-sm' role='group'>                 
+                            <button type='button' data-id=" ${articulo.ID_Articulo} "  class='btn btn-outline-success' id='botonModal' title='Agregar' data-bs-toggle='modal' data-bs-target='#modalStockEntrada'>
+                                    <i class='fa-regular fa-plus'></i>
+                            </button>
+                        </div>`
+                        ]);
+                    }
+                });
+
+                reponerTable.draw();
+            }
+        },
+        error: function (xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: xhr.responseText || 'Ocurrió un error al procesar la solicitud.'
+            }).then(() => {
+                location.reload();
+            });
+        }
+    });
+}
 
 
 

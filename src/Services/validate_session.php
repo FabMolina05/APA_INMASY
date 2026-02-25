@@ -14,7 +14,7 @@ class ValidateSession
         if (!isset($_SESSION['usuario_INMASY'])) {
            
             // se obtiene el id del usaurio de PADDE, en este caso se usa dato quemado para pruebas
-            $id_usuario_padde = 32734;
+            $id_usuario_padde = 14782;
 
             $usuarioBL = new UsuarioBL($conn);
             $resultado = $usuarioBL->obtenerPermisosUsuario($id_usuario_padde);
