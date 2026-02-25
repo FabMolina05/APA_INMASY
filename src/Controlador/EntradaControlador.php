@@ -193,12 +193,12 @@ class EntradaControlador extends Controller
     public function editarEntrada()
     {
         $entrada = [
-            'tipo_pago' => !empty($_POST['tipo_pago']) ?: null,
-            'numero_fondo' =>  !empty($_POST['numero_fondo']) ?: null,
-            'numero_factura' => !empty($_POST['factura']) ?: null,
+            'tipo_pago' => !empty($_POST['tipo_pago']) ?$_POST['tipo_pago']: null,
+            'numero_fondo' =>  !empty($_POST['numero_fondo']) ?$_POST['numero_fondo']: null,
+            'numero_factura' => !empty($_POST['factura']) ? $_POST['factura']: null,
             'fecha_adquisicion' => !empty( $_POST['fecha_adquisicion'])? $_POST['fecha_adquisicion'] : null,
 
-            'garantia' =>  !empty($_POST['garantia']) ?: null,
+            'garantia' =>  !empty($_POST['garantia']) ? $_POST['garantia']: null,
             'proveedor' => !empty( $_POST['proveedor'])? $_POST['proveedor'] : null,
             'id_entrada' => $_POST['id_entrante'],
         ];

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.5">
@@ -19,12 +20,13 @@
     <link rel="stylesheet" href="/public/CSS/general.css">
     <link rel="stylesheet" href="/public/CSS/registros.css">
     <link rel="stylesheet" href="/public/CSS/bitacora.css">
+    <link rel="icon" href="/public/Assets/logo.png">
 
 
 
 
 
-   
+
 </head>
+
 <body>
-    
